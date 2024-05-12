@@ -11,7 +11,7 @@ type MyTooltipProps = {
    children: ReactNode
 }
 
-const Mytooltip = ({ title, children }: MyTooltipProps) => {
+const MyTooltip = ({ title, children }: MyTooltipProps) => {
    return (
       <>
          <TooltipProvider delayDuration={0}>
@@ -25,4 +25,4 @@ const Mytooltip = ({ title, children }: MyTooltipProps) => {
       </>
    )
 }
-export default Mytooltip
+export default MyTooltip
