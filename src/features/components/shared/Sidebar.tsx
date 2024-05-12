@@ -24,7 +24,7 @@ const Sidebar = ({
 }) => {
    return (
       <div
-         className={`custom-scroll absolute left-0 top-0 z-50 flex max-h-screen  min-w-72 flex-col overflow-hidden bg-white p-4 transition-all duration-300 hover:overflow-y-auto sm:static sm:translate-x-0 ${isSideBarActive ? "translate-x-0" : "-translate-x-full"}`}
+         className={`custom-scroll dark:custom-scroll-dark absolute left-0 top-0 z-50 flex max-h-screen min-w-72  flex-col overflow-hidden bg-background p-4 transition-all duration-300 hover:overflow-y-auto sm:static sm:translate-x-0 ${isSideBarActive ? "translate-x-0" : "-translate-x-full"}`}
       >
          <div className="flex items-center gap-2">
             <img className="size-10" src={logo} />
@@ -47,8 +47,8 @@ const Sidebar = ({
                      to="/admin/dashboard"
                      className={({ isActive }) =>
                         isActive
-                           ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-100 p-2 tracking-wide"
-                           : "flex cursor-pointer items-center gap-2 rounded-lg p-2 tracking-wide hover:bg-gray-100"
+                           ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-200 p-2 tracking-wide dark:bg-primary"
+                           : "flex cursor-pointer items-center gap-2 rounded-lg p-2 tracking-wide hover:bg-secondary"
                      }
                   >
                      <span>
@@ -62,8 +62,8 @@ const Sidebar = ({
                      to="/admin/products"
                      className={({ isActive }) =>
                         isActive
-                           ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-100 p-2 tracking-wide"
-                           : "flex cursor-pointer items-center gap-2 rounded-lg p-2 tracking-wide hover:bg-gray-100"
+                           ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-100 p-2 tracking-wide dark:bg-primary"
+                           : "flex cursor-pointer items-center gap-2 rounded-lg p-2 tracking-wide hover:bg-secondary"
                      }
                   >
                      <span>
@@ -77,8 +77,8 @@ const Sidebar = ({
                      to="/admin/customers"
                      className={({ isActive }) =>
                         isActive
-                           ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-100 p-2 tracking-wide"
-                           : "flex cursor-pointer items-center gap-2 rounded-lg p-2 tracking-wide hover:bg-gray-100"
+                           ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-100 p-2 tracking-wide dark:bg-primary"
+                           : "flex cursor-pointer items-center gap-2 rounded-lg p-2 tracking-wide hover:bg-secondary"
                      }
                   >
                      <span>
@@ -92,8 +92,8 @@ const Sidebar = ({
                      to="/admin/transactions"
                      className={({ isActive }) =>
                         isActive
-                           ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-100 p-2 tracking-wide"
-                           : "flex cursor-pointer items-center gap-2 rounded-lg p-2 tracking-wide hover:bg-gray-100"
+                           ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-100 p-2 tracking-wide dark:bg-primary"
+                           : "flex cursor-pointer items-center gap-2 rounded-lg p-2 tracking-wide hover:bg-secondary"
                      }
                   >
                      <span>
@@ -113,8 +113,8 @@ const Sidebar = ({
                      to="/admin/bar"
                      className={({ isActive }) =>
                         isActive
-                           ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-100 p-2 tracking-wide"
-                           : "flex cursor-pointer items-center gap-2 rounded-lg p-2 tracking-wide hover:bg-gray-100"
+                           ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-100 p-2 tracking-wide dark:bg-primary"
+                           : "flex cursor-pointer items-center gap-2 rounded-lg p-2 tracking-wide hover:bg-secondary"
                      }
                   >
                      <span>
@@ -128,8 +128,8 @@ const Sidebar = ({
                      to="/admin/pie"
                      className={({ isActive }) =>
                         isActive
-                           ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-100 p-2 tracking-wide"
-                           : "flex cursor-pointer items-center gap-2 rounded-lg p-2 tracking-wide hover:bg-gray-100"
+                           ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-100 p-2 tracking-wide dark:bg-primary"
+                           : "flex cursor-pointer items-center gap-2 rounded-lg p-2 tracking-wide hover:bg-secondary"
                      }
                   >
                      <span>
@@ -143,8 +143,8 @@ const Sidebar = ({
                      to="/admin/line"
                      className={({ isActive }) =>
                         isActive
-                           ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-100 p-2 tracking-wide"
-                           : "flex cursor-pointer items-center gap-2 rounded-lg p-2 tracking-wide hover:bg-gray-100"
+                           ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-100 p-2 tracking-wide dark:bg-primary"
+                           : "flex cursor-pointer items-center gap-2 rounded-lg p-2 tracking-wide hover:bg-secondary"
                      }
                   >
                      <span>
@@ -164,8 +164,8 @@ const Sidebar = ({
                      to="/admin/stopwatch"
                      className={({ isActive }) =>
                         isActive
-                           ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-100 p-2 tracking-wide"
-                           : "flex cursor-pointer items-center gap-2 rounded-lg p-2 tracking-wide hover:bg-gray-100"
+                           ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-100 p-2 tracking-wide dark:bg-primary"
+                           : "flex cursor-pointer items-center gap-2 rounded-lg p-2 tracking-wide hover:bg-secondary"
                      }
                   >
                      <span>
@@ -179,8 +179,8 @@ const Sidebar = ({
                      to="/admin/coupon"
                      className={({ isActive }) =>
                         isActive
-                           ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-100 p-2 tracking-wide"
-                           : "flex cursor-pointer items-center gap-2 rounded-lg p-2 tracking-wide hover:bg-gray-100"
+                           ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-100 p-2 tracking-wide dark:bg-primary"
+                           : "flex cursor-pointer items-center gap-2 rounded-lg p-2 tracking-wide hover:bg-secondary"
                      }
                   >
                      <span>
@@ -194,8 +194,8 @@ const Sidebar = ({
                      to="/admin/toss"
                      className={({ isActive }) =>
                         isActive
-                           ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-100 p-2 tracking-wide"
-                           : "flex cursor-pointer items-center gap-2 rounded-lg p-2 tracking-wide hover:bg-gray-100"
+                           ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-100 p-2 tracking-wide dark:bg-primary"
+                           : "flex cursor-pointer items-center gap-2 rounded-lg p-2 tracking-wide hover:bg-secondary"
                      }
                   >
                      <span>

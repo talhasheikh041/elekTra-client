@@ -7,6 +7,7 @@ import {
 } from "react-router-dom"
 import { lazy } from "react"
 import RootLayout from "@/features/components/layout/Root-Layout"
+import { ThemeProvider } from "@/features/components/shared/Theme-Provider"
 
 // Pages
 const Customers = lazy(() => import("@/pages/Customers"))
@@ -29,7 +30,11 @@ function App() {
       ),
    )
 
-   return <RouterProvider router={router} />
+   return (
+      <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+         <RouterProvider router={router} />
+      </ThemeProvider>
+   )
 }
 
 export default App

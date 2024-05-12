@@ -1,4 +1,5 @@
 import { OutletContextType } from "@/features/components/layout/Root-Layout"
+import { ModeToggle } from "@/features/components/shared/Mode-toggle"
 import Mytooltip from "@/features/components/shared/My-tooltip"
 import RadialProgress from "@/features/components/shared/Radial-Progress"
 import { Avatar, AvatarFallback, AvatarImage } from "@/features/components/ui/avatar"
@@ -21,7 +22,7 @@ const Dashboard = () => {
             >
                <AlignRight
                   size="30px"
-                  className="text-gray-400 hover:scale-110 hover:text-black sm:hidden"
+                  className="text-gray-400 hover:scale-110 hover:text-black dark:hover:text-white sm:hidden"
                />
             </Button>
             <Input
@@ -31,7 +32,10 @@ const Dashboard = () => {
             <Search className="absolute left-11 text-gray-400  sm:left-0 sm:top-2 " />
 
             <Mytooltip title="Notifications">
-               <Bell size="28px" className="cursor-pointer text-gray-400 hover:text-black" />
+               <Bell
+                  size="28px"
+                  className="cursor-pointer text-gray-400 hover:text-black dark:hover:text-white"
+               />
             </Mytooltip>
 
             <Mytooltip title="Profile">
@@ -40,6 +44,8 @@ const Dashboard = () => {
                   <AvatarFallback>MT</AvatarFallback>
                </Avatar>
             </Mytooltip>
+
+            <ModeToggle />
          </section>
 
          <section className="mt-6">
