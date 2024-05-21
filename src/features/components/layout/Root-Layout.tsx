@@ -16,7 +16,7 @@ const RootLayout = () => {
          <aside>
             <Sidebar isSideBarActive={isSideBarActive} setIsSidebarActive={setIsSideBarActive} />
          </aside>
-         <main className="min-h-screen flex-auto bg-secondary dark:bg-secondary">
+         <main className="min-h-screen flex-auto bg-secondary dark:bg-secondary sm:ms-72">
             <Suspense fallback={<BounceLoader />}>
                <div className="container">
                   <Outlet
