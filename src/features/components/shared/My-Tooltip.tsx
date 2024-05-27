@@ -8,15 +8,16 @@ import { ReactNode } from "react"
 
 type MyTooltipProps = {
    title: string
+   className?: string
    children: ReactNode
 }
 
-const MyTooltip = ({ title, children }: MyTooltipProps) => {
+const MyTooltip = ({ title, className, children }: MyTooltipProps) => {
    return (
       <>
          <TooltipProvider delayDuration={0}>
             <Tooltip>
-               <TooltipTrigger>{children}</TooltipTrigger>
+               <TooltipTrigger className={className}>{children}</TooltipTrigger>
                <TooltipContent>
                   <p>{title}</p>
                </TooltipContent>
