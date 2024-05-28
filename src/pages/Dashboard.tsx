@@ -4,7 +4,7 @@ import DashboardHeader from "@/features/components/shared/Dashboard-Header"
 import { DataTable } from "@/features/components/shared/data-table/Data-Table"
 import ProductCategory from "@/features/products/products-category/Product-Category"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/components/ui/card"
-import { transactionColumns } from "@/features/transactions/transactions-table/Transaction-Columns"
+import { transactionColumns } from "@/features/transactions/transactions-list/Transaction-Columns"
 import { BiMaleFemale } from "react-icons/bi"
 
 import data from "@/assets/data.json"

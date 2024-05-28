@@ -16,7 +16,11 @@ export const productColumns: ColumnDef<ProductsType>[] = [
    {
       accessorKey: "photo",
       header: "Photo",
-      cell: ({ cell }) => <div className="flex items-center *:rounded-lg *:w-12">{cell.renderValue<ReactNode>()}</div>,
+      cell: ({ cell }) => (
+         <div className="flex items-center *:w-12 *:rounded-lg">
+            {cell.renderValue<ReactNode>()}
+         </div>
+      ),
    },
    {
       accessorKey: "name",
@@ -24,15 +28,11 @@ export const productColumns: ColumnDef<ProductsType>[] = [
    },
    {
       accessorKey: "price",
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Price" />
-      ),
+      header: ({ column }) => <DataTableColumnHeader column={column} title="Price" />,
    },
    {
       accessorKey: "stock",
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Stock" />
-      ),
+      header: ({ column }) => <DataTableColumnHeader column={column} title="Stock" />,
    },
    {
       accessorKey: "action",

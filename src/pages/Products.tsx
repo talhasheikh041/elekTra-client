@@ -1,8 +1,8 @@
 import MyTooltip from "@/features/components/shared/My-Tooltip"
 import { DataTable } from "@/features/components/shared/data-table/Data-Table"
-import { Button, buttonVariants } from "@/features/components/ui/button"
+import { buttonVariants } from "@/features/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/components/ui/card"
-import { ProductsType, productColumns } from "@/features/products/products-table/Product-Columns"
+import { ProductsType, productColumns } from "@/features/products/products-list/Product-Columns"
 import { cn } from "@/lib/utils"
 import { CirclePlusIcon } from "lucide-react"
 import { useState } from "react"
@@ -121,21 +121,22 @@ const Products = () => {
    const [data] = useState<ProductsType[]>(arr)
 
    return (
-      <div>
-         <Card className="my-4">
-            <CardHeader className="flex-row justify-between items-center">
-               <CardTitle>Products</CardTitle>
-               <MyTooltip className="bg-primary text-white rounded-full px-2 py-2" title="Add new Product">
-                     <Link to="">
-                        <CirclePlusIcon />
-                     </Link>
-               </MyTooltip>
-            </CardHeader>
-            <CardContent>
-               <DataTable columns={productColumns} data={data} isPagination={true} />
-            </CardContent>
-         </Card>
-      </div>
+      <Card className="my-4">
+         <CardHeader className="flex-row items-center justify-between">
+            <CardTitle>Products</CardTitle>
+            <MyTooltip
+               className="rounded-full bg-primary px-2 py-2 text-white"
+               title="Add new Product"
+            >
+               <Link to="">
+                  <CirclePlusIcon />
+               </Link>
+            </MyTooltip>
+         </CardHeader>
+         <CardContent>
+            <DataTable columns={productColumns} data={data} isPagination={true} />
+         </CardContent>
+      </Card>
    )
 }
 export default Products
