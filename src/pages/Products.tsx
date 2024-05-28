@@ -3,9 +3,9 @@ import { DataTable } from "@/features/components/shared/data-table/Data-Table"
 import { buttonVariants } from "@/features/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/components/ui/card"
 import { ProductsType, productColumns } from "@/features/products/products-list/Product-Columns"
+import AddProductCard from "@/features/products/products-management/Add-Product-Card"
 import { cn } from "@/lib/utils"
-import { CirclePlusIcon } from "lucide-react"
-import { useState } from "react"
+import { useId, useState } from "react"
 import { Link } from "react-router-dom"
 
 const img =
@@ -118,19 +118,16 @@ const arr: ProductsType[] = [
 ]
 
 const Products = () => {
+   const addNewProductId = useId()
+
    const [data] = useState<ProductsType[]>(arr)
 
    return (
       <Card className="my-4">
          <CardHeader className="flex-row items-center justify-between">
             <CardTitle>Products</CardTitle>
-            <MyTooltip
-               className="rounded-full bg-primary px-2 py-2 text-white"
-               title="Add new Product"
-            >
-               <Link to="">
-                  <CirclePlusIcon />
-               </Link>
+            <MyTooltip title="Add new Product">
+               <AddProductCard key={addNewProductId} />
             </MyTooltip>
          </CardHeader>
          <CardContent>
