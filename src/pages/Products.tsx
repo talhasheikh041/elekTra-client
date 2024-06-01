@@ -4,6 +4,7 @@ import { buttonVariants } from "@/features/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/components/ui/card"
 import { ProductsType, productColumns } from "@/features/products/products-list/Product-Columns"
 import AddProductCard from "@/features/products/products-management/Add-Product-Card"
+import EditProductCard from "@/features/products/products-management/Edit-Product-Card"
 import { cn } from "@/lib/utils"
 import { useId, useState } from "react"
 import { Link } from "react-router-dom"
@@ -20,12 +21,14 @@ const arr: ProductsType[] = [
       price: 690,
       stock: 3,
       action: (
-         <Link
-            className={cn(buttonVariants({ variant: "default" }), "h-5 rounded-full px-3")}
-            to="/admin/product/sajknaskd"
-         >
-            Manage
-         </Link>
+         <EditProductCard
+            product={{
+               photo: img,
+               name: "Puma Shoes Air Jordan Cook Nigga 2023",
+               price: 690,
+               stock: 3,
+            }}
+         />
       ),
    },
 
@@ -123,9 +126,9 @@ const Products = () => {
    const [data] = useState<ProductsType[]>(arr)
 
    return (
-      <Card className="my-4">
+      <Card>
          <CardHeader className="flex-row items-center justify-between">
-            <CardTitle>Products</CardTitle>
+            <CardTitle className="font-light uppercase tracking-widest">Products</CardTitle>
             <MyTooltip title="Add new Product">
                <AddProductCard key={addNewProductId} />
             </MyTooltip>

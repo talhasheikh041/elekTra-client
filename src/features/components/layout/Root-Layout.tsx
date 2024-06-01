@@ -12,13 +12,13 @@ const RootLayout = () => {
    const [isSideBarActive, setIsSideBarActive] = useState(false)
 
    return (
-      <div className="flex">
+      <div className="">
          <aside>
             <Sidebar isSideBarActive={isSideBarActive} setIsSidebarActive={setIsSideBarActive} />
          </aside>
          <main className="min-h-screen flex-auto bg-secondary dark:bg-secondary sm:ms-72">
             <Suspense fallback={<BounceLoader />}>
-               <div className="container">
+               <div className="container py-4">
                   <Outlet
                      context={[isSideBarActive, setIsSideBarActive] satisfies OutletContextType}
                   />

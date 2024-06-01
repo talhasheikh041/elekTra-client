@@ -3,8 +3,9 @@ import { buttonVariants } from "@/features/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/components/ui/card"
 import {
    TransactionsType,
-   transactionColumns,
+   getTransactionColumns,
 } from "@/features/transactions/transactions-list/Transaction-Columns"
+import EditTransaction from "@/features/transactions/transactions-management/Edit-Transaction"
 import { cn } from "@/lib/utils"
 import { useState } from "react"
 import { Link } from "react-router-dom"
@@ -16,14 +17,7 @@ const arr: TransactionsType[] = [
       discount: 400,
       quantity: 3,
       status: <span className="red">Processing</span>,
-      action: (
-         <Link
-            className={cn(buttonVariants({ variant: "default" }), "h-5 rounded-full px-3")}
-            to="/admin/transaction/sajknaskd"
-         >
-            Manage
-         </Link>
-      ),
+      action: <EditTransaction />,
    },
    {
       user: "Xavirors",
@@ -61,12 +55,12 @@ const Transactions = () => {
    const [data] = useState(arr)
 
    return (
-      <Card className="my-4">
+      <Card>
          <CardHeader>
-            <CardTitle>Transactions</CardTitle>
+            <CardTitle className="font-light uppercase tracking-widest">Transactions</CardTitle>
          </CardHeader>
          <CardContent>
-            <DataTable columns={transactionColumns} data={data} isPagination={true} />
+            <DataTable columns={getTransactionColumns(true)} data={data} isPagination={true} />
          </CardContent>
       </Card>
    )

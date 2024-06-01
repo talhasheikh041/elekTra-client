@@ -4,14 +4,14 @@ import DashboardHeader from "@/features/components/shared/Dashboard-Header"
 import { DataTable } from "@/features/components/shared/data-table/Data-Table"
 import ProductCategory from "@/features/products/products-category/Product-Category"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/components/ui/card"
-import { transactionColumns } from "@/features/transactions/transactions-list/Transaction-Columns"
+import { getTransactionColumns } from "@/features/transactions/transactions-list/Transaction-Columns"
 import { BiMaleFemale } from "react-icons/bi"
 
 import data from "@/assets/data.json"
 
 const Dashboard = () => {
    return (
-      <div className="py-2">
+      <div>
          <section>
             <DashboardHeader />
          </section>
@@ -110,7 +110,7 @@ const Dashboard = () => {
                </CardHeader>
 
                <CardContent>
-                  <DataTable columns={transactionColumns} data={data.transaction} />
+                  <DataTable columns={getTransactionColumns(false)} data={data.transaction} />
                </CardContent>
             </Card>
          </section>

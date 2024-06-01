@@ -54,9 +54,9 @@ const Customers = () => {
    const [data] = useState(arr)
 
    return (
-      <Card className="my-4">
+      <Card>
          <CardHeader>
-            <CardTitle>Transactions</CardTitle>
+            <CardTitle className="font-light uppercase tracking-widest">Customers</CardTitle>
          </CardHeader>
          <CardContent>
             <DataTable columns={customersColumns} data={data} isPagination={true} />
