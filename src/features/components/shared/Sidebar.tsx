@@ -110,7 +110,7 @@ const Sidebar = ({
             <ul className="mt-3 ps-3">
                <li>
                   <NavLink
-                     to="/admin/bar"
+                     to="/admin/charts/bar"
                      className={({ isActive }) =>
                         isActive
                            ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-200 p-2 tracking-wide dark:bg-primary"
@@ -125,7 +125,7 @@ const Sidebar = ({
                </li>
                <li>
                   <NavLink
-                     to="/admin/pie"
+                     to="/admin/charts/pie"
                      className={({ isActive }) =>
                         isActive
                            ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-200 p-2 tracking-wide dark:bg-primary"
@@ -140,7 +140,7 @@ const Sidebar = ({
                </li>
                <li>
                   <NavLink
-                     to="/admin/line"
+                     to="/admin/charts/line"
                      className={({ isActive }) =>
                         isActive
                            ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-200 p-2 tracking-wide dark:bg-primary"
@@ -161,7 +161,7 @@ const Sidebar = ({
             <ul className="mt-3 ps-3">
                <li>
                   <NavLink
-                     to="/admin/stopwatch"
+                     to="/admin/apps/stopwatch"
                      className={({ isActive }) =>
                         isActive
                            ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-200 p-2 tracking-wide dark:bg-primary"
@@ -176,7 +176,7 @@ const Sidebar = ({
                </li>
                <li>
                   <NavLink
-                     to="/admin/coupon"
+                     to="/admin/apps/coupon"
                      className={({ isActive }) =>
                         isActive
                            ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-200 p-2 tracking-wide dark:bg-primary"
@@ -191,10 +191,10 @@ const Sidebar = ({
                </li>
                <li>
                   <NavLink
-                     to="/admin/toss"
+                     to="/admin/apps/toss"
                      className={({ isActive }) =>
                         isActive
-                           ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-100 p-2 tracking-wide dark:bg-primary"
+                           ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-200 p-2 tracking-wide dark:bg-primary"
                            : "flex cursor-pointer items-center gap-2 rounded-lg p-2 tracking-wide hover:bg-secondary"
                      }
                   >

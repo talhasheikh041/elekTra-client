@@ -98,7 +98,7 @@ const EditTransaction = () => {
                Manage
             </span>
          </DialogTrigger>
-         <DialogContent className="max-h-screen max-w-4xl overflow-y-auto">
+         <DialogContent className="max-h-screen max-w-4xl overflow-y-auto gap-10">
             <DialogHeader>
                <DialogTitle className="mx-auto text-2xl font-light uppercase tracking-widest">
                   Edit Transaction

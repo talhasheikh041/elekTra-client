@@ -52,7 +52,7 @@ const Dashboard = () => {
                      Revenue & Transactions
                   </CardTitle>
                </CardHeader>
-               <CardContent>
+               <CardContent className="h-80">
                   <BarChart
                      title_1="Revenues"
                      title_2="Transactions"
