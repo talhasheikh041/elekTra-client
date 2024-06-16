@@ -101,11 +101,11 @@ const Coupon = () => {
          <CardHeader>
             <CardTitle className="font-light uppercase tracking-widest">Coupon</CardTitle>
          </CardHeader>
-         <CardContent className="flex h-[calc(100vh_-_106px)] flex-col items-center justify-center">
+         <CardContent className=" grid h-[calc(100vh_-_106px)] place-items-center">
             <section>
                <Form {...form}>
                   <form onSubmit={form.handleSubmit(onSubmit)}>
-                     <div className="flex space-x-5">
+                     <div className="flex flex-col space-y-3 sm:flex-row sm:space-x-5 sm:space-y-0">
                         <FormField
                            control={form.control}
                            name="prefix"
@@ -117,6 +117,7 @@ const Coupon = () => {
                                           {...field}
                                           type="text"
                                           placeholder="Text to display"
+                                          className="w-auto"
                                        />
                                     </FormControl>
                                     <FormMessage />
@@ -142,6 +143,7 @@ const Coupon = () => {
                                              )
                                           }
                                           placeholder="Coupon Length"
+                                          className="w-auto"
                                        />
                                     </FormControl>
                                     <FormMessage />
@@ -153,13 +155,13 @@ const Coupon = () => {
 
                      <fieldset className="mt-3">
                         <legend>Include</legend>
-                        <div className="mt-2 flex space-x-8">
+                        <div className="mt-2 flex flex-col space-y-1 sm:flex-row sm:space-x-8">
                            <FormField
                               control={form.control}
                               name="options.includeCharacters"
                               render={({ field }) => {
                                  return (
-                                    <FormItem className="flex items-center justify-center space-x-1 space-y-0">
+                                    <FormItem className="flex space-x-1 space-y-0 sm:items-center sm:justify-center">
                                        <FormControl>
                                           <Checkbox
                                              checked={field.value}
@@ -176,7 +178,7 @@ const Coupon = () => {
                               name="options.includeNumbers"
                               render={({ field }) => {
                                  return (
-                                    <FormItem className="flex items-center justify-center space-x-1 space-y-0">
+                                    <FormItem className="flex space-x-1 space-y-0 sm:items-center sm:justify-center">
                                        <FormControl>
                                           <Checkbox
                                              checked={field.value}
@@ -193,7 +195,7 @@ const Coupon = () => {
                               name="options.includeSymbols"
                               render={({ field }) => {
                                  return (
-                                    <FormItem className="flex items-center justify-center space-x-1 space-y-0">
+                                    <FormItem className="flex space-x-1 space-y-0 sm:items-center sm:justify-center">
                                        <FormControl>
                                           <Checkbox
                                              checked={field.value}
@@ -213,7 +215,7 @@ const Coupon = () => {
                         )}
                      </fieldset>
                      <div className="mt-8 flex justify-center">
-                        <Button className="w-1/4" type="submit">
+                        <Button className="sm:w-1/4" type="submit">
                            Generate
                         </Button>
                      </div>

@@ -32,7 +32,7 @@ const Toss = () => {
                         backgroundSize: "100%",
                         backfaceVisibility: "hidden",
                      }}
-                     className={"absolute size-64 rounded-full"}
+                     className={"absolute size-44 sm:size-64 rounded-full"}
                   ></div>
                   <div
                      style={{
@@ -43,7 +43,7 @@ const Toss = () => {
                         backfaceVisibility: "hidden",
                         transform: "rotateY(-180deg)",
                      }}
-                     className={"absolute size-64 rounded-full"}
+                     className={"absolute size-44 sm:size-64 rounded-full"}
                   ></div>
                </article>
             </section>
