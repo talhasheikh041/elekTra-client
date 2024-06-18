@@ -40,7 +40,7 @@ const Stopwatch = () => {
             <CardTitle className="font-light uppercase tracking-widest">StopWatch</CardTitle>
          </CardHeader>
          <CardContent className="flex h-[calc(100vh_-_106px)] flex-col items-center justify-center">
-            <h1 className="rounded-lg border bg-gray-100 p-4 font-mono text-3xl font-semibold tracking-widest sm:text-5xl">
+            <h1 className="rounded-lg border bg-secondary p-4 font-mono text-3xl font-semibold tracking-widest sm:text-5xl">
                {formatTime(time)}
             </h1>
             <div className="mt-8 flex gap-8">

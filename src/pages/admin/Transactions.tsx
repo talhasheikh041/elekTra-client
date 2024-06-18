@@ -4,8 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/features/components/
 import {
    TransactionsType,
    getTransactionColumns,
-} from "@/features/transactions/transactions-list/Transaction-Columns"
-import EditTransaction from "@/features/transactions/transactions-management/Edit-Transaction"
+} from "@/features/transactions/table/Transaction-Columns"
+import EditTransaction from "@/features/transactions/management/Edit-Transaction"
 import { cn } from "@/lib/utils"
 import { useState } from "react"
 import { Link } from "react-router-dom"

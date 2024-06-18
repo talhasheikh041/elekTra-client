@@ -24,7 +24,7 @@ const Sidebar = ({
 }) => {
    return (
       <div
-         className={`custom-scroll dark:custom-scroll-dark absolute left-0 top-0 z-50 flex max-h-screen min-w-72  flex-col overflow-hidden bg-background p-4 transition-all duration-300 hover:overflow-y-auto sm:fixed sm:translate-x-0 ${isSideBarActive ? "translate-x-0" : "-translate-x-full"}`}
+         className={`custom-scroll absolute left-0 top-0 z-50 flex h-screen min-w-72 flex-col overflow-hidden bg-background p-4 transition-all duration-500 hover:overflow-y-auto sm:translate-x-0 sm:fixed ${isSideBarActive ? "translate-x-0" : "-translate-x-full"}`}
       >
          <div className="flex items-center gap-2">
             <img className="size-10" src={logo} />
@@ -50,6 +50,7 @@ const Sidebar = ({
                            ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-200 p-2 tracking-wide dark:bg-primary"
                            : "flex cursor-pointer items-center gap-2 rounded-lg p-2 tracking-wide hover:bg-secondary"
                      }
+                     onClick={() => setIsSidebarActive(false)}
                   >
                      <span>
                         <LayoutDashboardIcon size="18px" color="purple" />
@@ -65,6 +66,7 @@ const Sidebar = ({
                            ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-200 p-2 tracking-wide dark:bg-primary"
                            : "flex cursor-pointer items-center gap-2 rounded-lg p-2 tracking-wide hover:bg-secondary"
                      }
+                     onClick={() => setIsSidebarActive(false)}
                   >
                      <span>
                         <ShoppingBag size="18px" color="blue" />
@@ -80,6 +82,7 @@ const Sidebar = ({
                            ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-200 p-2 tracking-wide dark:bg-primary"
                            : "flex cursor-pointer items-center gap-2 rounded-lg p-2 tracking-wide hover:bg-secondary"
                      }
+                     onClick={() => setIsSidebarActive(false)}
                   >
                      <span>
                         <Users size="18px" color="darkorange" />
@@ -95,6 +98,7 @@ const Sidebar = ({
                            ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-200 p-2 tracking-wide dark:bg-primary"
                            : "flex cursor-pointer items-center gap-2 rounded-lg p-2 tracking-wide hover:bg-secondary"
                      }
+                     onClick={() => setIsSidebarActive(false)}
                   >
                      <span>
                         <ArrowLeftRight size="18px" color="darkcyan" />
@@ -116,6 +120,7 @@ const Sidebar = ({
                            ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-200 p-2 tracking-wide dark:bg-primary"
                            : "flex cursor-pointer items-center gap-2 rounded-lg p-2 tracking-wide hover:bg-secondary"
                      }
+                     onClick={() => setIsSidebarActive(false)}
                   >
                      <span>
                         <BarChart3 size="18px" color="#1c5f88" />
@@ -131,6 +136,7 @@ const Sidebar = ({
                            ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-200 p-2 tracking-wide dark:bg-primary"
                            : "flex cursor-pointer items-center gap-2 rounded-lg p-2 tracking-wide hover:bg-secondary"
                      }
+                     onClick={() => setIsSidebarActive(false)}
                   >
                      <span>
                         <PieChart size="18px" color="green" />
@@ -146,6 +152,7 @@ const Sidebar = ({
                            ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-200 p-2 tracking-wide dark:bg-primary"
                            : "flex cursor-pointer items-center gap-2 rounded-lg p-2 tracking-wide hover:bg-secondary"
                      }
+                     onClick={() => setIsSidebarActive(false)}
                   >
                      <span>
                         <LineChart size="18px" color="darkgray" />
@@ -167,6 +174,7 @@ const Sidebar = ({
                            ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-200 p-2 tracking-wide dark:bg-primary"
                            : "flex cursor-pointer items-center gap-2 rounded-lg p-2 tracking-wide hover:bg-secondary"
                      }
+                     onClick={() => setIsSidebarActive(false)}
                   >
                      <span>
                         <Timer size="18px" color="darkred" />
@@ -182,6 +190,7 @@ const Sidebar = ({
                            ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-200 p-2 tracking-wide dark:bg-primary"
                            : "flex cursor-pointer items-center gap-2 rounded-lg p-2 tracking-wide hover:bg-secondary"
                      }
+                     onClick={() => setIsSidebarActive(false)}
                   >
                      <span>
                         <Puzzle size="18px" color="Fuchsia" />
@@ -197,6 +206,7 @@ const Sidebar = ({
                            ? "flex cursor-pointer items-center gap-2 rounded-lg bg-orange-200 p-2 tracking-wide dark:bg-primary"
                            : "flex cursor-pointer items-center gap-2 rounded-lg p-2 tracking-wide hover:bg-secondary"
                      }
+                     onClick={() => setIsSidebarActive(false)}
                   >
                      <span>
                         <Coins size="18px" color="Teal" />

@@ -3,30 +3,40 @@ import {
    createBrowserRouter,
    createRoutesFromElements,
    Route,
-   Navigate,
+   Link,
 } from "react-router-dom"
 import { lazy } from "react"
-import RootLayout from "@/features/components/layout/Root-Layout"
+import AdminLayout from "@/features/components/layout/Admin-Layout"
 import { ThemeProvider } from "@/features/components/shared/Theme-Provider"
+import { Button } from "@/features/components/ui/button"
 
 // Pages
-const Customers = lazy(() => import("@/pages/Customers"))
-const Dashboard = lazy(() => import("@/pages/Dashboard"))
-const Products = lazy(() => import("@/pages/Products"))
-const Transactions = lazy(() => import("@/pages/Transactions"))
-const Bar = lazy(() => import("@/pages/charts/Bar"))
-const Line = lazy(() => import("@/pages/charts/Line"))
-const Pie = lazy(() => import("@/pages/charts/Pie"))
-const Stopwatch = lazy(() => import("@/pages/apps/Stopwatch"))
-const Toss = lazy(() => import("@/pages/apps/Toss"))
-const Coupon = lazy(() => import("@/pages/apps/Coupon"))
+const Customers = lazy(() => import("@/pages/admin/Customers"))
+const Dashboard = lazy(() => import("@/pages/admin/Dashboard"))
+const Products = lazy(() => import("@/pages/admin/Products"))
+const Transactions = lazy(() => import("@/pages/admin/Transactions"))
+const Bar = lazy(() => import("@/pages/admin/charts/Bar"))
+const Line = lazy(() => import("@/pages/admin/charts/Line"))
+const Pie = lazy(() => import("@/pages/admin/charts/Pie"))
+const Stopwatch = lazy(() => import("@/pages/admin/apps/Stopwatch"))
+const Toss = lazy(() => import("@/pages/admin/apps/Toss"))
+const Coupon = lazy(() => import("@/pages/admin/apps/Coupon"))
 
 function App() {
    const router = createBrowserRouter(
       createRoutesFromElements(
          <Route>
-            <Route path="/" element={<Navigate to="/admin/dashboard" replace />} />
-            <Route path="/admin" element={<RootLayout />}>
+            <Route
+               path="/"
+               element={
+                  <div className="grid min-h-screen place-items-center">
+                     <Button>
+                        <Link to="admin/dashboard">Go to Dashboard</Link>
+                     </Button>
+                  </div>
+               }
+            />
+            <Route path="/admin" element={<AdminLayout />}>
                <Route path="dashboard" element={<Dashboard />} />
                <Route path="customers" element={<Customers />} />
                <Route path="products" element={<Products />} />

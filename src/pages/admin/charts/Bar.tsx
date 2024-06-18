@@ -1,4 +1,4 @@
-import { BarChart } from "@/features/components/shared/Charts"
+import { BarChart } from "@/features/components/shared/admin/Charts"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/components/ui/card"
 
 const months = [

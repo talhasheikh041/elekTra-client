@@ -1,4 +1,4 @@
-import { LineChart } from "@/features/components/shared/Charts"
+import { LineChart } from "@/features/components/shared/admin/Charts"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/components/ui/card"
 
 const months = [

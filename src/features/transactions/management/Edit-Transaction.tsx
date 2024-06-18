@@ -7,7 +7,7 @@ import {
    DialogTitle,
    DialogTrigger,
 } from "@/features/components/ui/dialog"
-import OrderItem from "@/features/transactions/transactions-management/Order-Item"
+import OrderItem from "@/features/transactions/management/Order-Item"
 import { cn } from "@/lib/utils"
 import { OrderItemType, OrderType } from "@/types"
 import { useState } from "react"

@@ -1,19 +1,21 @@
-import { OutletContextType } from "@/features/components/layout/Root-Layout"
 import { ModeToggle } from "@/features/components/shared/Mode-Toggle"
 import MyTooltip from "@/features/components/shared/My-Tooltip"
 import { Avatar, AvatarFallback, AvatarImage } from "@/features/components/ui/avatar"
 import { Button } from "@/features/components/ui/button"
 import { Input } from "@/features/components/ui/input"
 import { AlignRight, Bell, Search } from "lucide-react"
-import { useOutletContext } from "react-router-dom"
 
-const DashboardHeader = () => {
-   const [isSideBarActive, setIsSideBarActive] = useOutletContext<OutletContextType>()
-
+const DashboardHeader = ({
+   isSideBarActive,
+   setIsSidebarActive,
+}: {
+   isSideBarActive: boolean
+   setIsSidebarActive: React.Dispatch<React.SetStateAction<boolean>>
+}) => {
    return (
-      <div className="relative flex items-center gap-3 border-b border-b-secondary-foreground pb-2">
+      <div className="relative mb-6 flex items-center gap-3 border-b border-b-secondary-foreground pb-2">
          <Button
-            onClick={() => setIsSideBarActive(!isSideBarActive)}
+            onClick={() => setIsSidebarActive(!isSideBarActive)}
             className="h-0 p-0"
             variant="ghost"
          >

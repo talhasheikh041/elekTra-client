@@ -1,22 +1,17 @@
-import { BarChart, DoughnutChart } from "@/features/components/shared/Charts"
-import ProgressCard from "@/features/components/shared/Progress-Card"
-import DashboardHeader from "@/features/components/shared/Dashboard-Header"
+import { BarChart, DoughnutChart } from "@/features/components/shared/admin/Charts"
+import ProgressCard from "@/features/components/shared/admin/Progress-Card"
 import { DataTable } from "@/features/components/shared/data-table/Data-Table"
-import ProductCategory from "@/features/products/products-category/Product-Category"
+import ProductCategory from "@/features/products/category/Product-Category"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/components/ui/card"
-import { getTransactionColumns } from "@/features/transactions/transactions-list/Transaction-Columns"
+import { getTransactionColumns } from "@/features/transactions/table/Transaction-Columns"
 import { BiMaleFemale } from "react-icons/bi"
 
 import data from "@/assets/data.json"
 
 const Dashboard = () => {
    return (
-      <div>
+      <>
          <section>
-            <DashboardHeader />
-         </section>
-
-         <section className="mt-6">
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
                <ProgressCard
                   amount={3400000}
@@ -24,12 +19,7 @@ const Dashboard = () => {
                   heading="Revenue (Rs)"
                   percentage={60}
                />
-               <ProgressCard
-                  amount={65383}
-                  color="text-blue-500"
-                  heading="Users"
-                  percentage={40}
-               />
+               <ProgressCard amount={65383} color="text-blue-500" heading="Users" percentage={40} />
                <ProgressCard
                   amount={560000}
                   color="text-orange-500"
@@ -88,7 +78,7 @@ const Dashboard = () => {
                   </CardTitle>
                </CardHeader>
 
-               <CardContent className="w-80 mx-auto">
+               <CardContent className="mx-auto w-80">
                   <DoughnutChart
                      data={[12, 19]}
                      labels={["Male", "Female"]}
@@ -114,7 +104,7 @@ const Dashboard = () => {
                </CardContent>
             </Card>
          </section>
-      </div>
+      </>
    )
 }
 export default Dashboard
