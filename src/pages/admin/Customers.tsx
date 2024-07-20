@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/features/components/
 import {
    CustomersType,
    customersColumns,
-} from "@/features/customers/table/columns"
+} from "@/features/customers/table/customer-columns"
 import { useState } from "react"
 import { FaTrash } from "react-icons/fa"
 

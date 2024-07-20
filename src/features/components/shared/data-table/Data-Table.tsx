@@ -88,7 +88,11 @@ export function DataTable<TData, TValue>({
                </TableBody>
             </Table>
          </div>
-         {isPagination && <div className="mt-6"><DataTablePagination table={table} /></div>}
+         {isPagination && (
+            <div className="mt-6 flex justify-center">
+               <DataTablePagination table={table} />
+            </div>
+         )}
       </>
    )
 }

@@ -10,18 +10,20 @@ import {
    DropdownMenuSeparator,
    DropdownMenuTrigger,
 } from "@/features/components/ui/dropdown-menu"
-import { LogInIcon, Moon, SearchIcon, ShoppingBagIcon, Sun } from "lucide-react"
+import { HomeIcon, LogInIcon, Moon, SearchIcon, ShoppingBagIcon, Sun } from "lucide-react"
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 const Header = () => {
    const [user, setUser] = useState(false)
    const isAdmin = true
 
+   const navigate = useNavigate()
+
    const { theme, setTheme } = useTheme()
 
    return (
-      <nav className="container sticky top-0 z-10 flex items-center justify-between gap-3 bg-secondary py-3 font-light shadow-md">
+      <nav className="sticky top-0 z-10 flex items-center justify-between gap-3 bg-secondary px-6 py-3 font-light shadow-md">
          <div>
             <Link to="/">
                <p className="select-none text-3xl font-bold">
@@ -30,12 +32,11 @@ const Header = () => {
             </Link>
          </div>
 
-         <div className="flex items-center gap-2 self-end">
-            <Link
-               className="-mt-1 uppercase tracking-widest transition-transform hover:font-normal"
-               to={"/"}
-            >
-               Home
+         <div className="flex items-center gap-3 self-end">
+            <Link to={"/"}>
+               <MyTooltip title="Home">
+                  <HomeIcon className="size-5 transition-transform hover:scale-110" />
+               </MyTooltip>
             </Link>
 
             <Link to={"search"}>
@@ -65,8 +66,8 @@ const Header = () => {
                            <Link to={"/admin/dashboard"}>Dashboard</Link>
                         </DropdownMenuItem>
                      )}
-                     <DropdownMenuItem>
-                        <Link to="/orders">Orders</Link>
+                     <DropdownMenuItem onClick={() => navigate("myorders")}>
+                        <span>Orders</span>
                      </DropdownMenuItem>
                      <DropdownMenuItem
                         className="cursor-pointer"

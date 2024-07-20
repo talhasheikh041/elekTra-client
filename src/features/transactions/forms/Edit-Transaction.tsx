@@ -7,7 +7,7 @@ import {
    DialogTitle,
    DialogTrigger,
 } from "@/features/components/ui/dialog"
-import OrderItem from "@/features/transactions/management/Order-Item"
+import OrderItem from "@/features/transactions/Order-Item"
 import { cn } from "@/lib/utils"
 import { OrderItemType, OrderType } from "@/types"
 import { useState } from "react"
@@ -19,28 +19,28 @@ const orderItems: OrderItemType[] = [
    {
       name: "Puma Shoes",
       photo: img,
-      _id: "asdsaasdas",
+      _id: "1",
       quantity: 4,
       price: 2000,
    },
    {
       name: "Puma Shoes",
       photo: img,
-      _id: "asdsaasdas",
+      _id: "2",
       quantity: 4,
       price: 2000,
    },
    {
       name: "Puma Shoes",
       photo: img,
-      _id: "asdsaasdas",
+      _id: "3",
       quantity: 4,
       price: 2000,
    },
    {
       name: "Puma Shoes",
       photo: img,
-      _id: "asdsaasdas",
+      _id: "4",
       quantity: 4,
       price: 2000,
    },
@@ -98,7 +98,7 @@ const EditTransaction = () => {
                Manage
             </span>
          </DialogTrigger>
-         <DialogContent className="max-h-screen max-w-4xl overflow-y-auto gap-10">
+         <DialogContent className="max-h-screen max-w-4xl gap-10 overflow-y-auto">
             <DialogHeader>
                <DialogTitle className="mx-auto text-2xl font-light uppercase tracking-widest">
                   Edit Transaction
@@ -117,6 +117,7 @@ const EditTransaction = () => {
                         _id={i._id}
                         quantity={i.quantity}
                         price={i.price}
+                        key={i._id}
                      />
                   ))}
                </section>
@@ -137,7 +138,7 @@ const EditTransaction = () => {
                   <p>Total: {total}</p>
 
                   <h5 className="mt-4 font-bold">Status Info</h5>
-                  <p>
+                  <div>
                      Status:{" "}
                      {status === "Delivered" ? (
                         <Badge className="bg-purple-500">{status}</Badge>
@@ -146,7 +147,7 @@ const EditTransaction = () => {
                      ) : (
                         <Badge className="bg-red-500">{status}</Badge>
                      )}
-                  </p>
+                  </div>
 
                   <Button className="mx-auto mt-6 block" onClick={statusHandler}>
                      Process Status
