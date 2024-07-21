@@ -37,7 +37,7 @@ const Search = () => {
 
    return (
       <div className="container flex gap-8 py-8">
-         <aside className="h-screen min-w-64 bg-secondary p-6 shadow-xl">
+         <aside className="h-screen min-w-64 bg-secondary p-6 shadow-xl rounded-lg">
             <h2 className="text-3xl font-light uppercase tracking-widest">Filters</h2>
 
             <div className="mt-6 flex flex-col gap-5">

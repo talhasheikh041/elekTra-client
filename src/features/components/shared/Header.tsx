@@ -66,7 +66,10 @@ const Header = () => {
                            <Link to={"/admin/dashboard"}>Dashboard</Link>
                         </DropdownMenuItem>
                      )}
-                     <DropdownMenuItem onClick={() => navigate("myorders")}>
+                     <DropdownMenuItem
+                        className="cursor-pointer"
+                        onClick={() => navigate("myorders")}
+                     >
                         <span>Orders</span>
                      </DropdownMenuItem>
                      <DropdownMenuItem
