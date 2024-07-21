@@ -1,11 +1,9 @@
 import { DataTable } from "@/features/components/shared/data-table/Data-Table"
 import { Badge } from "@/features/components/ui/badge"
-import { buttonVariants } from "@/features/components/ui/button"
 import {
    customerOrderColumns,
    CustomerOrderType,
 } from "@/features/customers/table/customer-order-columns"
-import { cn } from "@/lib/utils"
 import { Link } from "react-router-dom"
 
 const data: CustomerOrderType[] = [
@@ -14,7 +12,9 @@ const data: CustomerOrderType[] = [
       quantity: 10,
       amount: 2000,
       discount: 100,
-      status: <Badge className="cursor-pointer bg-purple-500">Processing</Badge>,
+      status: (
+         <Badge className=" cursor-default bg-purple-500 hover:bg-purple-500">Processing</Badge>
+      ),
       action: (
          <Badge className="bg-primary">
             <Link to={`/admin/transaction/23`}>Manage</Link>
@@ -26,7 +26,9 @@ const data: CustomerOrderType[] = [
       quantity: 10,
       amount: 2000,
       discount: 100,
-      status: <Badge className="cursor-pointer bg-purple-500">Processing</Badge>,
+      status: (
+         <Badge className=" cursor-default bg-purple-500 hover:bg-purple-500">Processing</Badge>
+      ),
       action: (
          <Badge className="bg-primary">
             <Link to={`/admin/transaction/23`}>Manage</Link>
@@ -38,7 +40,9 @@ const data: CustomerOrderType[] = [
       quantity: 10,
       amount: 2000,
       discount: 100,
-      status: <Badge className="cursor-pointer bg-purple-500">Processing</Badge>,
+      status: (
+         <Badge className=" cursor-default bg-purple-500 hover:bg-purple-500">Processing</Badge>
+      ),
       action: (
          <Badge className="bg-primary">
             <Link to={`/admin/transaction/23`}>Manage</Link>
@@ -50,7 +54,9 @@ const data: CustomerOrderType[] = [
       quantity: 10,
       amount: 2000,
       discount: 100,
-      status: <Badge className="cursor-pointer bg-purple-500">Processing</Badge>,
+      status: (
+         <Badge className=" cursor-default bg-purple-500 hover:bg-purple-500">Processing</Badge>
+      ),
       action: (
          <Badge className="bg-primary">
             <Link to={`/admin/transaction/23`}>Manage</Link>
@@ -62,7 +68,9 @@ const data: CustomerOrderType[] = [
       quantity: 10,
       amount: 2000,
       discount: 100,
-      status: <Badge className="cursor-pointer bg-purple-500">Processing</Badge>,
+      status: (
+         <Badge className=" cursor-default bg-purple-500 hover:bg-purple-500">Processing</Badge>
+      ),
       action: (
          <Badge className="bg-primary">
             <Link to={`/admin/transaction/23`}>Manage</Link>

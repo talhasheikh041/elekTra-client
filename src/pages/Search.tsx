@@ -18,17 +18,22 @@ import {
 } from "@/features/components/ui/select"
 import { Slider } from "@/features/components/ui/slider"
 import ProductCard from "@/features/products/Product-Card"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router-dom"
 
 const Search = () => {
-   const [searchParams] = useSearchParams()
+   const [searchParams, setSearchParams] = useSearchParams()
 
    const [sort, setSort] = useState<string>("")
    const [range, setRange] = useState<number>(10000)
    const [category, setCategory] = useState<string>("all")
    const [search, setSearch] = useState<string>("")
-   const [page] = useState<number>(searchParams.size < 1 ? 1 : Number(searchParams.get("page")))
+
+   const page = Number(searchParams.get("page")) ?? 1
+
+   useEffect(() => {
+      window.scrollTo({ top: 0, behavior: "smooth" })
+   }, [page])
 
    return (
       <div className="container flex gap-8 py-8">
@@ -118,8 +123,10 @@ const Search = () => {
                               pointerEvents: page === 1 ? "none" : "auto",
                               cursor: page === 1 ? "not-allowed" : "pointer",
                            }}
-                           href={`/search?page=${page - 1}`}
                            className={`${page === 1 && "text-muted-foreground"}`}
+                           onClick={() =>
+                              page > 1 && setSearchParams({ page: JSON.stringify(page - 1) })
+                           }
                         />
                      </PaginationItem>
                      <PaginationItem>
@@ -128,13 +135,17 @@ const Search = () => {
                      </PaginationItem>
 
                      <PaginationItem>
+                        <PaginationEllipsis />
+                     </PaginationItem>
+
+                     <PaginationItem>
                         <PaginationNext
                            style={{
                               pointerEvents: page === 4 ? "none" : "auto",
                               cursor: page === 4 ? "not-allowed" : "pointer",
                            }}
-                           href={`/search?page=${page + 1}`}
                            className={`${page === 4 && "text-muted-foreground"}`}
+                           onClick={() => setSearchParams({ page: JSON.stringify(page + 1) })}
                         />
                      </PaginationItem>
                   </PaginationContent>

@@ -1,4 +1,5 @@
 import BounceLoader from "@/features/components/shared/Bounce-Loader"
+import ScrollToTop from "@/features/components/shared/ScrollToTop"
 import DashboardHeader from "@/features/components/shared/admin/Dashboard-Header"
 import Sidebar from "@/features/components/shared/admin/Sidebar"
 import { Suspense, useState } from "react"
@@ -14,6 +15,7 @@ const AdminLayout = () => {
 
    return (
       <>
+         <ScrollToTop />
          <aside>
             <Sidebar isSideBarActive={isSideBarActive} setIsSidebarActive={setIsSideBarActive} />
          </aside>
