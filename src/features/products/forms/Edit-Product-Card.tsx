@@ -1,4 +1,4 @@
-import { Button, buttonVariants } from "@/features/components/ui/button"
+import { Button, buttonVariants } from "@/features/global-components/ui/button"
 import {
    Dialog,
    DialogContent,
@@ -6,7 +6,7 @@ import {
    DialogHeader,
    DialogTitle,
    DialogTrigger,
-} from "@/features/components/ui/dialog"
+} from "@/features/global-components/ui/dialog"
 import {
    Form,
    FormControl,
@@ -14,8 +14,8 @@ import {
    FormItem,
    FormLabel,
    FormMessage,
-} from "@/features/components/ui/form"
-import { Input } from "@/features/components/ui/input"
+} from "@/features/global-components/ui/form"
+import { Input } from "@/features/global-components/ui/input"
 import { cn } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react"

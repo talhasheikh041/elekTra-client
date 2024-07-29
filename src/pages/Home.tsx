@@ -1,5 +1,5 @@
 import heroImg from "@/assets/cover.jpg"
-import ProductCard from "@/features/products/Product-Card"
+import ProductCard from "@/features/products/components/Product-Card"
 import { Link } from "react-router-dom"
 
 const Home = () => {

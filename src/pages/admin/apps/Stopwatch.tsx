@@ -1,5 +1,5 @@
-import { Button } from "@/features/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/features/components/ui/card"
+import { Button } from "@/features/global-components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/global-components/ui/card"
 import { useEffect, useState } from "react"
 
 const formatTime = (timeInSeconds: number) => {

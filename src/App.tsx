@@ -1,14 +1,20 @@
+import { lazy } from "react"
 import {
-   RouterProvider,
    createBrowserRouter,
    createRoutesFromElements,
    Route,
+   RouterProvider,
 } from "react-router-dom"
-import { lazy } from "react"
-import AdminLayout from "@/features/components/layout/Admin-Layout"
-import { ThemeProvider } from "@/features/components/shared/Theme-Provider"
-import RootLayout from "@/features/components/layout/Root-Layout"
 
+// Hooks
+import useAuthChanged from "@/features/auth/hooks/use-auth-changed"
+
+// Components
+import AdminLayout from "@/features/global-components/layout/Admin-Layout"
+import RootLayout from "@/features/global-components/layout/Root-Layout"
+import RequireAuth from "@/features/global-components/shared/Require-Auth"
+
+// User Pages
 const Home = lazy(() => import("@/pages/Home"))
 const Cart = lazy(() => import("@/pages/Cart"))
 const Search = lazy(() => import("@/pages/Search"))
@@ -29,6 +35,8 @@ const Toss = lazy(() => import("@/pages/admin/apps/Toss"))
 const Coupon = lazy(() => import("@/pages/admin/apps/Coupon"))
 
 function App() {
+   useAuthChanged()
+
    const router = createBrowserRouter(
       createRoutesFromElements(
          <Route>
@@ -38,40 +46,41 @@ function App() {
                <Route path="search" element={<Search />} />
                <Route path="login" element={<Login />} />
 
-               <Route>
-                  <Route path="shipping" element={<Shipping />} />
-                  <Route path="myorders" element={<MyOrders />} />
+               {/* Require Auth Routes */}
+               <Route element={<RequireAuth isAdmin={false} />}>
+                  <Route>
+                     <Route path="shipping" element={<Shipping />} />
+                     <Route path="myorders" element={<MyOrders />} />
+                  </Route>
                </Route>
             </Route>
 
             {/* Admin Routes */}
-            <Route path="/admin" element={<AdminLayout />}>
-               <Route path="dashboard" element={<Dashboard />} />
-               <Route path="customers" element={<Customers />} />
-               <Route path="products" element={<Products />} />
-               <Route path="transactions" element={<Transactions />} />
+            <Route element={<RequireAuth isAdmin={true} />}>
+               <Route path="/admin" element={<AdminLayout />}>
+                  <Route path="dashboard" element={<Dashboard />} />
+                  <Route path="customers" element={<Customers />} />
+                  <Route path="products" element={<Products />} />
+                  <Route path="transactions" element={<Transactions />} />
 
-               <Route path="charts">
-                  <Route path="bar" element={<Bar />} />
-                  <Route path="pie" element={<Pie />} />
-                  <Route path="line" element={<Line />} />
-               </Route>
+                  <Route path="charts">
+                     <Route path="bar" element={<Bar />} />
+                     <Route path="pie" element={<Pie />} />
+                     <Route path="line" element={<Line />} />
+                  </Route>
 
-               <Route path="apps">
-                  <Route path="stopwatch" element={<Stopwatch />} />
-                  <Route path="toss" element={<Toss />} />
-                  <Route path="coupon" element={<Coupon />} />
+                  <Route path="apps">
+                     <Route path="stopwatch" element={<Stopwatch />} />
+                     <Route path="toss" element={<Toss />} />
+                     <Route path="coupon" element={<Coupon />} />
+                  </Route>
                </Route>
             </Route>
          </Route>,
       ),
    )
 
-   return (
-      <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-         <RouterProvider router={router} />
-      </ThemeProvider>
-   )
+   return <RouterProvider router={router} />
 }
 
 export default App

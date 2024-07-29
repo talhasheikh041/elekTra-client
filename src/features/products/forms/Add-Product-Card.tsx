@@ -4,7 +4,7 @@ import {
    DialogHeader,
    DialogTitle,
    DialogTrigger,
-} from "@/features/components/ui/dialog"
+} from "@/features/global-components/ui/dialog"
 import { CirclePlusIcon } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -17,10 +17,11 @@ import {
    FormItem,
    FormLabel,
    FormMessage,
-} from "@/features/components/ui/form"
-import { Input } from "@/features/components/ui/input"
-import { Button } from "@/features/components/ui/button"
+} from "@/features/global-components/ui/form"
+import { Input } from "@/features/global-components/ui/input"
+import { Button } from "@/features/global-components/ui/button"
 import { useState } from "react"
+import MyTooltip from "@/features/global-components/shared/My-Tooltip"
 
 const productSchema = z.object({
    name: z.string().min(1, { message: "Name is required" }),
@@ -68,10 +69,11 @@ const AddProductCard = () => {
    return (
       <Dialog open={open} onOpenChange={handleOpenChange}>
          <DialogTrigger asChild>
-            <CirclePlusIcon
-               size={"40px"}
-               className="rounded-full bg-primary px-2 py-2 text-white"
-            />
+            <Button size="icon" className="rounded-full">
+               <MyTooltip title="Add new Product">
+                  <CirclePlusIcon size={"30px"} />
+               </MyTooltip>
+            </Button>
          </DialogTrigger>
          <DialogContent>
             <DialogHeader>

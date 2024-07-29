@@ -1,15 +1,15 @@
-import { Badge } from "@/features/components/ui/badge"
-import { Button, buttonVariants } from "@/features/components/ui/button"
+import { Badge } from "@/features/global-components/ui/badge"
+import { Button, buttonVariants } from "@/features/global-components/ui/button"
 import {
    Dialog,
    DialogContent,
    DialogHeader,
    DialogTitle,
    DialogTrigger,
-} from "@/features/components/ui/dialog"
-import OrderItem from "@/features/transactions/Order-Item"
+} from "@/features/global-components/ui/dialog"
+import OrderItem from "@/features/transactions/components/Order-Item"
 import { cn } from "@/lib/utils"
-import { OrderItemType, OrderType } from "@/types"
+import { OrderItemType, OrderType } from "@/types/types"
 import { useState } from "react"
 
 const img =

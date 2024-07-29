@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/features/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/global-components/ui/card"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -9,10 +9,10 @@ import {
    FormItem,
    FormLabel,
    FormMessage,
-} from "@/features/components/ui/form"
-import { Button } from "@/features/components/ui/button"
-import { Input } from "@/features/components/ui/input"
-import { Checkbox } from "@/features/components/ui/checkbox"
+} from "@/features/global-components/ui/form"
+import { Button } from "@/features/global-components/ui/button"
+import { Input } from "@/features/global-components/ui/input"
+import { Checkbox } from "@/features/global-components/ui/checkbox"
 import { useState } from "react"
 
 const couponFormSchema = z

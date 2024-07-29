@@ -5,11 +5,11 @@ import {
    TableHead,
    TableHeader,
    TableRow,
-} from "@/features/components/ui/table"
+} from "@/features/global-components/ui/table"
 
 import coverImg from "@/assets/cover.jpg"
-import { Button } from "@/features/components/ui/button"
-import { Input } from "@/features/components/ui/input"
+import { Button } from "@/features/global-components/ui/button"
+import { Input } from "@/features/global-components/ui/input"
 import { useState } from "react"
 import { FaTrash } from "react-icons/fa"
 

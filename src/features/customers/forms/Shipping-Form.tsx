@@ -1,18 +1,18 @@
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/features/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/features/global-components/ui/form"
 
-import { Input } from "@/features/components/ui/input"
+import { Input } from "@/features/global-components/ui/input"
 import {
    Select,
    SelectContent,
    SelectItem,
    SelectTrigger,
    SelectValue,
-} from "@/features/components/ui/select"
+} from "@/features/global-components/ui/select"
 
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { Button } from "@/features/components/ui/button"
+import { Button } from "@/features/global-components/ui/button"
 
 const addressSchema = z.object({
    address: z.string().min(1, "Address is required"),

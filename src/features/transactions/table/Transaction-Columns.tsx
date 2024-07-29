@@ -1,4 +1,4 @@
-import { DataTableColumnHeader } from "@/features/components/shared/data-table/Column-Header"
+import { DataTableColumnHeader } from "@/features/global-components/shared/data-table/Column-Header"
 import { ColumnDef } from "@tanstack/react-table"
 import { ReactNode } from "react"
 

@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/features/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/global-components/ui/card"
 import headCoin from "@/assets/head_coin.png"
 import tailCoin from "@/assets/tail_coin.png"
 import { useState } from "react"

@@ -1,4 +1,4 @@
-import { Button } from "@/features/components/ui/button"
+import { Button } from "@/features/global-components/ui/button"
 import ShippingForm from "@/features/customers/forms/Shipping-Form"
 
 import { ArrowBigLeft } from "lucide-react"

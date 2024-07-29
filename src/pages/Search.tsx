@@ -1,5 +1,5 @@
-import { Input } from "@/features/components/ui/input"
-import { Label } from "@/features/components/ui/label"
+import { Input } from "@/features/global-components/ui/input"
+import { Label } from "@/features/global-components/ui/label"
 import {
    Pagination,
    PaginationContent,
@@ -8,16 +8,16 @@ import {
    PaginationLink,
    PaginationNext,
    PaginationPrevious,
-} from "@/features/components/ui/pagination"
+} from "@/features/global-components/ui/pagination"
 import {
    Select,
    SelectContent,
    SelectItem,
    SelectTrigger,
    SelectValue,
-} from "@/features/components/ui/select"
-import { Slider } from "@/features/components/ui/slider"
-import ProductCard from "@/features/products/Product-Card"
+} from "@/features/global-components/ui/select"
+import { Slider } from "@/features/global-components/ui/slider"
+import ProductCard from "@/features/products/components/Product-Card"
 import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router-dom"
 

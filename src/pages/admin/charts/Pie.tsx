@@ -1,5 +1,5 @@
-import { DoughnutChart, PieChart } from "@/features/components/shared/admin/Charts"
-import { Card, CardContent, CardHeader, CardTitle } from "@/features/components/ui/card"
+import { DoughnutChart, PieChart } from "@/features/global-components/shared/admin/Charts"
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/global-components/ui/card"
 import { categories } from "@/assets/data.json"
 
 function Pie() {

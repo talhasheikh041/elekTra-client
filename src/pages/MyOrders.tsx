@@ -1,5 +1,5 @@
-import { DataTable } from "@/features/components/shared/data-table/Data-Table"
-import { Badge } from "@/features/components/ui/badge"
+import { DataTable } from "@/features/global-components/shared/data-table/Data-Table"
+import { Badge } from "@/features/global-components/ui/badge"
 import {
    customerOrderColumns,
    CustomerOrderType,

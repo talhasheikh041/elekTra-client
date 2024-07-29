@@ -1,7 +1,7 @@
-import MyTooltip from "@/features/components/shared/My-Tooltip"
-import { DataTable } from "@/features/components/shared/data-table/Data-Table"
-import { buttonVariants } from "@/features/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/features/components/ui/card"
+import MyTooltip from "@/features/global-components/shared/My-Tooltip"
+import { DataTable } from "@/features/global-components/shared/data-table/Data-Table"
+import { buttonVariants } from "@/features/global-components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/global-components/ui/card"
 import { ProductsType, productColumns } from "@/features/products/table/Product-Columns"
 import AddProductCard from "@/features/products/forms/Add-Product-Card"
 import EditProductCard from "@/features/products/forms/Edit-Product-Card"
@@ -129,9 +129,7 @@ const Products = () => {
       <Card>
          <CardHeader className="flex-row items-center justify-between">
             <CardTitle className="font-light uppercase tracking-widest">Products</CardTitle>
-            <MyTooltip title="Add new Product">
                <AddProductCard key={addNewProductId} />
-            </MyTooltip>
          </CardHeader>
          <CardContent>
             <DataTable columns={productColumns} data={data} isPagination={true} />

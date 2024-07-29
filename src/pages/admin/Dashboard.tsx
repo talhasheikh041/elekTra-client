@@ -1,8 +1,8 @@
-import { BarChart, DoughnutChart } from "@/features/components/shared/admin/Charts"
-import ProgressCard from "@/features/components/shared/admin/Progress-Card"
-import { DataTable } from "@/features/components/shared/data-table/Data-Table"
-import ProductCategory from "@/features/products/Product-Category"
-import { Card, CardContent, CardHeader, CardTitle } from "@/features/components/ui/card"
+import { BarChart, DoughnutChart } from "@/features/global-components/shared/admin/Charts"
+import ProgressCard from "@/features/global-components/shared/admin/Progress-Card"
+import { DataTable } from "@/features/global-components/shared/data-table/Data-Table"
+import ProductCategory from "@/features/products/components/Product-Category"
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/global-components/ui/card"
 import { getTransactionColumns } from "@/features/transactions/table/Transaction-Columns"
 import { BiMaleFemale } from "react-icons/bi"
 

@@ -1,6 +1,6 @@
-import { DataTable } from "@/features/components/shared/data-table/Data-Table"
-import { buttonVariants } from "@/features/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/features/components/ui/card"
+import { DataTable } from "@/features/global-components/shared/data-table/Data-Table"
+import { buttonVariants } from "@/features/global-components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/global-components/ui/card"
 import {
    TransactionsType,
    getTransactionColumns,
