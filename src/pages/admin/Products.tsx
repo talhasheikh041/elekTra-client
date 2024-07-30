@@ -1,138 +1,72 @@
-import MyTooltip from "@/features/global-components/shared/My-Tooltip"
+import { selectUser } from "@/features/customers/reducer/user-reducer"
 import { DataTable } from "@/features/global-components/shared/data-table/Data-Table"
-import { buttonVariants } from "@/features/global-components/ui/button"
+import SkeletonWrapper from "@/features/global-components/shared/Skeleton-Wrapper"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/global-components/ui/card"
-import { ProductsType, productColumns } from "@/features/products/table/Product-Columns"
+import { Skeleton } from "@/features/global-components/ui/skeleton"
+import { useAllProdcuctsQuery } from "@/features/products/api/product-api"
 import AddProductCard from "@/features/products/forms/Add-Product-Card"
 import EditProductCard from "@/features/products/forms/Edit-Product-Card"
-import { cn } from "@/lib/utils"
-import { useId, useState } from "react"
-import { Link } from "react-router-dom"
+import { ProductColumnsTypes, productColumns } from "@/features/products/table/Product-Columns"
+import { useAppSelector } from "@/redux/store"
+import { CustomErrorType } from "@/types/api-types"
+import { skipToken } from "@reduxjs/toolkit/query"
+import { useId } from "react"
+import { toast } from "sonner"
 
-const img =
-   "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c2hvZXN8ZW58MHx8MHx8&w=1000&q=804"
-
-const img2 = "https://m.media-amazon.com/images/I/514T0SvwkHL._SL1500_.jpg"
-
-const arr: ProductsType[] = [
-   {
-      photo: <img src={img} alt="Shoes" />,
-      name: "Puma Shoes Air Jordan Cook Nigga 2023",
-      price: 690,
-      stock: 3,
-      action: (
-         <EditProductCard
-            product={{
-               photo: img,
-               name: "Puma Shoes Air Jordan Cook Nigga 2023",
-               price: 690,
-               stock: 3,
-            }}
-         />
-      ),
-   },
-
-   {
-      photo: <img src={img2} alt="Shoes" />,
-      name: "Macbook",
-      price: 232223,
-      stock: 213,
-      action: (
-         <Link
-            className={cn(buttonVariants({ variant: "default" }), "h-5 rounded-full px-3")}
-            to="/admin/product/sajknaskd"
-         >
-            Manage
-         </Link>
-      ),
-   },
-   {
-      photo: <img src={img} alt="Shoes" />,
-      name: "Puma Shoes Air Jordan Cook Nigga 2023",
-      price: 690,
-      stock: 3,
-      action: (
-         <Link
-            className={cn(buttonVariants({ variant: "default" }), "h-5 rounded-full px-3")}
-            to="/admin/product/sajknaskd"
-         >
-            Manage
-         </Link>
-      ),
-   },
-
-   {
-      photo: <img src={img2} alt="Shoes" />,
-      name: "Macbook",
-      price: 232223,
-      stock: 213,
-      action: (
-         <Link
-            className={cn(buttonVariants({ variant: "default" }), "h-5 rounded-full px-3")}
-            to="/admin/product/sajknaskd"
-         >
-            Manage
-         </Link>
-      ),
-   },
-   {
-      photo: <img src={img} alt="Shoes" />,
-      name: "Puma Shoes Air Jordan Cook Nigga 2023",
-      price: 690,
-      stock: 3,
-      action: (
-         <Link
-            className={cn(buttonVariants({ variant: "default" }), "h-5 rounded-full px-3")}
-            to="/admin/product/sajknaskd"
-         >
-            Manage
-         </Link>
-      ),
-   },
-
-   {
-      photo: <img src={img2} alt="Shoes" />,
-      name: "Macbook",
-      price: 232223,
-      stock: 213,
-      action: (
-         <Link
-            className={cn(buttonVariants({ variant: "default" }), "h-5 rounded-full px-3")}
-            to="/admin/product/sajknaskd"
-         >
-            Manage
-         </Link>
-      ),
-   },
-   {
-      photo: <img src={img2} alt="Shoes" />,
-      name: "Macbook",
-      price: 232223,
-      stock: 213,
-      action: (
-         <Link
-            className={cn(buttonVariants({ variant: "default" }), "h-5 rounded-full px-3")}
-            to="/admin/product/sajknaskd"
-         >
-            Manage
-         </Link>
-      ),
-   },
-]
+const SERVER_LINK = import.meta.env.VITE_SERVER_LINK as string
 
 const Products = () => {
    const addNewProductId = useId()
 
-   const [data] = useState<ProductsType[]>(arr)
+   const { user } = useAppSelector(selectUser)
+
+   const { data, isError, isSuccess, isLoading, error } = useAllProdcuctsQuery(
+      user?._id ?? skipToken,
+   )
+
+   let errorMessage: string | null = null
+
+   if (isError) {
+      const err = error as CustomErrorType
+      errorMessage = err.data.message
+      toast.error(errorMessage)
+   }
+
+   const allProducts: ProductColumnsTypes[] | null = data
+      ? data.products.map((product) => ({
+           photo: <img src={`${SERVER_LINK}/uploads/${product.photo}`} alt="Shoes" />,
+           name: product.name,
+           price: product.price,
+           stock: product.stock,
+           action: (
+              <EditProductCard
+                 product={{
+                    photo: `${SERVER_LINK}/uploads/${product.photo}`,
+                    name: product.name,
+                    price: product.price,
+                    stock: product.stock,
+                 }}
+              />
+           ),
+        }))
+      : null
 
    return (
       <Card>
          <CardHeader className="flex-row items-center justify-between">
             <CardTitle className="font-light uppercase tracking-widest">Products</CardTitle>
-               <AddProductCard key={addNewProductId} />
+            <AddProductCard key={addNewProductId} />
          </CardHeader>
          <CardContent>
-            <DataTable columns={productColumns} data={data} isPagination={true} />
+            {isLoading ? (
+               <SkeletonWrapper className="space-y-3" quantity={8}>
+                  <Skeleton className="h-16 w-full" />
+               </SkeletonWrapper>
+            ) : isSuccess && allProducts ? (
+               <DataTable columns={productColumns} data={allProducts} isPagination={true} />
+            ) : (
+               <p>{errorMessage}</p>
+            )}
          </CardContent>
       </Card>
    )

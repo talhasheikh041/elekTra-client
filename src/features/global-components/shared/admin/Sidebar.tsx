@@ -11,7 +11,7 @@ import {
    Users,
    X,
 } from "lucide-react"
-import { NavLink } from "react-router-dom"
+import { Link, NavLink } from "react-router-dom"
 import logo from "@/assets/logo.svg"
 import { Button } from "@/features/global-components/ui/button"
 
@@ -24,13 +24,13 @@ const Sidebar = ({
 }) => {
    return (
       <div
-         className={`custom-scroll absolute left-0 top-0 z-50 flex h-screen min-w-72 flex-col overflow-hidden bg-background p-4 transition-all duration-500 hover:overflow-y-auto sm:translate-x-0 sm:fixed ${isSideBarActive ? "translate-x-0" : "-translate-x-full"}`}
+         className={`custom-scroll absolute left-0 top-0 z-50 flex h-screen min-w-72 flex-col overflow-hidden bg-background p-4 transition-all duration-500 hover:overflow-y-auto sm:fixed sm:translate-x-0 ${isSideBarActive ? "translate-x-0" : "-translate-x-full"}`}
       >
          <div className="flex items-center gap-2">
             <img className="size-10" src={logo} />
-            <p className="text-3xl font-bold">
+            <Link to={"/"} className="text-3xl font-bold">
                Elek<span className="text-orange-700">Tra</span>.
-            </p>
+            </Link>
             <Button
                onClick={() => setIsSidebarActive(!isSideBarActive)}
                variant="outline"

@@ -8,12 +8,10 @@ import { ThemeProvider } from "@/features/global-components/shared/Theme-Provide
 import { Toaster } from "@/features/global-components/ui/sonner"
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-   <React.StrictMode>
-      <Provider store={store}>
-         <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-            <Toaster richColors={true} toastOptions={{}} position="top-center" />
-            <App />
-         </ThemeProvider>
-      </Provider>
-   </React.StrictMode>,
+   <Provider store={store}>
+      <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+         <Toaster richColors={true} toastOptions={{}} position="top-center" />
+         <App />
+      </ThemeProvider>
+   </Provider>,
 )

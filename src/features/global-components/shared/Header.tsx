@@ -23,7 +23,6 @@ const Header = () => {
    const { user, loading } = useAppSelector(selectUser)
    const navigate = useNavigate()
 
-
    const logoutHandler = async () => {
       try {
          await signOut(auth)
@@ -71,14 +70,15 @@ const Header = () => {
                         <Avatar className="size-8 cursor-pointer">
                            <AvatarImage src={user.photo} />
                            <AvatarFallback>
-                              {user.name[0] + user.name[user.name.length - 1]}
+                              {user.name[0].toUpperCase() +
+                                 user.name[user.name.length - 1].toUpperCase()}
                            </AvatarFallback>
                         </Avatar>
                      </MyTooltip>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
                      <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                     {user.role?.includes("admin") && (
+                     {user.role === "admin" && (
                         <DropdownMenuItem>
                            <Link to={"/admin/dashboard"}>Dashboard</Link>
                         </DropdownMenuItem>

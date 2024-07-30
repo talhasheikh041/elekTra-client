@@ -4,15 +4,15 @@ import { ReactNode } from "react"
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type ProductsType = {
-   photo: ReactNode
+export type ProductColumnsTypes = {
    name: string
    price: number
    stock: number
+   photo: ReactNode
    action: ReactNode
 }
 
-export const productColumns: ColumnDef<ProductsType>[] = [
+export const productColumns: ColumnDef<ProductColumnsTypes>[] = [
    {
       accessorKey: "photo",
       header: "Photo",

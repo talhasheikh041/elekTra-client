@@ -61,7 +61,7 @@ const EditProductCard = ({ product }: EditProductCardProps) => {
          if (typeof reader.result === "string") {
             setItem((prev) => ({
                ...prev,
-               photo: reader.result as string
+               photo: reader.result as string,
             }))
          }
       }
@@ -77,7 +77,7 @@ const EditProductCard = ({ product }: EditProductCardProps) => {
          form.reset()
          setItem((prev) => ({
             ...prev,
-            photo: product.photo
+            photo: product.photo,
          }))
       }
    }
@@ -94,7 +94,7 @@ const EditProductCard = ({ product }: EditProductCardProps) => {
                Manage
             </span>
          </DialogTrigger>
-         <DialogContent className="max-w-4xl overflow-y-auto max-h-screen">
+         <DialogContent className="max-h-screen max-w-4xl overflow-y-auto">
             <DialogHeader>
                <DialogTitle className="mx-auto text-2xl font-light uppercase tracking-widest">
                   Edit Product
@@ -108,16 +108,16 @@ const EditProductCard = ({ product }: EditProductCardProps) => {
                      </span>
                   </div>
 
-                  <div className="mt-4">
+                  <div className="mt-4 flex justify-center">
                      <img
-                        className="rounded-lg object-cover aspect-square"
+                        className="h-60 rounded-lg object-contain"
                         src={item.photo as string}
                         alt="product-photo"
                      />
                   </div>
 
-                  <div className="flex flex-col items-center justify-center mt-5 gap-4">
-                     <span className="tracking-widest mx-auto">{form.getValues().name}</span>
+                  <div className="mt-5 flex flex-col items-center justify-center gap-4">
+                     <span className="mx-auto tracking-widest">{form.getValues().name}</span>
                      <span className="text-3xl font-bold">${form.getValues().price}</span>
                   </div>
                </div>

@@ -10,9 +10,7 @@ const RequireAuth = ({ isAdmin }: { isAdmin: boolean }) => {
 
    if (!user) return <Navigate to={"/login"} />
 
-   const isUserAdmin = user.role?.includes("admin")
-
-   if (isAdmin && !isUserAdmin) return <Navigate to={"/"} />
+   if (isAdmin && user.role !== "admin") return <Navigate to={"/"} />
 
    return <Outlet />
 }
