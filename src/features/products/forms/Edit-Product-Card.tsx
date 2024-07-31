@@ -1,3 +1,15 @@
+import { selectUser } from "@/features/customers/reducer/user-reducer"
+import {
+   AlertDialog,
+   AlertDialogAction,
+   AlertDialogCancel,
+   AlertDialogContent,
+   AlertDialogDescription,
+   AlertDialogFooter,
+   AlertDialogHeader,
+   AlertDialogTitle,
+   AlertDialogTrigger,
+} from "@/features/global-components/ui/alert-dialog"
 import { Button, buttonVariants } from "@/features/global-components/ui/button"
 import {
    Dialog,
@@ -16,38 +28,55 @@ import {
    FormMessage,
 } from "@/features/global-components/ui/form"
 import { Input } from "@/features/global-components/ui/input"
-import { cn } from "@/lib/utils"
+import {
+   useDeleteProductMutation,
+   useUpdateProductMutation,
+} from "@/features/products/api/product-api"
+import { cn, responseToast } from "@/lib/utils"
+import { useAppSelector } from "@/redux/store"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
+import { FaTrash } from "react-icons/fa"
+import { toast } from "sonner"
 import { z } from "zod"
 
 type EditProductCardProps = {
    product: {
       photo: string
       name: string
+      category: string
       price: number
       stock: number
+      _id: string
    }
 }
 
 const productSchema = z.object({
    name: z.string().min(1, { message: "Name is required" }),
+   category: z.string().min(1, { message: "Category is required" }),
    price: z.number().min(0, { message: "Price must be a positive number" }),
    stock: z.number().int().min(0, { message: "Stock must be a positive integer" }),
    photo: z
       .instanceof(File, { message: "Photo is required" })
-      .refine((file) => file.size <= 5 * 1024 * 1024, { message: "Photo must be less than 5MB" }),
+      .refine((file) => file.size <= 5 * 1024 * 1024, { message: "Photo must be less than 5MB" })
+      .optional(),
 })
 
 const EditProductCard = ({ product }: EditProductCardProps) => {
    const [open, setOpen] = useState(false)
    const [item, setItem] = useState(product)
 
+   const { user } = useAppSelector(selectUser)
+
+   const [updateProduct] = useUpdateProductMutation()
+   const [deleteProduct] = useDeleteProductMutation()
+
    const form = useForm<z.infer<typeof productSchema>>({
       resolver: zodResolver(productSchema),
       defaultValues: {
          name: item.name,
+         category: item.category,
          price: item.price,
          stock: item.stock,
          photo: undefined,
@@ -67,8 +96,33 @@ const EditProductCard = ({ product }: EditProductCardProps) => {
       }
    }
 
-   const onSubmit = (values: z.infer<typeof productSchema>) => {
-      console.log(values)
+   const updateProductHandler = async (values: z.infer<typeof productSchema>) => {
+      try {
+         const formData = new FormData()
+
+         formData.set("name", values.name)
+         formData.set("price", values.price.toString())
+         formData.set("stock", values.stock.toString())
+         formData.set("category", values.category.toString())
+
+         if (values.photo) formData.set("photo", values.photo)
+
+         const res = await updateProduct({ userId: user?._id!, productId: product._id, formData })
+         responseToast(res)
+         handleOpenChange(false)
+      } catch (error) {
+         toast.error(error as string)
+      }
+   }
+
+   const deleteHandler = async () => {
+      try {
+         const res = await deleteProduct({ userId: user?._id!, productId: product._id })
+         responseToast(res)
+         handleOpenChange(false)
+      } catch (error) {
+         toast.error(error as string)
+      }
    }
 
    const handleOpenChange = (isOpen: boolean) => {
@@ -101,7 +155,7 @@ const EditProductCard = ({ product }: EditProductCardProps) => {
                </DialogTitle>
             </DialogHeader>
             <div className="flex justify-center gap-12">
-               <div className="flex-1 rounded-lg border p-4">
+               <div className="relative flex-1 rounded-lg border p-4">
                   <div className="flex justify-end">
                      <span className="font-semibold text-green-500">
                         {form.getValues().stock} available
@@ -120,11 +174,41 @@ const EditProductCard = ({ product }: EditProductCardProps) => {
                      <span className="mx-auto tracking-widest">{form.getValues().name}</span>
                      <span className="text-3xl font-bold">${form.getValues().price}</span>
                   </div>
+
+                  <div className="absolute left-2 top-2">
+                     <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                           <Button variant={"destructive"} size={"icon"}>
+                              <FaTrash size={"18px"} />
+                           </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                           <AlertDialogHeader>
+                              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                              <AlertDialogDescription>
+                                 This action cannot be undone. This will permanently delete your
+                                 product.
+                              </AlertDialogDescription>
+                           </AlertDialogHeader>
+                           <AlertDialogFooter>
+                              <AlertDialogCancel>Cancel</AlertDialogCancel>
+                              <AlertDialogAction onClick={deleteHandler} asChild>
+                                 <Button
+                                    variant={"destructive"}
+                                    className="bg-destructive hover:bg-destructive/90"
+                                 >
+                                    Delete
+                                 </Button>
+                              </AlertDialogAction>
+                           </AlertDialogFooter>
+                        </AlertDialogContent>
+                     </AlertDialog>
+                  </div>
                </div>
 
                <div className="flex-1">
                   <Form {...form}>
-                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                     <form onSubmit={form.handleSubmit(updateProductHandler)} className="space-y-6">
                         <FormField
                            control={form.control}
                            name="name"

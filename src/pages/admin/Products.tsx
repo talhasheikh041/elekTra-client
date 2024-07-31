@@ -43,8 +43,10 @@ const Products = () => {
                  product={{
                     photo: `${SERVER_LINK}/uploads/${product.photo}`,
                     name: product.name,
+                    category: product.category,
                     price: product.price,
                     stock: product.stock,
+                    _id: product._id,
                  }}
               />
            ),

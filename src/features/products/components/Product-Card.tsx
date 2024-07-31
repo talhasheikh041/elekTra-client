@@ -18,7 +18,7 @@ const ProductCard = ({ name, photo, price }: ProductCardProps) => {
    const photoURL = `${import.meta.env.VITE_SERVER_LINK}/uploads/${photo}`
 
    return (
-      <div className="relative flex min-h-72 w-80 flex-none cursor-pointer snap-start snap-always flex-col items-center justify-center p-3">
+      <div className="relative flex min-h-72 w-80 flex-none cursor-pointer snap-start snap-always flex-col items-center justify-center rounded-lg bg-secondary p-3">
          <div>
             <img src={photoURL} className="h-60 rounded-lg object-contain" alt="product" />
          </div>

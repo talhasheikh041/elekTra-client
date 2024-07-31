@@ -17,7 +17,7 @@ export const productColumns: ColumnDef<ProductColumnsTypes>[] = [
       accessorKey: "photo",
       header: "Photo",
       cell: ({ cell }) => (
-         <div className="flex items-center *:w-12 *:rounded-lg">
+         <div className="flex items-center *:h-12 *:w-12 *:rounded-lg *:object-contain">
             {cell.renderValue<ReactNode>()}
          </div>
       ),

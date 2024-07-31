@@ -1,10 +1,10 @@
 import { userApi } from "@/features/customers/api/user-api"
 import { MessageResponseType } from "@/types/api-types"
-import { IUser } from "@/types/types"
+import { UserType } from "@/types/types"
 
 const authApi = userApi.injectEndpoints({
    endpoints: (builder) => ({
-      login: builder.mutation<MessageResponseType, IUser>({
+      login: builder.mutation<MessageResponseType, UserType>({
          query: (user) => ({
             url: "new",
             method: "POST",

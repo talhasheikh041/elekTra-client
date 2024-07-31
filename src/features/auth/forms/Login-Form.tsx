@@ -20,7 +20,7 @@ import {
    SelectTrigger,
    SelectValue,
 } from "@/features/global-components/ui/select"
-import { cn } from "@/lib/utils"
+import { cn, responseToast } from "@/lib/utils"
 import { format } from "date-fns"
 import { CalendarIcon } from "lucide-react"
 import { FaGoogle } from "react-icons/fa"
@@ -66,13 +66,7 @@ const LoginForm = () => {
             photo: user.photoURL!,
          })
 
-         if ("data" in res && res.data) {
-            toast.success(res.data.message)
-         } else {
-            const error = res.error as FetchBaseQueryError
-            const data = error.data as MessageResponseType
-            toast.error(data.message)
-         }
+         responseToast(res)
       } catch (error) {
          toast.error("Error loging the user!")
       }

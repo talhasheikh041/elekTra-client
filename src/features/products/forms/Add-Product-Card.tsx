@@ -1,3 +1,6 @@
+import { selectUser } from "@/features/customers/reducer/user-reducer"
+import MyTooltip from "@/features/global-components/shared/My-Tooltip"
+import { Button } from "@/features/global-components/ui/button"
 import {
    Dialog,
    DialogContent,
@@ -5,26 +8,28 @@ import {
    DialogTitle,
    DialogTrigger,
 } from "@/features/global-components/ui/dialog"
-import { CirclePlusIcon } from "lucide-react"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
 import {
    Form,
    FormControl,
-   // FormDescription,
    FormField,
    FormItem,
    FormLabel,
    FormMessage,
 } from "@/features/global-components/ui/form"
 import { Input } from "@/features/global-components/ui/input"
-import { Button } from "@/features/global-components/ui/button"
+import { useNewProductMutation } from "@/features/products/api/product-api"
+import { responseToast } from "@/lib/utils"
+import { useAppSelector } from "@/redux/store"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { CirclePlusIcon } from "lucide-react"
 import { useState } from "react"
-import MyTooltip from "@/features/global-components/shared/My-Tooltip"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import { z } from "zod"
 
 const productSchema = z.object({
    name: z.string().min(1, { message: "Name is required" }),
+   category: z.string().min(1, { message: "Category is required" }),
    price: z.number().min(0, { message: "Price must be a positive number" }),
    stock: z.number().int().min(0, { message: "Stock must be a positive integer" }),
    photo: z
@@ -36,10 +41,15 @@ const AddProductCard = () => {
    const [open, setOpen] = useState(false)
    const [photoURL, setPhotoURL] = useState<string | null>(null)
 
+   const { user } = useAppSelector(selectUser)
+
+   const [newProduct] = useNewProductMutation()
+
    const form = useForm<z.infer<typeof productSchema>>({
       resolver: zodResolver(productSchema),
       defaultValues: {
          name: "",
+         category: "",
          price: undefined,
          stock: undefined,
          photo: undefined,
@@ -54,8 +64,22 @@ const AddProductCard = () => {
       }
    }
 
-   const onSubmit = (values: z.infer<typeof productSchema>) => {
-      console.log(values)
+   const onSubmit = async (values: z.infer<typeof productSchema>) => {
+      try {
+         const formData = new FormData()
+
+         formData.set("name", values.name)
+         formData.set("price", values.price.toString())
+         formData.set("stock", values.stock.toString())
+         formData.set("category", values.category.toString())
+         formData.set("photo", values.photo)
+
+         const res = await newProduct({ id: user?._id!, formData })
+         responseToast(res)
+         handleOpenChange(false)
+      } catch (error) {
+         toast.error(error as string)
+      }
    }
 
    const handleOpenChange = (isOpen: boolean) => {
@@ -75,7 +99,7 @@ const AddProductCard = () => {
                </MyTooltip>
             </Button>
          </DialogTrigger>
-         <DialogContent>
+         <DialogContent className="h-full overflow-y-scroll">
             <DialogHeader>
                <DialogTitle className="mx-auto text-2xl font-light uppercase tracking-widest">
                   New Product
@@ -142,6 +166,20 @@ const AddProductCard = () => {
                                        )
                                     }
                                  />
+                              </FormControl>
+                              <FormMessage />
+                           </FormItem>
+                        )}
+                     />
+
+                     <FormField
+                        control={form.control}
+                        name="category"
+                        render={({ field }) => (
+                           <FormItem>
+                              <FormLabel>Category</FormLabel>
+                              <FormControl>
+                                 <Input {...field} />
                               </FormControl>
                               <FormMessage />
                            </FormItem>

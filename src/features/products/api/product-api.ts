@@ -1,8 +1,12 @@
 import {
    AllProductsResponseType,
    CategoriesResponseType,
+   DeleteProductRequestType,
+   MessageResponseType,
+   NewProductRequestType,
    SearchProductsRequestType,
    SearchProductsResponseType,
+   UpdateProductRequestType,
 } from "@/types/api-types"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
@@ -11,18 +15,23 @@ export const productApi = createApi({
    baseQuery: fetchBaseQuery({
       baseUrl: `${import.meta.env.VITE_SERVER_LINK}/api/v1/product/`,
    }),
+   tagTypes: ["product"],
+
    endpoints: (builder) => ({
       latestProdcuts: builder.query<AllProductsResponseType, null>({
          query: () => "latest",
+         providesTags: ["product"],
       }),
       allProdcucts: builder.query<AllProductsResponseType, string>({
          query: (id) => ({
             url: "admin-products",
             params: { id },
          }),
+         providesTags: ["product"],
       }),
       categories: builder.query<CategoriesResponseType, null>({
          query: () => "categories",
+         providesTags: ["product"],
       }),
       searchProducts: builder.query<SearchProductsResponseType, SearchProductsRequestType>({
          query: ({ category, page, price, search, sort }) => {
@@ -34,6 +43,33 @@ export const productApi = createApi({
 
             return base
          },
+         providesTags: ["product"],
+      }),
+
+      newProduct: builder.mutation<MessageResponseType, NewProductRequestType>({
+         query: ({ id, formData }) => ({
+            url: `new?id=${id}`,
+            method: "POST",
+            body: formData,
+         }),
+         invalidatesTags: ["product"],
+      }),
+
+      updateProduct: builder.mutation<MessageResponseType, UpdateProductRequestType>({
+         query: ({ userId, productId, formData }) => ({
+            url: `${productId}?id=${userId}`,
+            method: "PUT",
+            body: formData,
+         }),
+         invalidatesTags: ["product"],
+      }),
+
+      deleteProduct: builder.mutation<MessageResponseType, DeleteProductRequestType>({
+         query: ({ userId, productId }) => ({
+            url: `${productId}?id=${userId}`,
+            method: "DELETE",
+         }),
+         invalidatesTags: ["product"],
       }),
    }),
 })
@@ -43,4 +79,7 @@ export const {
    useAllProdcuctsQuery,
    useCategoriesQuery,
    useLazySearchProductsQuery,
+   useNewProductMutation,
+   useUpdateProductMutation,
+   useDeleteProductMutation,
 } = productApi

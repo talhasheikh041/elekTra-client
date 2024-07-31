@@ -39,3 +39,19 @@ export type SearchProductsRequestType = {
    sort: string
    page: number
 }
+
+export type NewProductRequestType = {
+   id: string
+   formData: FormData
+}
+
+export type UpdateProductRequestType = {
+   userId: string
+   productId: string
+   formData: FormData
+}
+
+export type DeleteProductRequestType = {
+   userId: string
+   productId: string
+}

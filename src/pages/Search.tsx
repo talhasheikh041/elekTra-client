@@ -22,6 +22,7 @@ import { Skeleton } from "@/features/global-components/ui/skeleton"
 import { Slider } from "@/features/global-components/ui/slider"
 import { useCategoriesQuery, useLazySearchProductsQuery } from "@/features/products/api/product-api"
 import ProductCard from "@/features/products/components/Product-Card"
+import { areObjectsEqual } from "@/lib/utils"
 import { CustomErrorType } from "@/types/api-types"
 import { Loader } from "lucide-react"
 import { useEffect, useLayoutEffect, useState } from "react"
@@ -57,11 +58,14 @@ const Search = () => {
    const [
       trigger,
       {
-         data: searchProducts,
+         currentData: searchProducts,
          isLoading: searchProductsIsLoading,
          isError: searchProductsIsError,
          error: searchProductsError,
+         isSuccess: searchProductsIsSuccess,
+         isFetching: searchProductsisFetching,
       },
+      lastPromiseInfo,
    ] = useLazySearchProductsQuery()
 
    const [searchProductsErrorMsg, setSearchProductsErrorMsg] = useState<string>("")
@@ -75,15 +79,20 @@ const Search = () => {
    }, [searchProductsIsError])
 
    useEffect(() => {
-      const fetchProducts = async () => {
-         await trigger({
-            search,
-            category,
-            page,
-            price: range,
-            sort,
-         })
+      const lastArgs = lastPromiseInfo.lastArg
+      const presentArgs = {
+         search,
+         category,
+         page,
+         price: range,
+         sort,
       }
+      if (areObjectsEqual(lastArgs, presentArgs)) return
+
+      const fetchProducts = async () => {
+         await trigger(presentArgs)
+      }
+
       fetchProducts()
    }, [applyFilters])
 
@@ -122,7 +131,7 @@ const Search = () => {
                      defaultValue={[range]}
                      min={100}
                      max={1000000}
-                     step={500}
+                     step={100}
                   />
                </div>
 
@@ -171,14 +180,15 @@ const Search = () => {
                   className="max-w-md"
                   type="text"
                   placeholder="Search by name"
+                  onKeyDown={(e) => (e.key === "Enter" ? setApplyFilters((prev) => !prev) : null)}
                />
             </div>
 
-            {searchProductsIsLoading ? (
+            {searchProductsIsLoading || searchProductsisFetching ? (
                <SkeletonWrapper className="mt-8 grid w-full grid-cols-3 gap-y-6" quantity={8}>
                   <Skeleton className="h-64 w-64" />
                </SkeletonWrapper>
-            ) : searchProducts?.products.length && !searchProductsIsError ? (
+            ) : searchProducts?.products.length && searchProductsIsSuccess ? (
                <div className="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3">
                   {searchProducts.products.map((product) => (
                      <ProductCard

@@ -69,10 +69,7 @@ const Header = () => {
                      <MyTooltip title={user.name}>
                         <Avatar className="size-8 cursor-pointer">
                            <AvatarImage src={user.photo} />
-                           <AvatarFallback>
-                              {user.name[0].toUpperCase() +
-                                 user.name[user.name.length - 1].toUpperCase()}
-                           </AvatarFallback>
+                           <AvatarFallback>{user.name[0].toUpperCase()}</AvatarFallback>
                         </Avatar>
                      </MyTooltip>
                   </DropdownMenuTrigger>
