@@ -1,6 +1,7 @@
 import { userApi } from "@/features/customers/api/user-api"
 import { userReducer } from "@/features/customers/reducer/user-reducer"
 import { productApi } from "@/features/products/api/product-api"
+import { cartReducer } from "@/features/products/reducer/cart-reducer"
 import { configureStore } from "@reduxjs/toolkit"
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux"
 
@@ -9,6 +10,7 @@ export const store = configureStore({
       [userApi.reducerPath]: userApi.reducer,
       [productApi.reducerPath]: productApi.reducer,
       [userReducer.name]: userReducer.reducer,
+      [cartReducer.name]: cartReducer.reducer,
    },
    middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(userApi.middleware, productApi.middleware),

@@ -31,13 +31,15 @@ const LatestProducts = () => {
                <Skeleton className="h-64 w-64" />
             </SkeletonWrapper>
          ) : isSuccess && data ? (
-            <div className="mt-8 flex gap-3 snap-x snap-mandatory overflow-x-scroll">
+            <div className="mt-8 flex snap-x snap-mandatory gap-3 overflow-x-scroll">
                {data.products.map((product) => (
                   <ProductCard
+                     key={product._id}
                      name={product.name}
                      price={product.price}
-                     key={product._id}
                      photo={product.photo}
+                     stock={product.stock}
+                     productId={product._id}
                   />
                ))}
             </div>

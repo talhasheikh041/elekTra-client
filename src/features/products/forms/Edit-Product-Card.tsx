@@ -298,7 +298,7 @@ const EditProductCard = ({ product }: EditProductCardProps) => {
 
                         <div className="flex justify-center">
                            <Button className="text-md mx-auto px-6" type="submit">
-                              Create
+                              Update
                            </Button>
                         </div>
                      </form>

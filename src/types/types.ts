@@ -41,3 +41,20 @@ export type ProductType = {
    photo: string
    _id: string
 }
+
+export type ShippingInfoType = {
+   address: string
+   city: string
+   state: string
+   country: string
+   pinCode: string
+}
+
+export type CartItemType = {
+   productId: string
+   photo: string
+   name: string
+   price: number
+   quantity: number
+   stock: number
+}
