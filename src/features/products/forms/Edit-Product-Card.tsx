@@ -10,11 +10,11 @@ import {
    AlertDialogTitle,
    AlertDialogTrigger,
 } from "@/features/global-components/ui/alert-dialog"
-import { Button, buttonVariants } from "@/features/global-components/ui/button"
+import { Badge } from "@/features/global-components/ui/badge"
+import { Button } from "@/features/global-components/ui/button"
 import {
    Dialog,
    DialogContent,
-   // DialogDescription,
    DialogHeader,
    DialogTitle,
    DialogTrigger,
@@ -32,7 +32,7 @@ import {
    useDeleteProductMutation,
    useUpdateProductMutation,
 } from "@/features/products/api/product-api"
-import { cn, responseToast } from "@/lib/utils"
+import { responseToast } from "@/lib/utils"
 import { useAppSelector } from "@/redux/store"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react"
@@ -139,14 +139,7 @@ const EditProductCard = ({ product }: EditProductCardProps) => {
    return (
       <Dialog open={open} onOpenChange={handleOpenChange}>
          <DialogTrigger asChild>
-            <span
-               className={cn(
-                  buttonVariants({ variant: "default" }),
-                  "h-5 cursor-pointer rounded-full px-3",
-               )}
-            >
-               Manage
-            </span>
+            <Badge className="cursor-pointer">Manage</Badge>
          </DialogTrigger>
          <DialogContent className="max-h-screen max-w-4xl overflow-y-auto">
             <DialogHeader>

@@ -13,6 +13,7 @@ import useAuthChanged from "@/features/auth/hooks/use-auth-changed"
 import AdminLayout from "@/features/global-components/layout/Admin-Layout"
 import RootLayout from "@/features/global-components/layout/Root-Layout"
 import RequireAuth from "@/features/global-components/shared/Require-Auth"
+import Error404 from "@/features/global-components/shared/Error-404"
 
 // User Pages
 const Home = lazy(() => import("@/pages/Home"))
@@ -20,7 +21,7 @@ const Cart = lazy(() => import("@/pages/Cart"))
 const Search = lazy(() => import("@/pages/Search"))
 const Shipping = lazy(() => import("@/pages/Shipping"))
 const Login = lazy(() => import("@/pages/Login"))
-const MyOrders = lazy(() => import("@/pages/MyOrders"))
+const MyOrders = lazy(() => import("@/pages/My-Orders"))
 
 // Admin Pages
 const Dashboard = lazy(() => import("@/pages/admin/Dashboard"))
@@ -39,7 +40,7 @@ function App() {
 
    const router = createBrowserRouter(
       createRoutesFromElements(
-         <Route>
+         <Route errorElement={<Error404 />}>
             <Route path="/" element={<RootLayout />}>
                <Route index element={<Home />} />
                <Route path="cart" element={<Cart />} />

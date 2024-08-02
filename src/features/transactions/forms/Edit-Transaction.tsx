@@ -1,5 +1,17 @@
+import { selectUser } from "@/features/customers/reducer/user-reducer"
+import {
+   AlertDialog,
+   AlertDialogAction,
+   AlertDialogCancel,
+   AlertDialogContent,
+   AlertDialogDescription,
+   AlertDialogFooter,
+   AlertDialogHeader,
+   AlertDialogTitle,
+   AlertDialogTrigger,
+} from "@/features/global-components/ui/alert-dialog"
 import { Badge } from "@/features/global-components/ui/badge"
-import { Button, buttonVariants } from "@/features/global-components/ui/button"
+import { Button } from "@/features/global-components/ui/button"
 import {
    Dialog,
    DialogContent,
@@ -7,96 +19,82 @@ import {
    DialogTitle,
    DialogTrigger,
 } from "@/features/global-components/ui/dialog"
+import {
+   Select,
+   SelectContent,
+   SelectItem,
+   SelectTrigger,
+   SelectValue,
+} from "@/features/global-components/ui/select"
+import {
+   useDeleteOrderMutation,
+   useUpdateOrderMutation,
+} from "@/features/transactions/api/order-api"
 import OrderItem from "@/features/transactions/components/Order-Item"
-import { cn } from "@/lib/utils"
-import { OrderItemType, OrderType } from "@/types/types"
+import { responseToast } from "@/lib/utils"
+import { useAppSelector } from "@/redux/store"
+import { MessageResponseType } from "@/types/api-types"
+import { OrderType } from "@/types/types"
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query"
 import { useState } from "react"
+import { FaTrash } from "react-icons/fa"
+import { toast } from "sonner"
 
-const img =
-   "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c2hvZXN8ZW58MHx8MHx8&w=1000&q=804"
+type EditTransactionProps = {
+   order: OrderType
+}
 
-const orderItems: OrderItemType[] = [
-   {
-      name: "Puma Shoes",
-      photo: img,
-      _id: "1",
-      quantity: 4,
-      price: 2000,
-   },
-   {
-      name: "Puma Shoes",
-      photo: img,
-      _id: "2",
-      quantity: 4,
-      price: 2000,
-   },
-   {
-      name: "Puma Shoes",
-      photo: img,
-      _id: "3",
-      quantity: 4,
-      price: 2000,
-   },
-   {
-      name: "Puma Shoes",
-      photo: img,
-      _id: "4",
-      quantity: 4,
-      price: 2000,
-   },
-]
+const EditTransaction = ({ order }: EditTransactionProps) => {
+   const [status, setStatus] = useState(order.status)
 
-const EditTransaction = () => {
-   const [order, setOrder] = useState<OrderType>({
-      name: "Abhishek Singh",
-      address: "77 Black Street",
-      city: "Neyword",
-      state: "Nevada",
-      country: "India",
-      pinCode: 2434341,
-      status: "Processing",
-      subtotal: 4000,
-      discount: 1200,
-      shippingCharges: 0,
-      tax: 200,
-      total: 4000 + 200 + 0 - 1200,
-      orderItems,
-      _id: "asdnasjdhbn",
-   })
+   const { user } = useAppSelector(selectUser)
 
    const {
-      name,
-      address,
-      city,
-      country,
-      state,
-      pinCode,
+      shippingInfo: { address, city, country, pinCode, state },
       subtotal,
       shippingCharges,
       tax,
       discount,
       total,
-      status,
+      _id: orderId,
+      orderItems,
+      user: { name },
    } = order
 
-   const statusHandler = () => {
-      setOrder((prev) => ({
-         ...prev,
-         status: prev.status === "Processing" ? "Shipped" : "Delivered",
-      }))
+   const [updateOrder] = useUpdateOrderMutation()
+   const [deleteOrder] = useDeleteOrderMutation()
+
+   const statusHandler = async (value: string) => {
+      try {
+         const res = await updateOrder({ orderId, userId: user?._id!, status: value })
+
+         if ("data" in res) {
+            toast.success(res.data?.message)
+            setStatus(value)
+         } else {
+            const error = res.error as FetchBaseQueryError
+            const messageResponse = error.data as MessageResponseType
+            toast.error(messageResponse.message)
+         }
+      } catch (error) {
+         toast.error(error as string)
+      }
+   }
+
+   const deleteHandler = async () => {
+      try {
+         const res = await deleteOrder({ userId: user?._id!, orderId })
+         responseToast(res)
+         // handleOpenChange(false)
+      } catch (error) {
+         toast.error(error as string)
+      }
    }
 
    return (
       <Dialog>
          <DialogTrigger asChild>
-            <span
-               className={cn(
-                  buttonVariants({ variant: "default" }),
-                  "h-5 cursor-pointer rounded-full px-3",
-               )}
-            >
-               Manage
-            </span>
+            <Badge className="cursor-pointer">Manage</Badge>
          </DialogTrigger>
          <DialogContent className="max-h-screen max-w-4xl gap-10 overflow-y-auto">
             <DialogHeader>
@@ -110,7 +108,7 @@ const EditTransaction = () => {
                      Order Items
                   </h2>
 
-                  {order.orderItems.map((i) => (
+                  {orderItems.map((i) => (
                      <OrderItem
                         name={i.name}
                         photo={i.photo}
@@ -118,40 +116,71 @@ const EditTransaction = () => {
                         quantity={i.quantity}
                         price={i.price}
                         key={i._id}
+                        productId={i.productId}
                      />
                   ))}
                </section>
 
-               <article className="flex-1 rounded-lg bg-secondary px-4 py-2">
+               <article className="relative flex-1 rounded-lg bg-secondary px-4 py-2">
+                  <div className="absolute right-2 top-2">
+                     <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                           <Button variant={"destructive"} size={"icon"}>
+                              <FaTrash size={"18px"} />
+                           </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                           <AlertDialogHeader>
+                              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                              <AlertDialogDescription>
+                                 This action cannot be undone. This will permanently delete your
+                                 product.
+                              </AlertDialogDescription>
+                           </AlertDialogHeader>
+                           <AlertDialogFooter>
+                              <AlertDialogCancel>Cancel</AlertDialogCancel>
+                              <AlertDialogAction onClick={deleteHandler} asChild>
+                                 <Button
+                                    variant={"destructive"}
+                                    className="bg-destructive hover:bg-destructive/90"
+                                 >
+                                    Delete
+                                 </Button>
+                              </AlertDialogAction>
+                           </AlertDialogFooter>
+                        </AlertDialogContent>
+                     </AlertDialog>
+                  </div>
+
                   <h1 className="mx-auto mb-2 w-fit text-lg font-light uppercase tracking-widest">
                      Order Info
                   </h1>
                   <h5 className="font-semibold">User Info</h5>
-                  <p>Name: {name}</p>
-                  <p>Address: {`${address}, ${city}, ${state}, ${country} ${pinCode}`}</p>
+                  <p className="text-sm">Name: {name}</p>
+                  <p className="text-sm">
+                     Address: {`${address}, ${city}, ${state}, ${country} ${pinCode}`}
+                  </p>
 
                   <h5 className="mt-4 font-semibold">Amount Info</h5>
-                  <p>Subtotal: {subtotal}</p>
-                  <p>Shipping Charges: {shippingCharges}</p>
-                  <p>Tax: {tax}</p>
-                  <p>Discount: {discount}</p>
-                  <p>Total: {total}</p>
+                  <p className="text-sm">Subtotal: {subtotal}</p>
+                  <p className="text-sm">Shipping Charges: {shippingCharges}</p>
+                  <p className="text-sm">Tax: {tax}</p>
+                  <p className="text-sm">Discount: {discount}</p>
+                  <p className="text-sm">Total: {total}</p>
 
                   <h5 className="mt-4 font-bold">Status Info</h5>
-                  <div>
-                     Status:{" "}
-                     {status === "Delivered" ? (
-                        <Badge className="bg-purple-500">{status}</Badge>
-                     ) : status === "Shipped" ? (
-                        <Badge className="bg-green-500">{status}</Badge>
-                     ) : (
-                        <Badge className="bg-red-500">{status}</Badge>
-                     )}
+                  <div className="text-sm">
+                     <Select value={status} defaultValue={status} onValueChange={statusHandler}>
+                        <SelectTrigger className="mt-1 w-[150px]">
+                           <SelectValue placeholder="Status" />
+                        </SelectTrigger>
+                        <SelectContent>
+                           <SelectItem value="Processing">Processing</SelectItem>
+                           <SelectItem value="Shipped">Shipped</SelectItem>
+                           <SelectItem value="Delivered">Delivered</SelectItem>
+                        </SelectContent>
+                     </Select>
                   </div>
-
-                  <Button className="mx-auto mt-6 block" onClick={statusHandler}>
-                     Process Status
-                  </Button>
                </article>
             </div>
          </DialogContent>

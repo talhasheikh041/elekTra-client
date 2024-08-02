@@ -3,10 +3,18 @@ import { Link } from "react-router-dom"
 
 const OrderItem = ({ name, photo, _id, price, quantity }: OrderItemType) => {
    return (
-      <div className="flex items-center gap-4 mb-3">
-         <img className="size-10 object-cover rounded-lg" src={photo} alt={name} />
-         <Link to={`/product/${_id}`}>{name}</Link>
-         <span className="ms-auto">
+      <div className="mb-3 flex items-center gap-4">
+         <div>
+            <img
+               className="size-8 rounded-lg object-contain"
+               src={`${import.meta.env.VITE_SERVER_LINK}/uploads/${photo}`}
+               alt={name}
+            />
+         </div>
+         <Link className="text-xs underline hover:text-primary" to={`/product/${_id}`}>
+            {name}
+         </Link>
+         <span className="ms-auto text-xs">
             ${price} X {quantity} = ${price * quantity}
          </span>
       </div>

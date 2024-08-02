@@ -1,66 +1,62 @@
+import { selectUser } from "@/features/customers/reducer/user-reducer"
 import { DataTable } from "@/features/global-components/shared/data-table/Data-Table"
-import { buttonVariants } from "@/features/global-components/ui/button"
+import SkeletonWrapper from "@/features/global-components/shared/Skeleton-Wrapper"
+import { Badge } from "@/features/global-components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/global-components/ui/card"
+import { Skeleton } from "@/features/global-components/ui/skeleton"
+import { useAllOrdersQuery } from "@/features/transactions/api/order-api"
+import EditTransaction from "@/features/transactions/forms/Edit-Transaction"
 import {
    TransactionsType,
    getTransactionColumns,
 } from "@/features/transactions/table/Transaction-Columns"
-import EditTransaction from "@/features/transactions/forms/Edit-Transaction"
-import { cn } from "@/lib/utils"
-import { useState } from "react"
-import { Link } from "react-router-dom"
-
-const arr: TransactionsType[] = [
-   {
-      user: "Charas",
-      amount: 4500,
-      discount: 400,
-      quantity: 3,
-      status: <span className="red">Processing</span>,
-      action: <EditTransaction />,
-   },
-   {
-      user: "Xavirors",
-      amount: 6999,
-      discount: 400,
-      status: <span className="green">Shipped</span>,
-      quantity: 6,
-      action: (
-         <Link
-            className={cn(buttonVariants({ variant: "default" }), "h-5 rounded-full px-3")}
-            to="/admin/transaction/sajknaskd"
-         >
-            Manage
-         </Link>
-      ),
-   },
-   {
-      user: "Xavirors",
-      amount: 6999,
-      discount: 400,
-      status: <span className="purple">Delivered</span>,
-      quantity: 6,
-      action: (
-         <Link
-            className={cn(buttonVariants({ variant: "default" }), "h-5 rounded-full px-3")}
-            to="/admin/transaction/sajknaskd"
-         >
-            Manage
-         </Link>
-      ),
-   },
-]
+import { useAppSelector } from "@/redux/store"
+import { CustomErrorType } from "@/types/api-types"
+import { toast } from "sonner"
 
 const Transactions = () => {
-   const [data] = useState(arr)
+   const { user } = useAppSelector(selectUser)
+
+   const { data, isLoading, isError, error, isSuccess } = useAllOrdersQuery(user?._id!)
+
+   let errorMessage: string | null = null
+
+   if (isError) {
+      const err = error as CustomErrorType
+      errorMessage = err.data.message
+      toast.error(errorMessage)
+   }
+
+   const allTransactions: TransactionsType[] | null = data
+      ? data.orders?.map((order) => ({
+           amount: order.total,
+           user: order.user.name,
+           discount: order.discount,
+           quantity: order.orderItems.length,
+           status: <Badge variant="secondary">{order.status}</Badge>,
+           action: <EditTransaction key={order._id} order={order} />,
+        }))
+      : null
 
    return (
-      <Card>
+      <Card className="min-h-screen">
          <CardHeader>
             <CardTitle className="font-light uppercase tracking-widest">Transactions</CardTitle>
          </CardHeader>
          <CardContent>
-            <DataTable columns={getTransactionColumns(true)} data={data} isPagination={true} />
+            {isLoading ? (
+               <SkeletonWrapper className="space-y-3" quantity={8}>
+                  <Skeleton className="h-16 w-full" />
+               </SkeletonWrapper>
+            ) : isSuccess && allTransactions ? (
+               <DataTable
+                  columns={getTransactionColumns(true)}
+                  data={allTransactions}
+                  isPagination={true}
+               />
+            ) : (
+               <p className="mt-8 grid place-items-center">{errorMessage}</p>
+            )}
          </CardContent>
       </Card>
    )

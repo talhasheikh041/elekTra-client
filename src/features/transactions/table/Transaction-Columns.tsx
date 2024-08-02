@@ -5,7 +5,7 @@ import { ReactNode } from "react"
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 export type TransactionsType = {
-   user?: string
+   user: string
    amount: number
    discount: number
    quantity: number
@@ -17,7 +17,7 @@ export const getTransactionColumns = (includeAction: boolean): ColumnDef<Transac
    const columns: ColumnDef<TransactionsType>[] = [
       {
          accessorKey: "user",
-         header: "Avatar",
+         header: "User",
       },
       {
          accessorKey: "amount",

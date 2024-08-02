@@ -2,15 +2,28 @@ import { Button } from "@/features/global-components/ui/button"
 import ShippingForm from "@/features/customers/forms/Shipping-Form"
 
 import { ArrowBigLeft } from "lucide-react"
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
+import { useAppSelector } from "@/redux/store"
+import { useEffect } from "react"
+import { toast } from "sonner"
 
 const Shipping = () => {
    const { state } = useLocation()
+   const navigate = useNavigate()
+
+   const cartItems = useAppSelector((state) => state.cardReducer.cartItems)
+
+   useEffect(() => {
+      if (cartItems.length <= 0) {
+         toast.error("First add something in the cart")
+         navigate("/cart")
+      }
+   }, [cartItems])
 
    return (
       <section className="relative">
          <div>
-            <Link to={state.from}>
+            <Link to={state?.from || ".."}>
                <Button
                   size="icon"
                   variant="default"
