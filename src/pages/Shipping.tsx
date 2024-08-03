@@ -11,7 +11,7 @@ const Shipping = () => {
    const { state } = useLocation()
    const navigate = useNavigate()
 
-   const { cartItems, total } = useAppSelector((state) => state.cardReducer)
+   const { cartItems, total } = useAppSelector((state) => state.cartReducer)
 
    useEffect(() => {
       if (cartItems.length <= 0) {

@@ -67,7 +67,7 @@ export type OrderDetailsResponseType = {
    order: OrderType
 }
 
-export type NewOrderRequest = {
+export type NewOrderRequestType = {
    shippingInfo: ShippingInfoType
    orderItems: CartItemType[]
    subtotal: number
@@ -78,13 +78,23 @@ export type NewOrderRequest = {
    user: string
 }
 
-export type UpdateOrderRequest = {
+export type UpdateOrderRequestType = {
    userId: string
    orderId: string
    status: string
 }
 
-export type DeleteOrderRequest = {
+export type DeleteOrderRequestType = {
    userId: string
    orderId: string
+}
+
+export type AllUsersResponseType = {
+   success: true
+   users: UserType[]
+}
+
+export type DeleteUserRequestType = {
+   userId: string
+   adminUserId: string
 }

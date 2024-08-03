@@ -1,4 +1,4 @@
-import RadialProgress from "@/features/global-components/shared/admin/Radial-Progress"
+import RadialProgress from "@/features/dashboard/components/Radial-Progress"
 import { Card } from "@/features/global-components/ui/card"
 import { TrendingDown, TrendingUp } from "lucide-react"
 

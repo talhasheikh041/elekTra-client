@@ -2,7 +2,7 @@ import { useAppSelector } from "@/redux/store"
 
 const CartBill = () => {
    let { discount, shippingCharges, subtotal, tax, total } = useAppSelector(
-      (state) => state.cardReducer,
+      (state) => state.cartReducer,
    )
 
    const formattedDiscount = new Intl.NumberFormat("en-us", {

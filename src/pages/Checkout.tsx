@@ -4,7 +4,7 @@ import { Elements, PaymentElement, useElements, useStripe } from "@stripe/react-
 import { loadStripe } from "@stripe/stripe-js"
 import { Navigate, useLocation, useNavigate } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "@/redux/store"
-import { NewOrderRequest } from "@/types/api-types"
+import { NewOrderRequestType } from "@/types/api-types"
 import { selectUser } from "@/features/customers/reducer/user-reducer"
 import { toast } from "sonner"
 import { useNewOrderMutation } from "@/features/transactions/api/order-api"
@@ -20,7 +20,7 @@ const CheckoutForm = () => {
    const dispatch = useAppDispatch()
 
    const { cartItems, discount, shippingCharges, shippingInfo, subtotal, tax, total } =
-      useAppSelector((state) => state.cardReducer)
+      useAppSelector((state) => state.cartReducer)
    const { user } = useAppSelector(selectUser)
 
    const [newOrder] = useNewOrderMutation()
@@ -34,7 +34,7 @@ const CheckoutForm = () => {
 
       setIsProcessing(true)
 
-      const order: NewOrderRequest = {
+      const order: NewOrderRequestType = {
          discount,
          orderItems: cartItems,
          shippingCharges,

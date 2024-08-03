@@ -1,9 +1,9 @@
 import {
    AllOrdersResponseType,
-   DeleteOrderRequest,
+   DeleteOrderRequestType,
    MessageResponseType,
-   NewOrderRequest,
-   UpdateOrderRequest,
+   NewOrderRequestType,
+   UpdateOrderRequestType,
 } from "@/types/api-types"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
@@ -14,7 +14,7 @@ export const orderApi = createApi({
    }),
    tagTypes: ["Order"],
    endpoints: (builder) => ({
-      newOrder: builder.mutation<MessageResponseType, NewOrderRequest>({
+      newOrder: builder.mutation<MessageResponseType, NewOrderRequestType>({
          query: (order) => ({
             url: "new",
             method: "POST",
@@ -23,7 +23,7 @@ export const orderApi = createApi({
          invalidatesTags: ["Order"],
       }),
 
-      updateOrder: builder.mutation<MessageResponseType, UpdateOrderRequest>({
+      updateOrder: builder.mutation<MessageResponseType, UpdateOrderRequestType>({
          query: ({ orderId, userId, status }) => ({
             url: `${orderId}?id=${userId}&status=${status}`,
             method: "PUT",
@@ -31,7 +31,7 @@ export const orderApi = createApi({
          invalidatesTags: ["Order"],
       }),
 
-      deleteOrder: builder.mutation<MessageResponseType, DeleteOrderRequest>({
+      deleteOrder: builder.mutation<MessageResponseType, DeleteOrderRequestType>({
          query: ({ orderId, userId }) => ({
             url: `${orderId}?id=${userId}`,
             method: "DELETE",

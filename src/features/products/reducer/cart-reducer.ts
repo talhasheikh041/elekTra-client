@@ -20,7 +20,7 @@ const initialState: CartReducerInitialStateType = {
 }
 
 export const cartReducer = createSlice({
-   name: "cardReducer",
+   name: "cartReducer",
    initialState,
    reducers: {
       addToCart: (state, action: PayloadAction<CartItemType>) => {

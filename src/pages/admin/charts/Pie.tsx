@@ -1,4 +1,4 @@
-import { DoughnutChart, PieChart } from "@/features/global-components/shared/admin/Charts"
+import { DoughnutChart, PieChart } from "@/features/dashboard/components/Charts"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/global-components/ui/card"
 import { categories } from "@/assets/data.json"
 

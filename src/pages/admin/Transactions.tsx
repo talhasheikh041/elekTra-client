@@ -27,7 +27,7 @@ const Transactions = () => {
       toast.error(errorMessage)
    }
 
-   const allTransactions: TransactionsType[] | null = data
+   const allTransactions: TransactionsType[] | null = isSuccess
       ? data.orders?.map((order) => ({
            amount: order.total,
            user: order.user.name,

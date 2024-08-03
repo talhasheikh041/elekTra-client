@@ -1,7 +1,7 @@
 import BounceLoader from "@/features/global-components/shared/Bounce-Loader"
 import ScrollToTop from "@/features/global-components/shared/ScrollToTop"
-import DashboardHeader from "@/features/global-components/shared/admin/Dashboard-Header"
-import Sidebar from "@/features/global-components/shared/admin/Sidebar"
+import DashboardHeader from "@/features/dashboard/components/Dashboard-Header"
+import Sidebar from "@/features/dashboard/components/Sidebar"
 import { Suspense, useState } from "react"
 import { Outlet } from "react-router-dom"
 
@@ -10,7 +10,7 @@ export type OutletContextType = [
    setIsSidebarActive: React.Dispatch<React.SetStateAction<boolean>>,
 ]
 
-const AdminLayout = () => {
+const DashboardLayout = () => {
    const [isSideBarActive, setIsSideBarActive] = useState(false)
 
    return (
@@ -34,4 +34,4 @@ const AdminLayout = () => {
    )
 }
 
-export default AdminLayout
+export default DashboardLayout

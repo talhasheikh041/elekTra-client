@@ -25,7 +25,7 @@ const Cart = () => {
    const dispatch = useAppDispatch()
 
    const cartItems = useAppSelector((state) => {
-      return state.cardReducer.cartItems
+      return state.cartReducer.cartItems
    })
 
    useEffect(() => {

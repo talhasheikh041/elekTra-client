@@ -1,5 +1,5 @@
-import { BarChart, DoughnutChart } from "@/features/global-components/shared/admin/Charts"
-import ProgressCard from "@/features/global-components/shared/admin/Progress-Card"
+import { BarChart, DoughnutChart } from "@/features/dashboard/components/Charts"
+import ProgressCard from "@/features/dashboard/components/Progress-Card"
 import { DataTable } from "@/features/global-components/shared/data-table/Data-Table"
 import ProductCategory from "@/features/products/components/Product-Category"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/global-components/ui/card"

@@ -10,7 +10,7 @@ import {
 import useAuthChanged from "@/features/auth/hooks/use-auth-changed"
 
 // Components
-import AdminLayout from "@/features/global-components/layout/Admin-Layout"
+import DashboardLayout from "@/features/global-components/layout/Dashboard-Layout"
 import RootLayout from "@/features/global-components/layout/Root-Layout"
 import RequireAuth from "@/features/global-components/shared/Require-Auth"
 import Error404 from "@/features/global-components/shared/Error-404"
@@ -60,7 +60,7 @@ function App() {
 
             {/* Admin Routes */}
             <Route element={<RequireAuth isAdmin={true} />}>
-               <Route path="/admin" element={<AdminLayout />}>
+               <Route path="/admin" element={<DashboardLayout />}>
                   <Route path="dashboard" element={<Dashboard />} />
                   <Route path="customers" element={<Customers />} />
                   <Route path="products" element={<Products />} />
