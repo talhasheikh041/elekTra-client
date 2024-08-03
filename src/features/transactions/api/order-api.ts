@@ -2,9 +2,9 @@ import {
    AllOrdersResponseType,
    DeleteOrderRequest,
    MessageResponseType,
+   NewOrderRequest,
    UpdateOrderRequest,
 } from "@/types/api-types"
-import { OrderType } from "@/types/types"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 export const orderApi = createApi({
@@ -14,7 +14,7 @@ export const orderApi = createApi({
    }),
    tagTypes: ["Order"],
    endpoints: (builder) => ({
-      newOrder: builder.mutation<MessageResponseType, OrderType>({
+      newOrder: builder.mutation<MessageResponseType, NewOrderRequest>({
          query: (order) => ({
             url: "new",
             method: "POST",

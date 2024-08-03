@@ -22,6 +22,7 @@ const Search = lazy(() => import("@/pages/Search"))
 const Shipping = lazy(() => import("@/pages/Shipping"))
 const Login = lazy(() => import("@/pages/Login"))
 const MyOrders = lazy(() => import("@/pages/My-Orders"))
+const Checkout = lazy(() => import("@/pages/Checkout"))
 
 // Admin Pages
 const Dashboard = lazy(() => import("@/pages/admin/Dashboard"))
@@ -51,6 +52,7 @@ function App() {
                <Route element={<RequireAuth isAdmin={false} />}>
                   <Route>
                      <Route path="shipping" element={<Shipping />} />
+                     <Route path="pay" element={<Checkout />} />
                      <Route path="myorders" element={<MyOrders />} />
                   </Route>
                </Route>

@@ -30,7 +30,7 @@ const ProductCard = ({ name, photo, price, productId, stock }: ProductCardProps)
       dispatch(
          addToCart({
             name,
-            photo: photoURL,
+            photo,
             price,
             productId,
             stock,

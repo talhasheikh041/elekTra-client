@@ -1,4 +1,10 @@
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/features/global-components/ui/form"
+import {
+   Form,
+   FormControl,
+   FormField,
+   FormItem,
+   FormMessage,
+} from "@/features/global-components/ui/form"
 
 import { Input } from "@/features/global-components/ui/input"
 import {
@@ -9,23 +15,32 @@ import {
    SelectValue,
 } from "@/features/global-components/ui/select"
 
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
 import { Button } from "@/features/global-components/ui/button"
+import { zodResolver } from "@hookform/resolvers/zod"
+import axios from "axios"
+import { useForm } from "react-hook-form"
+import { useNavigate } from "react-router-dom"
+import { toast } from "sonner"
+import { z } from "zod"
+import { useAppDispatch } from "@/redux/store"
+import { saveShippingInfo } from "@/features/products/reducer/cart-reducer"
 
 const addressSchema = z.object({
    address: z.string().min(1, "Address is required"),
    city: z.string().min(1, "City is required"),
    state: z.string().min(1, "State is required"),
    country: z.string().min(1, "Country is required"),
-   pinCode: z
-      .number()
-      .positive("PinCode must be a positive number")
-      .int("PinCode must be an integer"),
+   pinCode: z.string().regex(/^\d{5}$/, "Pincode must be a 5-digit number"),
 })
 
-const ShippingForm = () => {
+type ShippingFormProps = {
+   amount: number
+}
+
+const ShippingForm = ({ amount }: ShippingFormProps) => {
+   const navigate = useNavigate()
+   const dispatch = useAppDispatch()
+
    const form = useForm<z.infer<typeof addressSchema>>({
       resolver: zodResolver(addressSchema),
       defaultValues: {
@@ -33,12 +48,23 @@ const ShippingForm = () => {
          city: "",
          state: "",
          country: "",
-         pinCode: undefined,
+         pinCode: "",
       },
    })
 
-   function onSubmit(values: z.infer<typeof addressSchema>) {
-      console.log(values)
+   async function onSubmit(values: z.infer<typeof addressSchema>) {
+      try {
+         const res = await axios.post<{ clientSecret: string }>(
+            `${import.meta.env.VITE_SERVER_LINK}/api/v1/payment/create`,
+            { amount },
+            { headers: { "Content-Type": "application/json" } },
+         )
+
+         navigate("/pay", { state: res.data.clientSecret })
+         dispatch(saveShippingInfo(values))
+      } catch (error: any) {
+         toast.error(error.response.data.message || "Something went wrong")
+      }
    }
 
    return (
@@ -110,17 +136,7 @@ const ShippingForm = () => {
                   render={({ field }) => (
                      <FormItem>
                         <FormControl>
-                           <Input
-                              type="number"
-                              placeholder="Pin Code"
-                              {...field}
-                              value={field.value === undefined ? "" : field.value}
-                              onChange={(e) =>
-                                 field.onChange(
-                                    e.target.value === "" ? undefined : Number(e.target.value),
-                                 )
-                              }
-                           />
+                           <Input placeholder="Pin Code" {...field} />
                         </FormControl>
                         <FormMessage />
                      </FormItem>

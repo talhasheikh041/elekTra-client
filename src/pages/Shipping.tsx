@@ -11,7 +11,7 @@ const Shipping = () => {
    const { state } = useLocation()
    const navigate = useNavigate()
 
-   const cartItems = useAppSelector((state) => state.cardReducer.cartItems)
+   const { cartItems, total } = useAppSelector((state) => state.cardReducer)
 
    useEffect(() => {
       if (cartItems.length <= 0) {
@@ -39,7 +39,7 @@ const Shipping = () => {
          </h1>
 
          <div className="mt-8 flex justify-center">
-            <ShippingForm />
+            <ShippingForm amount={total} />
          </div>
       </section>
    )
