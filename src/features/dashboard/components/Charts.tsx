@@ -28,8 +28,6 @@ ChartJS.register(
    PointElement,
 )
 
-const months = ["January", "February", "March", "April", "May", "June", "July"]
-
 type BarChartProps = {
    data_1: number[]
    data_2: number[]
@@ -37,7 +35,7 @@ type BarChartProps = {
    title_2: string
    bgColor_1: string
    bgColor_2: string
-   labels?: string[]
+   labels: string[]
    horizontal?: boolean
 }
 
@@ -49,7 +47,7 @@ export function BarChart({
    bgColor_1,
    bgColor_2,
    horizontal = false,
-   labels = months,
+   labels,
 }: BarChartProps) {
    const options: ChartOptions<"bar"> = {
       responsive: true,
@@ -193,7 +191,7 @@ type LineChartProps = {
    labels?: string[]
 }
 
-export function LineChart({ data, label, bgColor, borderColor, labels = months }: LineChartProps) {
+export function LineChart({ data, label, bgColor, borderColor, labels }: LineChartProps) {
    const lineChartOptions: ChartOptions<"line"> = {
       responsive: true,
 

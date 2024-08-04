@@ -1,4 +1,14 @@
-import { CartItemType, OrderType, ProductType, ShippingInfoType, UserType } from "@/types/types"
+import {
+   BarType,
+   CartItemType,
+   LineType,
+   OrderType,
+   PieType,
+   ProductType,
+   ShippingInfoType,
+   StatsType,
+   UserType,
+} from "@/types/types"
 
 export type CustomErrorType = {
    status: number
@@ -97,4 +107,24 @@ export type AllUsersResponseType = {
 export type DeleteUserRequestType = {
    userId: string
    adminUserId: string
+}
+
+export type StatsResponseType = {
+   success: true
+   stats: StatsType
+}
+
+export type PieResponseType = {
+   success: true
+   pieCarts: PieType
+}
+
+export type BarResponseType = {
+   success: true
+   barCarts: BarType
+}
+
+export type LineResponseType = {
+   success: true
+   lineCarts: LineType
 }

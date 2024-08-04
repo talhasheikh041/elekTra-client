@@ -51,3 +51,86 @@ export type OrderType = {
    }
    _id: string
 }
+
+export type StatsType = {
+   percentage: {
+      products: number
+      orders: number
+      users: number
+      revenue: number
+   }
+   count: {
+      product: number
+      orders: number
+      users: number
+      totalRevenue: number
+   }
+   barChart: {
+      order: number[]
+      revenue: number[]
+   }
+   categories: {
+      band: number
+      phone: number
+   }
+   userRatio: {
+      male: number
+      female: number
+   }
+   latestTransactions: {
+      _id: string
+      discount: number
+      status: string
+      quantity: number
+      user: {
+         _id: string
+         name: string
+      }
+      amount: number
+   }[]
+}
+
+export type PieType = {
+   orderFulfillmentRatio: {
+      processing: number
+      shipped: number
+      delivered: number
+   }
+   productCategoriesRatio: {
+      band: number
+      phone: number
+   }
+   stockAvailability: {
+      inStock: number
+      outOfStock: number
+   }
+   revenueDistribution: {
+      marketingCost: number
+      discount: number
+      burnt: number
+      productionCost: number
+      netMargin: number
+   }
+   userAgeGroup: {
+      teen: number
+      adult: number
+      old: number
+   }
+   userCount: {
+      admin: number
+      customer: number
+   }
+}
+
+export type BarType = {
+   products: number[]
+   users: number[]
+   orders: number[]
+}
+
+export type LineType = {
+   users: number[]
+   products: number[]
+   discount: number[]
+   revenue: number[]
+}

@@ -1,22 +1,27 @@
+import { selectUser } from "@/features/customers/reducer/user-reducer"
+import { useLineChartQuery } from "@/features/dashboard/api/dashboard-api"
 import { LineChart } from "@/features/dashboard/components/Charts"
+import SkeletonWrapper from "@/features/global-components/shared/Skeleton-Wrapper"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/global-components/ui/card"
+import { Skeleton } from "@/features/global-components/ui/skeleton"
+import { getLastMonths } from "@/lib/utils"
+import { useAppSelector } from "@/redux/store"
+import { CustomErrorType } from "@/types/api-types"
+import { toast } from "sonner"
 
-const months = [
-   "January",
-   "February",
-   "March",
-   "April",
-   "May",
-   "June",
-   "July",
-   "Aug",
-   "Sept",
-   "Oct",
-   "Nov",
-   "Dec",
-]
+const { lastSixMonths, lastTwelveMonths } = getLastMonths()
 
 function Line() {
+   const { user } = useAppSelector(selectUser)
+
+   const { data, isLoading, isError, isSuccess, error } = useLineChartQuery(user?._id!)
+
+   let errorMessage: string | null = null
+   if (isError) {
+      const err = error as CustomErrorType
+      errorMessage = err.data.message
+      toast.error(errorMessage)
+   }
    return (
       <Card>
          <CardHeader>
@@ -25,59 +30,64 @@ function Line() {
             </CardTitle>
          </CardHeader>
          <CardContent className="flex flex-col gap-12 py-6">
-            <section>
-               <div>
-                  <LineChart
-                     data={[200, 444, 444, 556, 778, 455, 990, 1444, 256, 447, 1000, 1200]}
-                     label="Users"
-                     borderColor="rgb(53, 162, 255)"
-                     bgColor="rgba(53, 162, 255,0.5)"
-                     labels={months}
-                  />
-               </div>
-               <h2 className="mt-4 flex justify-center">Active Users</h2>
-            </section>
-            <section>
-               <div>
-                  <LineChart
-                     data={[40, 60, 244, 100, 143, 120, 41, 47, 50, 56, 32]}
-                     bgColor={"hsla(269,80%,40%,0.4)"}
-                     borderColor={"hsl(269,80%,40%)"}
-                     label="Products"
-                     labels={months}
-                  />
-               </div>
-               <h2 className="mt-4 flex justify-center">Total Products (SKU)</h2>
-            </section>
-            <section>
-               <div>
-                  <LineChart
-                     data={[
-                        24000, 14400, 24100, 34300, 90000, 20000, 25600, 44700, 99000, 144400,
-                        100000, 120000,
-                     ]}
-                     bgColor={"hsla(129,80%,40%,0.4)"}
-                     borderColor={"hsl(129,80%,40%)"}
-                     label="Revenue"
-                     labels={months}
-                  />
-               </div>
-               <h2 className="mt-4 flex justify-center">Total Revenue</h2>
-            </section>
-            <section>
-               <div>
-                  <LineChart
-                     data={[
-                        9000, 12000, 12000, 9000, 1000, 5000, 4000, 1200, 1100, 1500, 2000, 5000,
-                     ]}
-                     bgColor={"hsla(29,80%,40%,0.4)"}
-                     borderColor={"hsl(29,80%,40%)"}
-                     label="Discount"
-                     labels={months}
-                  />
-               </div>
-               <h2 className="mt-4 flex justify-center">Discount Allotted</h2>
-            </section>
+            {isLoading ? (
+               <SkeletonWrapper className="flex flex-col items-center gap-10" quantity={2}>
+                  <Skeleton className="w-full h-[300px]" />
+               </SkeletonWrapper>
+            ) : isSuccess && data ? (
+               <>
+                  <section>
+                     <div>
+                        <LineChart
+                           data={data.lineCarts.users}
+                           label="Users"
+                           borderColor="rgb(53, 162, 255)"
+                           bgColor="rgba(53, 162, 255,0.5)"
+                           labels={lastTwelveMonths}
+                        />
+                     </div>
+                     <h2 className="mt-4 flex justify-center">Active Users</h2>
+                  </section>
+                  <section>
+                     <div>
+                        <LineChart
+                           data={data.lineCarts.products}
+                           bgColor={"hsla(269,80%,40%,0.4)"}
+                           borderColor={"hsl(269,80%,40%)"}
+                           label="Products"
+                           labels={lastTwelveMonths}
+                        />
+                     </div>
+                     <h2 className="mt-4 flex justify-center">Total Products (SKU)</h2>
+                  </section>
+                  <section>
+                     <div>
+                        <LineChart
+                           data={data.lineCarts.revenue}
+                           bgColor={"hsla(129,80%,40%,0.4)"}
+                           borderColor={"hsl(129,80%,40%)"}
+                           label="Revenue"
+                           labels={lastTwelveMonths}
+                        />
+                     </div>
+                     <h2 className="mt-4 flex justify-center">Total Revenue</h2>
+                  </section>
+                  <section>
+                     <div>
+                        <LineChart
+                           data={data.lineCarts.discount}
+                           bgColor={"hsla(29,80%,40%,0.4)"}
+                           borderColor={"hsl(29,80%,40%)"}
+                           label="Discount"
+                           labels={lastTwelveMonths}
+                        />
+                     </div>
+                     <h2 className="mt-4 flex justify-center">Discount Allotted</h2>
+                  </section>
+               </>
+            ) : (
+               <p>{errorMessage}</p>
+            )}
          </CardContent>
       </Card>
    )

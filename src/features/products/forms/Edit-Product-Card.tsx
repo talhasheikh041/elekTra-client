@@ -138,7 +138,7 @@ const EditProductCard = ({ product }: EditProductCardProps) => {
 
    return (
       <Dialog open={open} onOpenChange={handleOpenChange}>
-         <DialogTrigger asChild>
+         <DialogTrigger>
             <Badge className="cursor-pointer">Manage</Badge>
          </DialogTrigger>
          <DialogContent className="max-h-screen max-w-4xl overflow-y-auto">

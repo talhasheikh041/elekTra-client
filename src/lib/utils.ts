@@ -4,6 +4,7 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/query"
 import { type ClassValue, clsx } from "clsx"
 import { toast } from "sonner"
 import { twMerge } from "tailwind-merge"
+import moment from "moment"
 
 type ResType =
    | {
@@ -58,4 +59,29 @@ export const areObjectsEqual = (obj1: Object, obj2: Object) => {
    }
 
    return true
+}
+
+export const getLastMonths = () => {
+   const currentDate = moment()
+   currentDate.date(1)
+
+   const lastSixMonths: string[] = []
+   const lastTwelveMonths: string[] = []
+
+   for (let i = 0; i < 6; i++) {
+      const monthDate = currentDate.clone().subtract(i, "months")
+      const monthName = monthDate.format("MMMM")
+      lastSixMonths.unshift(monthName)
+   }
+
+   for (let i = 0; i < 12; i++) {
+      const monthDate = currentDate.clone().subtract(i, "months")
+      const monthName = monthDate.format("MMMM")
+      lastTwelveMonths.unshift(monthName)
+   }
+
+   return {
+      lastSixMonths,
+      lastTwelveMonths,
+   }
 }

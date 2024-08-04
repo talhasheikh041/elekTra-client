@@ -93,7 +93,7 @@ const EditTransaction = ({ order }: EditTransactionProps) => {
 
    return (
       <Dialog>
-         <DialogTrigger asChild>
+         <DialogTrigger>
             <Badge className="cursor-pointer">Manage</Badge>
          </DialogTrigger>
          <DialogContent className="max-h-screen max-w-4xl gap-10 overflow-y-auto">
