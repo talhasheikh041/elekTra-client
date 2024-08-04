@@ -1,4 +1,4 @@
-import { userApi } from "@/features/customers/api/user-api"
+import { useLazyGetUserQuery } from "@/features/customers/api/user-api"
 import { userExist, userNotExist } from "@/features/customers/reducer/user-reducer"
 import { auth } from "@/firebase"
 import { useAppDispatch } from "@/redux/store"
@@ -6,7 +6,7 @@ import { onAuthStateChanged } from "firebase/auth"
 import { useEffect } from "react"
 
 const useAuthChanged = () => {
-   const [trigger] = userApi.useLazyGetUserQuery()
+   const [trigger] = useLazyGetUserQuery()
    const dispatch = useAppDispatch()
 
    useEffect(() => {

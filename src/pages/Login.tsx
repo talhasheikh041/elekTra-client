@@ -1,12 +1,19 @@
 import LoginForm from "@/features/auth/forms/Login-Form"
 import { selectUser } from "@/features/customers/reducer/user-reducer"
 import { useAppSelector } from "@/redux/store"
-import { Navigate } from "react-router-dom"
+import { useEffect } from "react"
+import { useLocation, useNavigate } from "react-router-dom"
 
 const Login = () => {
    const { user } = useAppSelector(selectUser)
+   const location = useLocation()
+   const navigate = useNavigate()
 
-   if (user) return <Navigate to={"/"} />
+   useEffect(() => {
+      if (user) {
+         navigate(location.state?.from || "/")
+      }
+   }, [user])
 
    return (
       <div>

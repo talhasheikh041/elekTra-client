@@ -35,4 +35,4 @@ export const userApi = createApi({
    }),
 })
 
-export const { useGetUserQuery, useAllUsersQuery, useDeleteUserMutation } = userApi
+export const { useLazyGetUserQuery, useAllUsersQuery, useDeleteUserMutation } = userApi

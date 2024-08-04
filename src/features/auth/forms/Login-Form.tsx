@@ -11,6 +11,9 @@ import {
    FormMessage,
 } from "@/features/global-components/ui/form"
 
+import { useLoginMutation } from "@/features/auth/api/auth-api"
+import { useLazyGetUserQuery } from "@/features/customers/api/user-api"
+import { userExist, userNotExist } from "@/features/customers/reducer/user-reducer"
 import { Calendar } from "@/features/global-components/ui/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/features/global-components/ui/popover"
 import {
@@ -20,16 +23,16 @@ import {
    SelectTrigger,
    SelectValue,
 } from "@/features/global-components/ui/select"
-import { cn, responseToast } from "@/lib/utils"
+import { auth } from "@/firebase"
+import { cn } from "@/lib/utils"
+import { useAppDispatch } from "@/redux/store"
+import { CustomErrorType, MessageResponseType } from "@/types/api-types"
 import { format } from "date-fns"
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth"
 import { CalendarIcon } from "lucide-react"
 import { FaGoogle } from "react-icons/fa"
+import { useLocation, useNavigate } from "react-router-dom"
 import { toast } from "sonner"
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth"
-import { auth } from "@/firebase"
-import { useLoginMutation } from "@/features/auth/api/auth-api"
-import { FetchBaseQueryError } from "@reduxjs/toolkit/query"
-import { MessageResponseType } from "@/types/api-types"
 
 const loginSchema = z.object({
    gender: z.string().min(1, { message: "Gender is required" }).optional(),
@@ -49,7 +52,12 @@ const LoginForm = () => {
       },
    })
 
+   const location = useLocation()
+   const dispatch = useAppDispatch()
+   const navigate = useNavigate()
+
    const [login] = useLoginMutation()
+   const [trigger] = useLazyGetUserQuery()
 
    async function onSubmit(values: z.infer<typeof loginSchema>) {
       const { dob, gender } = values
@@ -57,18 +65,21 @@ const LoginForm = () => {
          const provider = new GoogleAuthProvider()
          const { user } = await signInWithPopup(auth, provider)
 
-         const res = await login({
+         await login({
             _id: user.uid,
             name: user.displayName!,
             email: user.email!,
-            gender,
-            dob: dob?.toISOString(),
+            gender: gender!,
+            dob: dob?.toISOString()!,
             photo: user.photoURL!,
-         })
+         }).unwrap()
 
-         responseToast(res)
+         const data = await trigger(user.uid).unwrap()
+         dispatch(userExist(data.user))
       } catch (error) {
-         toast.error("Error loging the user!")
+         const err = error as CustomErrorType
+         toast.error(err.data.message)
+         dispatch(userNotExist())
       }
    }
 

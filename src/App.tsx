@@ -7,13 +7,13 @@ import {
 } from "react-router-dom"
 
 // Hooks
-import useAuthChanged from "@/features/auth/hooks/use-auth-changed"
 
 // Components
 import DashboardLayout from "@/features/global-components/layout/Dashboard-Layout"
 import RootLayout from "@/features/global-components/layout/Root-Layout"
 import RequireAuth from "@/features/global-components/shared/Require-Auth"
 import Error404 from "@/features/global-components/shared/Error-404"
+import PersistAuth from "@/features/global-components/shared/Persist-Auth"
 
 // User Pages
 const Home = lazy(() => import("@/pages/Home"))
@@ -37,45 +37,45 @@ const Toss = lazy(() => import("@/pages/admin/apps/Toss"))
 const Coupon = lazy(() => import("@/pages/admin/apps/Coupon"))
 
 function App() {
-   useAuthChanged()
-
    const router = createBrowserRouter(
       createRoutesFromElements(
          <Route errorElement={<Error404 />}>
-            <Route path="/" element={<RootLayout />}>
-               <Route index element={<Home />} />
-               <Route path="cart" element={<Cart />} />
-               <Route path="search" element={<Search />} />
-               <Route path="login" element={<Login />} />
+            <Route element={<PersistAuth />}>
+               <Route path="/" element={<RootLayout />}>
+                  <Route index element={<Home />} />
+                  <Route path="cart" element={<Cart />} />
+                  <Route path="search" element={<Search />} />
+                  <Route path="login" element={<Login />} />
 
-               {/* Require Auth Routes */}
-               <Route element={<RequireAuth isAdmin={false} />}>
-                  <Route>
-                     <Route path="shipping" element={<Shipping />} />
-                     <Route path="pay" element={<Checkout />} />
-                     <Route path="myorders" element={<MyOrders />} />
+                  {/* Require Auth Routes */}
+                  <Route element={<RequireAuth isAdmin={false} />}>
+                     <Route>
+                        <Route path="shipping" element={<Shipping />} />
+                        <Route path="pay" element={<Checkout />} />
+                        <Route path="myorders" element={<MyOrders />} />
+                     </Route>
                   </Route>
                </Route>
-            </Route>
 
-            {/* Admin Routes */}
-            <Route element={<RequireAuth isAdmin={true} />}>
-               <Route path="/admin" element={<DashboardLayout />}>
-                  <Route path="dashboard" element={<Dashboard />} />
-                  <Route path="customers" element={<Customers />} />
-                  <Route path="products" element={<Products />} />
-                  <Route path="transactions" element={<Transactions />} />
+               {/* Admin Routes */}
+               <Route element={<RequireAuth isAdmin={true} />}>
+                  <Route path="/admin" element={<DashboardLayout />}>
+                     <Route path="dashboard" element={<Dashboard />} />
+                     <Route path="customers" element={<Customers />} />
+                     <Route path="products" element={<Products />} />
+                     <Route path="transactions" element={<Transactions />} />
 
-                  <Route path="charts">
-                     <Route path="bar" element={<Bar />} />
-                     <Route path="pie" element={<Pie />} />
-                     <Route path="line" element={<Line />} />
-                  </Route>
+                     <Route path="charts">
+                        <Route path="bar" element={<Bar />} />
+                        <Route path="pie" element={<Pie />} />
+                        <Route path="line" element={<Line />} />
+                     </Route>
 
-                  <Route path="apps">
-                     <Route path="stopwatch" element={<Stopwatch />} />
-                     <Route path="toss" element={<Toss />} />
-                     <Route path="coupon" element={<Coupon />} />
+                     <Route path="apps">
+                        <Route path="stopwatch" element={<Stopwatch />} />
+                        <Route path="toss" element={<Toss />} />
+                        <Route path="coupon" element={<Coupon />} />
+                     </Route>
                   </Route>
                </Route>
             </Route>
