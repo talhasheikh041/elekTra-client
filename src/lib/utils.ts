@@ -85,3 +85,11 @@ export const getLastMonths = () => {
       lastTwelveMonths,
    }
 }
+
+export const currencyFormatter = (currency: number) => {
+   return new Intl.NumberFormat("en-us", {
+      style: "currency",
+      currency: "USD",
+      maximumFractionDigits: 0,
+   }).format(currency)
+}

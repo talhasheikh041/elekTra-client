@@ -14,7 +14,21 @@ export type ProductType = {
    stock: number
    category: string
    photo: string
+   rating: number
+   totalReviews: number
    _id: string
+}
+
+export type ReviewType = {
+   _id: string
+   product: string
+   user: {
+      _id: string
+      name: string
+      photo: string
+   }
+   rating: number
+   comment: string
 }
 
 export type ShippingInfoType = {

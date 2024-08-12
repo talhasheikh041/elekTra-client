@@ -23,6 +23,7 @@ const Shipping = lazy(() => import("@/pages/Shipping"))
 const Login = lazy(() => import("@/pages/Login"))
 const MyOrders = lazy(() => import("@/pages/My-Orders"))
 const Checkout = lazy(() => import("@/pages/Checkout"))
+const ProductDetails = lazy(() => import("@/pages/Product-Details"))
 
 // Admin Pages
 const Dashboard = lazy(() => import("@/pages/admin/Dashboard"))
@@ -39,13 +40,14 @@ const Coupon = lazy(() => import("@/pages/admin/apps/Coupon"))
 function App() {
    const router = createBrowserRouter(
       createRoutesFromElements(
-         <Route errorElement={<Error404 />}>
-            <Route element={<PersistAuth />}>
-               <Route path="/" element={<RootLayout />}>
+         <Route element={<PersistAuth />}>
+            <Route path="/" element={<RootLayout />}>
+               <Route errorElement={<Error404 />}>
                   <Route index element={<Home />} />
                   <Route path="cart" element={<Cart />} />
                   <Route path="search" element={<Search />} />
                   <Route path="login" element={<Login />} />
+                  <Route path="/product/:productId" element={<ProductDetails />} />
 
                   {/* Require Auth Routes */}
                   <Route element={<RequireAuth isAdmin={false} />}>
@@ -56,26 +58,26 @@ function App() {
                      </Route>
                   </Route>
                </Route>
+            </Route>
 
-               {/* Admin Routes */}
-               <Route element={<RequireAuth isAdmin={true} />}>
-                  <Route path="/admin" element={<DashboardLayout />}>
-                     <Route path="dashboard" element={<Dashboard />} />
-                     <Route path="customers" element={<Customers />} />
-                     <Route path="products" element={<Products />} />
-                     <Route path="transactions" element={<Transactions />} />
+            {/* Admin Routes */}
+            <Route element={<RequireAuth isAdmin={true} />}>
+               <Route path="/admin" element={<DashboardLayout />}>
+                  <Route path="dashboard" element={<Dashboard />} />
+                  <Route path="customers" element={<Customers />} />
+                  <Route path="products" element={<Products />} />
+                  <Route path="transactions" element={<Transactions />} />
 
-                     <Route path="charts">
-                        <Route path="bar" element={<Bar />} />
-                        <Route path="pie" element={<Pie />} />
-                        <Route path="line" element={<Line />} />
-                     </Route>
+                  <Route path="charts">
+                     <Route path="bar" element={<Bar />} />
+                     <Route path="pie" element={<Pie />} />
+                     <Route path="line" element={<Line />} />
+                  </Route>
 
-                     <Route path="apps">
-                        <Route path="stopwatch" element={<Stopwatch />} />
-                        <Route path="toss" element={<Toss />} />
-                        <Route path="coupon" element={<Coupon />} />
-                     </Route>
+                  <Route path="apps">
+                     <Route path="stopwatch" element={<Stopwatch />} />
+                     <Route path="toss" element={<Toss />} />
+                     <Route path="coupon" element={<Coupon />} />
                   </Route>
                </Route>
             </Route>

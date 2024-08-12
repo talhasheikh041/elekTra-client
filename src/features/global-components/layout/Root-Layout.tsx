@@ -1,4 +1,5 @@
 import BounceLoader from "@/features/global-components/shared/Bounce-Loader"
+import Footer from "@/features/global-components/shared/Footer"
 import Header from "@/features/global-components/shared/Header"
 import ScrollTotop from "@/features/global-components/shared/ScrollToTop"
 import { Suspense } from "react"
@@ -8,10 +9,15 @@ const RootLayout = () => {
    return (
       <>
          <ScrollTotop />
-         <Header />
-         <Suspense fallback={<BounceLoader />}>
-            <Outlet />
-         </Suspense>
+         <div className="grid grid-cols-1 grid-rows-[auto_1fr_auto] min-h-dvh">
+            <Header />
+            <div>
+               <Suspense fallback={<BounceLoader />}>
+                  <Outlet />
+               </Suspense>
+            </div>
+            <Footer />
+         </div>
       </>
    )
 }

@@ -1,3 +1,4 @@
+import { currencyFormatter } from "@/lib/utils"
 import { useAppSelector } from "@/redux/store"
 
 const CartBill = () => {
@@ -5,35 +6,11 @@ const CartBill = () => {
       (state) => state.cartReducer,
    )
 
-   const formattedDiscount = new Intl.NumberFormat("en-us", {
-      style: "currency",
-      currency: "USD",
-      maximumFractionDigits: 0,
-   }).format(discount)
-
-   const formattedShippingCharges = new Intl.NumberFormat("en-us", {
-      style: "currency",
-      currency: "USD",
-      maximumFractionDigits: 0,
-   }).format(shippingCharges)
-
-   const formattedSubtotal = new Intl.NumberFormat("en-us", {
-      style: "currency",
-      currency: "USD",
-      maximumFractionDigits: 0,
-   }).format(subtotal)
-
-   const formattedTax = new Intl.NumberFormat("en-us", {
-      style: "currency",
-      currency: "USD",
-      maximumFractionDigits: 0,
-   }).format(tax)
-
-   const formattedTotal = new Intl.NumberFormat("en-us", {
-      style: "currency",
-      currency: "USD",
-      maximumFractionDigits: 0,
-   }).format(total)
+   const formattedDiscount = currencyFormatter(discount)
+   const formattedShippingCharges = currencyFormatter(shippingCharges)
+   const formattedSubtotal = currencyFormatter(subtotal)
+   const formattedTax = currencyFormatter(tax)
+   const formattedTotal = currencyFormatter(total)
 
    return (
       <>

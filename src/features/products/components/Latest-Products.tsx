@@ -1,4 +1,12 @@
 import SkeletonWrapper from "@/features/global-components/shared/Skeleton-Wrapper"
+import {
+   Carousel,
+   CarouselContent,
+   CarouselDotButtons,
+   CarouselItem,
+   CarouselNext,
+   CarouselPrevious,
+} from "@/features/global-components/ui/carousel"
 import { Skeleton } from "@/features/global-components/ui/skeleton"
 import { useLatestProdcutsQuery } from "@/features/products/api/product-api"
 import ProductCard from "@/features/products/components/Product-Card"
@@ -19,30 +27,46 @@ const LatestProducts = () => {
 
    return (
       <>
-         <div className="flex items-center justify-between font-light uppercase tracking-widest">
-            <h1 className="text-2xl">Latest Products</h1>
-            <Link className="hover:font-normal" to={"search"}>
+         <div className="mb-8 flex items-center justify-between font-light uppercase tracking-widest">
+            <h1 className="text-lg sm:text-2xl">Latest Products</h1>
+            <Link className="text-xs hover:font-normal md:text-sm" to={"search"}>
                More
             </Link>
          </div>
 
          {isLoading ? (
-            <SkeletonWrapper className="mt-8 flex w-full justify-between" quantity={4}>
-               <Skeleton className="h-64 w-64" />
+            <SkeletonWrapper className="mt-8 flex w-full gap-3" quantity={4}>
+               <Skeleton className="h-64 w-80" />
             </SkeletonWrapper>
          ) : isSuccess && data ? (
-            <div className="mt-8 flex snap-x snap-mandatory gap-3 overflow-x-scroll">
-               {data.products.map((product) => (
-                  <ProductCard
-                     key={product._id}
-                     name={product.name}
-                     price={product.price}
-                     photo={product.photo}
-                     stock={product.stock}
-                     productId={product._id}
-                  />
-               ))}
-            </div>
+            <Carousel>
+               <CarouselContent className="-ml-[calc(2rem*1)] flex touch-pan-y touch-pinch-zoom gap-5">
+                  {data.products.map((product) => (
+                     <CarouselItem
+                        className="w-full min-w-0 flex-shrink-0 grow basis-auto pl-6 sm:w-1/2 md:pl-8 lg:w-1/4"
+                        key={product._id}
+                     >
+                        <ProductCard
+                           name={product.name}
+                           price={product.price}
+                           photo={product.photo}
+                           stock={product.stock}
+                           productId={product._id}
+                        />
+                     </CarouselItem>
+                  ))}
+               </CarouselContent>
+               <div className="mt-7 grid grid-cols-[auto_1fr] justify-between gap-5">
+                  <div className="grid grid-cols-2 items-center gap-2">
+                     <CarouselPrevious className="static translate-y-0" />
+                     <CarouselNext className="static translate-y-0" />
+                  </div>
+
+                  <div className="embla__dots">
+                     <CarouselDotButtons />
+                  </div>
+               </div>
+            </Carousel>
          ) : (
             <p className="grid place-items-center">{errorMessage}</p>
          )}

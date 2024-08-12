@@ -5,6 +5,7 @@ import {
    OrderType,
    PieType,
    ProductType,
+   ReviewType,
    ShippingInfoType,
    StatsType,
    UserType,
@@ -36,6 +37,28 @@ export type AllProductsResponseType = {
 export type CategoriesResponseType = {
    success: true
    categories: string[]
+}
+
+export type SingleProductResponseType = {
+   success: true
+   product: ProductType
+}
+
+export type AllReviewsProductResponse = {
+   success: true
+   reviews: ReviewType[]
+}
+
+export type NewReviewRequestType = {
+   rating: number
+   comment: string
+   userId?: string
+   productId: string
+}
+
+export type DeleteReviewRequestType = {
+   reviewId: string
+   userId?: string
 }
 
 export type SearchProductsResponseType = AllProductsResponseType & {

@@ -99,7 +99,7 @@ const AddProductCard = () => {
                </MyTooltip>
             </Button>
          </DialogTrigger>
-         <DialogContent className="h-full overflow-y-scroll">
+         <DialogContent className="max-h-full overflow-y-scroll">
             <DialogHeader>
                <DialogTitle className="mx-auto text-2xl font-light uppercase tracking-widest">
                   New Product
@@ -195,6 +195,7 @@ const AddProductCard = () => {
                               <FormControl>
                                  <Input
                                     type="file"
+                                    multiple
                                     onChange={(e) => {
                                        const file = e.target.files?.[0]
                                        if (file) {

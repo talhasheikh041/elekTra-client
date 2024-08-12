@@ -2,6 +2,7 @@ import { Button } from "@/features/global-components/ui/button"
 import { TableCell, TableRow } from "@/features/global-components/ui/table"
 import { addToCart, removeCartItem } from "@/features/products/reducer/cart-reducer"
 import { useAppDispatch } from "@/redux/store"
+import { Minus, Plus } from "lucide-react"
 import { FaTrash } from "react-icons/fa"
 import { toast } from "sonner"
 
@@ -69,7 +70,7 @@ const CartItem = ({ name, photo, price, productId, quantity, stock }: CartItemPr
                   className="flex size-8 cursor-pointer items-center justify-center text-lg"
                   size="icon"
                >
-                  +
+                  <Minus size={"20px"} />
                </Button>
                <p>{quantity}</p>
                <Button
@@ -78,7 +79,7 @@ const CartItem = ({ name, photo, price, productId, quantity, stock }: CartItemPr
                   className="flex size-8 cursor-pointer items-center justify-center text-lg"
                   size="icon"
                >
-                  -
+                  <Plus size={"20px"} />
                </Button>
             </div>
          </TableCell>
