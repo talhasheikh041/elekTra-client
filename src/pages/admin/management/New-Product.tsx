@@ -91,8 +91,16 @@ const NewProduct = () => {
 
          const res = await newProduct({ id: user?._id!, formData })
          responseToast(res)
-         form.reset()
          editorRef.current?.clearEditor()
+         form.reset({
+            name: "",
+            category: "",
+            detail: "",
+            shortDescription: "",
+            price: undefined,
+            stock: undefined,
+            photos: undefined,
+         })
       } catch (error) {
          toast.error(error as string)
       }
@@ -213,7 +221,11 @@ const NewProduct = () => {
                                  <FormLabel>Product Detail</FormLabel>
                                  <FormControl>
                                     {/* <Textarea className="h-60 resize-none" {...field} /> */}
-                                    <Tiptap description={field.value} onChange={field.onChange} />
+                                    <Tiptap
+                                       ref={editorRef}
+                                       description={field.value}
+                                       onChange={field.onChange}
+                                    />
                                  </FormControl>
                                  <FormMessage />
                               </FormItem>
@@ -270,7 +282,7 @@ const NewProduct = () => {
                      </div>
 
                      <div className="col-span-full flex justify-center">
-                        <Button className="text-md mx-auto px-6" type="submit">
+                        <Button className="text-md mx-auto px-6" type="submit" disabled={isLoading}>
                            {isLoading ? (
                               <span className="inline-flex items-center gap-2">
                                  Creating <Loader className="animate-spin" />

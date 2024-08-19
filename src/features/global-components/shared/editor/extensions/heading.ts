@@ -4,7 +4,7 @@ const CustomHeading = Heading.extend({
    addOptions(): HeadingOptions {
       return {
          ...this.parent?.(),
-         levels: [1, 2, 3, 4, 5, 6], // Specify the heading levels you want to support
+         levels: [1, 2, 3, 4], // Specify the heading levels you want to support
          HTMLAttributes: {},
       }
    },
@@ -15,12 +15,10 @@ const CustomHeading = Heading.extend({
          : this.options.levels[0]
 
       const classes = {
-         1: "text-4xl font-bold",
-         2: "text-3xl font-semibold",
-         3: "text-2xl font-medium",
-         4: "text-xl font-regular",
-         5: "text-lg font-light",
-         6: "text-base font-thin",
+         1: "scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl",
+         2: "scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0",
+         3: "scroll-m-20 text-2xl font-semibold tracking-tight",
+         4: "scroll-m-20 text-xl font-semibold tracking-tight",
       }
 
       return [

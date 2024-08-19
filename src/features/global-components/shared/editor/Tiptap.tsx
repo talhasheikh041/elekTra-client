@@ -1,173 +1,17 @@
-import { useUploadImage } from "@/features/global-components/shared/editor/extensions/use-upload-image"
-import { Button } from "@/features/global-components/ui/button"
-import { Toggle } from "@/features/global-components/ui/toggle"
-import Highlight from "@tiptap/extension-highlight"
-import TextAlign from "@tiptap/extension-text-align"
-import { EditorContent, useEditor, type Editor } from "@tiptap/react"
-import StarterKit from "@tiptap/starter-kit"
-import {
-   AlignCenter,
-   AlignJustify,
-   AlignLeft,
-   AlignRight,
-   Bold,
-   Heading1,
-   Heading2,
-   Heading3,
-   Highlighter,
-   ImageIcon,
-   Italic,
-   Loader,
-   Pilcrow,
-   Strikethrough,
-} from "lucide-react"
-import { forwardRef, useCallback, useImperativeHandle, useState } from "react"
-
-import CustomHeading from "@/features/global-components/shared/editor/extensions/heading"
-import CustomImage from "@/features/global-components/shared/editor/extensions/image"
+import { forwardRef, useImperativeHandle, useState } from "react"
+import { EditorContent, useEditor } from "@tiptap/react"
+import MenuBar from "@/features/global-components/shared/editor/Menu-Bar"
 import DOMPurify from "dompurify"
 import { TiptapEditorRef } from "@/pages/admin/management/New-Product"
 
-type MenuBarProps = {
-   editor: Editor | null
-   deleteImageLoading: boolean
-}
-
-const MenuBar = ({ editor, deleteImageLoading }: MenuBarProps) => {
-   if (!editor) {
-      return null
-   }
-   const { uploadImage, isLoading } = useUploadImage()
-
-   const addImage = useCallback(() => {
-      const fileInput = document.createElement("input")
-      fileInput.type = "file"
-      fileInput.accept = "image/*"
-
-      // Attach an event listener to handle file selection
-      fileInput.onchange = async (event: Event) => {
-         const target = event.target as HTMLInputElement
-         const file = target.files?.[0]
-         if (file) {
-            const url = await uploadImage(file)
-            if (url) editor.chain().focus().setImage({ src: url }).run()
-         }
-      }
-
-      // Programmatically trigger the file input click
-      fileInput.click()
-
-      // Optionally, remove the file input element after the click
-      fileInput.remove()
-   }, [editor])
-
-   return (
-      <div className="control-group">
-         <div className="rounded-sm border p-1">
-            <Toggle
-               size={"sm"}
-               onPressedChange={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-               pressed={editor.isActive("heading", { level: 1 })}
-            >
-               <Heading1 className="size-5" />
-            </Toggle>
-            <Toggle
-               size={"sm"}
-               onPressedChange={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-               pressed={editor.isActive("heading", { level: 2 })}
-            >
-               <Heading2 className="size-5" />
-            </Toggle>
-            <Toggle
-               size={"sm"}
-               onPressedChange={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-               pressed={editor.isActive("heading", { level: 3 })}
-            >
-               <Heading3 className="size-5" />
-            </Toggle>
-
-            <Toggle
-               size={"sm"}
-               onPressedChange={() => editor.chain().focus().setParagraph().run()}
-               pressed={editor.isActive("paragraph")}
-            >
-               <Pilcrow className="size-5" />
-            </Toggle>
-
-            <Toggle
-               size={"sm"}
-               onPressedChange={() => editor.chain().focus().toggleBold().run()}
-               pressed={editor.isActive("bold")}
-            >
-               <Bold className="size-5" />
-            </Toggle>
-
-            <Toggle
-               size={"sm"}
-               onPressedChange={() => editor.chain().focus().toggleItalic().run()}
-               pressed={editor.isActive("italic")}
-            >
-               <Italic className="size-5" />
-            </Toggle>
-
-            <Toggle
-               size={"sm"}
-               onPressedChange={() => editor.chain().focus().toggleStrike().run()}
-               pressed={editor.isActive("strike")}
-            >
-               <Strikethrough className="size-5" />
-            </Toggle>
-
-            <Toggle
-               size={"sm"}
-               onPressedChange={() => editor.chain().focus().toggleHighlight().run()}
-               pressed={editor.isActive("highlight")}
-            >
-               <Highlighter className="size-5" />
-            </Toggle>
-
-            <Toggle
-               size={"sm"}
-               onPressedChange={() => editor.chain().focus().setTextAlign("left").run()}
-               pressed={editor.isActive({ textAlign: "left" })}
-            >
-               <AlignLeft className="size-5" />
-            </Toggle>
-
-            <Toggle
-               size={"sm"}
-               onPressedChange={() => editor.chain().focus().setTextAlign("center").run()}
-               pressed={editor.isActive({ textAlign: "center" })}
-            >
-               <AlignCenter className="size-5" />
-            </Toggle>
-
-            <Toggle
-               size={"sm"}
-               onPressedChange={() => editor.chain().focus().setTextAlign("right").run()}
-               pressed={editor.isActive({ textAlign: "right" })}
-            >
-               <AlignRight className="size-5" />
-            </Toggle>
-
-            <Toggle
-               size={"sm"}
-               onPressedChange={() => editor.chain().focus().setTextAlign("justify").run()}
-               pressed={editor.isActive({ textAlign: "justify" })}
-            >
-               <AlignJustify className="size-5" />
-            </Toggle>
-            <Button variant={"ghost"} size={"icon"} type="button" onClick={addImage}>
-               {isLoading || deleteImageLoading ? (
-                  <Loader className="animate-spin" />
-               ) : (
-                  <ImageIcon className="size-5" />
-               )}
-            </Button>
-         </div>
-      </div>
-   )
-}
+// Extensions
+import StarterKit from "@tiptap/starter-kit"
+import Highlight from "@tiptap/extension-highlight"
+import TextAlign from "@tiptap/extension-text-align"
+import BulletList from "@tiptap/extension-bullet-list"
+import ListItem from "@tiptap/extension-list-item"
+import CustomHeading from "@/features/global-components/shared/editor/extensions/heading"
+import CustomImage from "@/features/global-components/shared/editor/extensions/image"
 
 type TiptapProps = {
    description: string
@@ -184,6 +28,21 @@ const Tiptap = forwardRef<TiptapEditorRef, TiptapProps>(({ description, onChange
                keepMarks: false,
             },
             heading: false,
+            paragraph: {
+               HTMLAttributes: {
+                  class: "leading-7 [&:not(:first-child)]:mt-6",
+               },
+            },
+            blockquote: {
+               HTMLAttributes: {
+                  class: "mt-6 border-l-2 pl-6 italic",
+               },
+            },
+            code: {
+               HTMLAttributes: {
+                  class: "relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold",
+               },
+            },
          }),
          TextAlign.configure({
             types: ["heading", "paragraph"],
@@ -193,6 +52,12 @@ const Tiptap = forwardRef<TiptapEditorRef, TiptapProps>(({ description, onChange
          CustomImage.configure({
             onDeleteImage: (loading: boolean) => setDeleteImageLoading(loading),
          }),
+         BulletList.configure({
+            HTMLAttributes: {
+               class: "my-6 ml-6 list-disc [&>li]:mt-2",
+            },
+         }),
+         ListItem,
       ],
       content: description,
       editorProps: {
@@ -210,7 +75,8 @@ const Tiptap = forwardRef<TiptapEditorRef, TiptapProps>(({ description, onChange
 
    useImperativeHandle(ref, () => ({
       clearEditor: () => {
-         editor?.commands.clearContent(true) // Clear the editor content
+         console.log("clearing editor")
+         editor?.commands.clearContent() // Clear the editor content
       },
    }))
 
