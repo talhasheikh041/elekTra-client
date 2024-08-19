@@ -13,7 +13,12 @@ export type ProductType = {
    price: number
    stock: number
    category: string
-   photo: string
+   photos: {
+      public_id: string
+      url: string
+   }[]
+   shortDescription: string
+   detail: string
    rating: number
    totalReviews: number
    _id: string

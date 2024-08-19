@@ -191,14 +191,7 @@ const Search = () => {
             ) : searchProducts?.products.length && searchProductsIsSuccess ? (
                <div className="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3">
                   {searchProducts.products.map((product) => (
-                     <ProductCard
-                        key={product._id}
-                        name={product.name}
-                        photo={product.photo}
-                        price={product.price}
-                        productId={product._id}
-                        stock={product.stock}
-                     />
+                     <ProductCard key={product._id} product={product} />
                   ))}
                </div>
             ) : (

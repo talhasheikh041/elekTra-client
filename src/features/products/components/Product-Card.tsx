@@ -1,41 +1,35 @@
 import MyTooltip from "@/features/global-components/shared/My-Tooltip"
 import { buttonVariants } from "@/features/global-components/ui/button"
 import { addToCart } from "@/features/products/reducer/cart-reducer"
-import { cn } from "@/lib/utils"
+import { cn, currencyFormatter } from "@/lib/utils"
 import { useAppDispatch } from "@/redux/store"
+import { ProductType } from "@/types/types"
 import { Eye } from "lucide-react"
 import { BiCartAdd } from "react-icons/bi"
 import { Link } from "react-router-dom"
 import { toast } from "sonner"
 
 type ProductCardProps = {
-   name: string
-   price: number
-   photo: string
-   stock: number
-   productId: string
+   product: ProductType
 }
 
-const ProductCard = ({ name, photo, price, productId, stock }: ProductCardProps) => {
-   const formattedPrice = new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-   }).format(price)
+const ProductCard = ({ product }: ProductCardProps) => {
+   const formattedPrice = currencyFormatter(product.price)
 
-   const photoURL = `${import.meta.env.VITE_SERVER_LINK}/uploads/${photo}`
+   const photoURL = `${product.photos[0].url}`
 
    const dispatch = useAppDispatch()
 
    const addToCartHandler = () => {
-      if (stock < 1) return toast.error("Product out of stock")
+      if (product.stock < 1) return toast.error("Product out of stock")
 
       dispatch(
          addToCart({
-            name,
-            photo,
-            price,
-            productId,
-            stock,
+            name: product.name,
+            photo: product.photos[0].url,
+            price: product.price,
+            productId: product._id,
+            stock: product.stock,
             quantity: 1,
          }),
       )
@@ -48,7 +42,7 @@ const ProductCard = ({ name, photo, price, productId, stock }: ProductCardProps)
          <div>
             <img src={photoURL} className="h-60 rounded-lg object-contain" alt="product" />
          </div>
-         <p className="mt-4 text-sm">{name}</p>
+         <p className="mt-4 text-sm">{product.name}</p>
          <p className="mt-1 font-medium">{formattedPrice}</p>
 
          <div className="absolute flex h-full w-full items-center justify-center gap-2 rounded-lg bg-secondary/35 opacity-0 hover:opacity-100">
@@ -65,7 +59,7 @@ const ProductCard = ({ name, photo, price, productId, stock }: ProductCardProps)
             </MyTooltip>
 
             <MyTooltip title="Details">
-               <Link to={`/product/${productId}`}>
+               <Link to={`/product/${product._id}`}>
                   <span
                      className={cn(
                         buttonVariants({ variant: "default" }),

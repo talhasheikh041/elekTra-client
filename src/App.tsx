@@ -11,9 +11,9 @@ import {
 // Components
 import DashboardLayout from "@/features/global-components/layout/Dashboard-Layout"
 import RootLayout from "@/features/global-components/layout/Root-Layout"
-import RequireAuth from "@/features/global-components/shared/Require-Auth"
 import Error404 from "@/features/global-components/shared/Error-404"
 import PersistAuth from "@/features/global-components/shared/Persist-Auth"
+import RequireAuth from "@/features/global-components/shared/Require-Auth"
 
 // User Pages
 const Home = lazy(() => import("@/pages/Home"))
@@ -28,6 +28,7 @@ const ProductDetails = lazy(() => import("@/pages/Product-Details"))
 // Admin Pages
 const Dashboard = lazy(() => import("@/pages/admin/Dashboard"))
 const Products = lazy(() => import("@/pages/admin/Products"))
+const NewProduct = lazy(() => import("@/pages/admin/management/New-Product"))
 const Transactions = lazy(() => import("@/pages/admin/Transactions"))
 const Customers = lazy(() => import("@/pages/admin/Customers"))
 const Bar = lazy(() => import("@/pages/admin/charts/Bar"))
@@ -47,7 +48,7 @@ function App() {
                   <Route path="cart" element={<Cart />} />
                   <Route path="search" element={<Search />} />
                   <Route path="login" element={<Login />} />
-                  <Route path="/product/:productId" element={<ProductDetails />} />
+                  <Route path="product/:productId" element={<ProductDetails />} />
 
                   {/* Require Auth Routes */}
                   <Route element={<RequireAuth isAdmin={false} />}>
@@ -65,7 +66,10 @@ function App() {
                <Route path="/admin" element={<DashboardLayout />}>
                   <Route path="dashboard" element={<Dashboard />} />
                   <Route path="customers" element={<Customers />} />
-                  <Route path="products" element={<Products />} />
+                  <Route path="products">
+                     <Route index element={<Products />} />
+                     <Route path="new" element={<NewProduct />} />
+                  </Route>
                   <Route path="transactions" element={<Transactions />} />
 
                   <Route path="charts">

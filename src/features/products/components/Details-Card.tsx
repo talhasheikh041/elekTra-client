@@ -15,7 +15,18 @@ type DetailsCardProps = {
 }
 
 const DetailsCard = ({ product }: DetailsCardProps) => {
-   const { _id, category, name, photo, price, rating, stock, totalReviews } = product
+   const {
+      _id,
+      category,
+      name,
+      photo,
+      price,
+      rating,
+      stock,
+      totalReviews,
+      shortDescription,
+      detail,
+   } = product
    const [quantity, setQuantity] = useState<number>(1)
 
    const dispatch = useAppDispatch()
@@ -68,9 +79,7 @@ const DetailsCard = ({ product }: DetailsCardProps) => {
 
          <div className="mt-4">
             <p className="max-w-lg font-extralight leading-7 [&:not(:first-child)]:mt-6">
-               We get to enjoy that 120 Hz ProMotion refresh rate, the Always On feature (which used
-               to be a bit too "on", but iOS settings now let us tone it down), and super-high peak
-               brightness capabilities for watching HDR video in any situation
+               {shortDescription}
             </p>
          </div>
 

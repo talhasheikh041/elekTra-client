@@ -1,6 +1,5 @@
 import SkeletonWrapper from "@/features/global-components/shared/Skeleton-Wrapper"
 import { Button } from "@/features/global-components/ui/button"
-import { Progress } from "@/features/global-components/ui/progress"
 import { Skeleton } from "@/features/global-components/ui/skeleton"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/features/global-components/ui/tabs"
 import {
@@ -42,8 +41,7 @@ const ProductDetails = () => {
 
    if (reviewsIsError) {
       const err = reviewsError as CustomErrorType
-      errorMessage = err.data.message
-      toast.error(errorMessage)
+      reviewsErrorMessage = err.data.message
    }
 
    return (
@@ -56,7 +54,7 @@ const ProductDetails = () => {
             <>
                <div className="flex flex-col gap-10 md:flex-row">
                   <section className="md:w-1/2">
-                     <DetailsSlider />
+                     <DetailsSlider photos={data.product.photos} />
                   </section>
 
                   <section>
@@ -76,26 +74,7 @@ const ProductDetails = () => {
                            </TabsTrigger>
                         </TabsList>
                         <TabsContent value="details">
-                           <p>
-                              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Inventore
-                              blanditiis perspiciatis temporibus voluptate aut delectus, provident
-                              deleniti neque dolores ad, nobis eum nesciunt tenetur natus unde
-                              cupiditate quos. Obcaecati, nisi! Amet ipsum, aliquid, voluptates a
-                              accusantium iste qui dolor iusto beatae, excepturi numquam magni
-                              asperiores illum labore inventore consequatur non! Vero odit,
-                              perferendis eligendi a ullam in quod earum quasi. Quo quia pariatur
-                              neque aliquam dolorem delectus asperiores repudiandae ratione ipsam
-                              dolor iusto laboriosam, et cupiditate, consectetur fugit harum omnis
-                              veniam illo dolorum suscipit beatae assumenda. Eligendi sequi nam at!
-                              Consequatur corrupti nobis repellendus, soluta, dolorem explicabo
-                              praesentium voluptates autem ipsum reprehenderit illo nihil similique
-                              doloribus pariatur nostrum aliquid aperiam doloremque voluptatem omnis
-                              eligendi exercitationem perspiciatis? Fugit doloribus fugiat nemo.
-                              Omnis similique ipsam deserunt? Porro, placeat doloribus. Laudantium
-                              repellendus consequatur cumque animi. Incidunt dolorum beatae nisi
-                              enim repellat totam consequuntur itaque, magnam consequatur eligendi!
-                              Magni aperiam id deleniti dolor in!
-                           </p>
+                           <div dangerouslySetInnerHTML={{ __html: data.product.detail }}></div>
                         </TabsContent>
                         <TabsContent value="reviews">
                            {reviewsIsLoading ? (
@@ -111,10 +90,6 @@ const ProductDetails = () => {
                                  </div>
 
                                  <div className="flex-grow">
-                                    <div className="flex justify-end">
-                                       <Button className="ml-auto inline">Add Review</Button>
-                                    </div>
-
                                     <div className="mt-6 flex w-full justify-between">
                                        <RatingStars rating={data.product.rating} readOnly={true} />
                                        <span className="self-end text-xl font-semibold">
@@ -128,7 +103,12 @@ const ProductDetails = () => {
                                  </div>
                               </div>
                            ) : (
-                              <p className="grid place-items-center">{reviewsErrorMessage}</p>
+                              <>
+                                 <div className="flex justify-end">
+                                    <Button className="ml-auto inline">Add Review</Button>
+                                 </div>
+                                 <p className="grid place-items-center">{reviewsErrorMessage}</p>
+                              </>
                            )}
                         </TabsContent>
                      </Tabs>

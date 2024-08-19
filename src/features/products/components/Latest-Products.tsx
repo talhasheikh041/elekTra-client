@@ -46,13 +46,7 @@ const LatestProducts = () => {
                         className="w-full min-w-0 flex-shrink-0 grow basis-auto pl-6 sm:w-1/2 md:pl-8 lg:w-1/4"
                         key={product._id}
                      >
-                        <ProductCard
-                           name={product.name}
-                           price={product.price}
-                           photo={product.photo}
-                           stock={product.stock}
-                           productId={product._id}
-                        />
+                        <ProductCard product={product} />
                      </CarouselItem>
                   ))}
                </CarouselContent>
