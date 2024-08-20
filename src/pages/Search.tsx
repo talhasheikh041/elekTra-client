@@ -1,5 +1,4 @@
 import SkeletonWrapper from "@/features/global-components/shared/Skeleton-Wrapper"
-import { Button } from "@/features/global-components/ui/button"
 import { Input } from "@/features/global-components/ui/input"
 import { Label } from "@/features/global-components/ui/label"
 import {
@@ -22,22 +21,21 @@ import { Skeleton } from "@/features/global-components/ui/skeleton"
 import { Slider } from "@/features/global-components/ui/slider"
 import { useCategoriesQuery, useLazySearchProductsQuery } from "@/features/products/api/product-api"
 import ProductCard from "@/features/products/components/Product-Card"
-import { areObjectsEqual } from "@/lib/utils"
+import { areObjectsEqual, debounce, generatePageNumbers } from "@/lib/utils"
 import { CustomErrorType } from "@/types/api-types"
 import { Loader } from "lucide-react"
-import { useEffect, useLayoutEffect, useState } from "react"
+import { useCallback, useEffect } from "react"
 import { useSearchParams } from "react-router-dom"
 import { toast } from "sonner"
 
 const Search = () => {
    const [searchParams, setSearchParams] = useSearchParams()
 
-   const [sort, setSort] = useState<string>("")
-   const [range, setRange] = useState<number>(1000000)
-   const [category, setCategory] = useState<string>("")
-   const [search, setSearch] = useState<string>("")
-   const [applyFilters, setApplyFilters] = useState<boolean>(false)
-
+   // Extracting filter values from search params
+   const sort = searchParams.get("sort") || ""
+   const range = Number(searchParams.get("range")) || 1000000
+   const category = searchParams.get("category") || ""
+   const search = searchParams.get("search") || ""
    const page = Number(searchParams.get("page")) || 1
 
    const {
@@ -68,15 +66,28 @@ const Search = () => {
       lastPromiseInfo,
    ] = useLazySearchProductsQuery()
 
-   const [searchProductsErrorMsg, setSearchProductsErrorMsg] = useState<string>("")
+   let searchProductsErrorMsg: string | null = null
 
-   useLayoutEffect(() => {
-      if (searchProductsIsError) {
-         const err = searchProductsError as CustomErrorType
-         setSearchProductsErrorMsg(err.data.message)
-         toast.error(err.data.message)
-      }
-   }, [searchProductsIsError])
+   if (searchProductsIsError) {
+      const err = searchProductsError as CustomErrorType
+      searchProductsErrorMsg = err.data.message
+   }
+
+   const debouncedSearchQuery = useCallback(
+      debounce(
+         async (presentArgs: {
+            search: string
+            category: string
+            page: number
+            price: number
+            sort: string
+         }) => {
+            await trigger(presentArgs)
+         },
+         500,
+      ),
+      [],
+   )
 
    useEffect(() => {
       const lastArgs = lastPromiseInfo.lastArg
@@ -89,12 +100,12 @@ const Search = () => {
       }
       if (areObjectsEqual(lastArgs, presentArgs)) return
 
-      const fetchProducts = async () => {
-         await trigger(presentArgs)
-      }
+      debouncedSearchQuery(presentArgs)
 
-      fetchProducts()
-   }, [applyFilters])
+      return () => {
+         debouncedSearchQuery.cancel?.()
+      }
+   }, [searchParams])
 
    useEffect(() => {
       window.scrollTo({ top: 0, behavior: "smooth" })
@@ -102,14 +113,19 @@ const Search = () => {
 
    return (
       <div className="container flex gap-8 py-8">
-         <aside className="h-screen min-w-64 rounded-lg bg-secondary p-6 shadow-xl">
+         <aside className="min-w-64 rounded-lg bg-secondary p-6 shadow-xl">
             <h2 className="text-3xl font-light uppercase tracking-widest">Filters</h2>
 
             <div className="mt-6 flex flex-col gap-5">
                <div>
                   <Label>Sort</Label>
                   <Select
-                     onValueChange={(value) => (value === "none" ? setSort("") : setSort(value))}
+                     onValueChange={(value) =>
+                        setSearchParams({
+                           ...Object.fromEntries(searchParams),
+                           sort: value === "none" ? "" : value,
+                        })
+                     }
                      defaultValue={sort}
                   >
                      <SelectTrigger>
@@ -127,7 +143,12 @@ const Search = () => {
                   <Label>Max Price: {range.toLocaleString()}</Label>
                   <Slider
                      className="mt-3"
-                     onValueChange={(value) => setRange(value[0])}
+                     onValueChange={(value) =>
+                        setSearchParams({
+                           ...Object.fromEntries(searchParams),
+                           range: value[0].toString(),
+                        })
+                     }
                      defaultValue={[range]}
                      min={100}
                      max={1000000}
@@ -139,7 +160,10 @@ const Search = () => {
                   <Label>Category</Label>
                   <Select
                      onValueChange={(value) =>
-                        value === "all" ? setCategory("") : setCategory(value)
+                        setSearchParams({
+                           ...Object.fromEntries(searchParams),
+                           category: value === "all" ? "" : value,
+                        })
                      }
                      defaultValue={category}
                   >
@@ -165,8 +189,6 @@ const Search = () => {
                      </SelectContent>
                   </Select>
                </div>
-
-               <Button onClick={() => setApplyFilters((prev) => !prev)}>Apply Filters</Button>
             </div>
          </aside>
 
@@ -176,11 +198,15 @@ const Search = () => {
             <div className="mt-4">
                <Input
                   value={search}
-                  onChange={(e) => setSearch(e.target.value)}
+                  onChange={(e) =>
+                     setSearchParams({
+                        ...Object.fromEntries(searchParams),
+                        search: e.target.value,
+                     })
+                  }
                   className="max-w-md"
                   type="text"
                   placeholder="Search by name"
-                  onKeyDown={(e) => (e.key === "Enter" ? setApplyFilters((prev) => !prev) : null)}
                />
             </div>
 
@@ -195,7 +221,9 @@ const Search = () => {
                   ))}
                </div>
             ) : (
-               <p className="mt-5 flex justify-center">{searchProductsErrorMsg}</p>
+               <p className="flex h-full items-center justify-center text-xl">
+                  {searchProductsErrorMsg}
+               </p>
             )}
 
             {searchProducts?.totalPages! > 1 && (
@@ -210,13 +238,31 @@ const Search = () => {
                               }}
                               className={`${page === 1 && "text-muted-foreground"}`}
                               onClick={() =>
-                                 page > 1 && setSearchParams({ page: JSON.stringify(page - 1) })
+                                 setSearchParams({
+                                    ...Object.fromEntries(searchParams),
+                                    page: (page - 1).toString(),
+                                 })
                               }
                            />
                         </PaginationItem>
                         <PaginationItem>
-                           <PaginationLink href="/search?page=2">2</PaginationLink>
-                           <PaginationLink href="/search?page=3">3</PaginationLink>
+                           {generatePageNumbers(page, searchProducts?.totalPages!).map(
+                              (pageNumber) => (
+                                 <PaginationLink
+                                    key={pageNumber}
+                                    isActive={page === pageNumber}
+                                    className="cursor-pointer"
+                                    onClick={() =>
+                                       setSearchParams({
+                                          ...Object.fromEntries(searchParams),
+                                          page: pageNumber.toString(),
+                                       })
+                                    }
+                                 >
+                                    {pageNumber}
+                                 </PaginationLink>
+                              ),
+                           )}
                         </PaginationItem>
 
                         <PaginationItem>
@@ -226,11 +272,18 @@ const Search = () => {
                         <PaginationItem>
                            <PaginationNext
                               style={{
-                                 pointerEvents: page === 4 ? "none" : "auto",
-                                 cursor: page === 4 ? "not-allowed" : "pointer",
+                                 pointerEvents:
+                                    page === searchProducts?.totalPages ? "none" : "auto",
+                                 cursor:
+                                    page === searchProducts?.totalPages ? "not-allowed" : "pointer",
                               }}
-                              className={`${page === 4 && "text-muted-foreground"}`}
-                              onClick={() => setSearchParams({ page: JSON.stringify(page + 1) })}
+                              className={`${page === searchProducts?.totalPages && "text-muted-foreground"}`}
+                              onClick={() =>
+                                 setSearchParams({
+                                    ...Object.fromEntries(searchParams),
+                                    page: (page + 1).toString(),
+                                 })
+                              }
                            />
                         </PaginationItem>
                      </PaginationContent>

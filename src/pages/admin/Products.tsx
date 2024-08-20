@@ -15,8 +15,6 @@ import { CirclePlusIcon } from "lucide-react"
 import { Link } from "react-router-dom"
 import { toast } from "sonner"
 
-const SERVER_LINK = import.meta.env.VITE_SERVER_LINK as string
-
 const Products = () => {
    const { user } = useAppSelector(selectUser)
 

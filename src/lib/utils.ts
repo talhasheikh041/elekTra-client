@@ -93,3 +93,43 @@ export const currencyFormatter = (currency: number) => {
       maximumFractionDigits: 0,
    }).format(currency)
 }
+
+export const generatePageNumbers = (currentPage: number, totalPages: number) => {
+   const pageNumbers = []
+   const maxVisiblePages = 3 // Number of visible page links
+
+   let startPage = Math.max(currentPage - 1, 1)
+   let endPage = Math.min(currentPage + 1, totalPages)
+
+   if (currentPage === 1) {
+      endPage = Math.min(currentPage + (maxVisiblePages - 1), totalPages)
+   } else if (currentPage === totalPages) {
+      startPage = Math.max(currentPage - (maxVisiblePages - 1), 1)
+   }
+
+   for (let i = startPage; i <= endPage; i++) {
+      pageNumbers.push(i)
+   }
+
+   return pageNumbers
+}
+
+export function debounce<T extends (...args: any[]) => void>(func: T, delay: number) {
+   let timeoutId: NodeJS.Timeout
+   const debounced = (...args: Parameters<T>) => {
+      if (timeoutId) {
+         clearTimeout(timeoutId)
+      }
+      timeoutId = setTimeout(() => {
+         func(...args)
+      }, delay)
+   }
+
+   debounced.cancel = () => {
+      if (timeoutId) {
+         clearTimeout(timeoutId)
+      }
+   }
+
+   return debounced
+}
