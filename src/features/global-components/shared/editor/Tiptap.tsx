@@ -8,8 +8,6 @@ import { TiptapEditorRef } from "@/pages/admin/management/New-Product"
 import StarterKit from "@tiptap/starter-kit"
 import Highlight from "@tiptap/extension-highlight"
 import TextAlign from "@tiptap/extension-text-align"
-import BulletList from "@tiptap/extension-bullet-list"
-import ListItem from "@tiptap/extension-list-item"
 import CustomHeading from "@/features/global-components/shared/editor/extensions/heading"
 import CustomImage from "@/features/global-components/shared/editor/extensions/image"
 
@@ -43,6 +41,11 @@ const Tiptap = forwardRef<TiptapEditorRef, TiptapProps>(({ description, onChange
                   class: "relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold",
                },
             },
+            bulletList: {
+               HTMLAttributes: {
+                  class: "my-6 ml-6 list-disc [&>li]:mt-2",
+               },
+            },
          }),
          TextAlign.configure({
             types: ["heading", "paragraph"],
@@ -52,12 +55,6 @@ const Tiptap = forwardRef<TiptapEditorRef, TiptapProps>(({ description, onChange
          CustomImage.configure({
             onDeleteImage: (loading: boolean) => setDeleteImageLoading(loading),
          }),
-         BulletList.configure({
-            HTMLAttributes: {
-               class: "my-6 ml-6 list-disc [&>li]:mt-2",
-            },
-         }),
-         ListItem,
       ],
       content: description,
       editorProps: {
@@ -69,7 +66,6 @@ const Tiptap = forwardRef<TiptapEditorRef, TiptapProps>(({ description, onChange
       onUpdate: ({ editor }) => {
          const cleanHtml = DOMPurify.sanitize(editor.getHTML())
          onChange(cleanHtml)
-         console.log(cleanHtml)
       },
    })
 

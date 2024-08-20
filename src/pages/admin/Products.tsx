@@ -38,18 +38,7 @@ const Products = () => {
            name: product.name,
            price: product.price,
            stock: product.stock,
-           action: (
-              <EditProductCard
-                 product={{
-                    photo: `${product.photos[0].url}`,
-                    name: product.name,
-                    category: product.category,
-                    price: product.price,
-                    stock: product.stock,
-                    _id: product._id,
-                 }}
-              />
-           ),
+           action: <EditProductCard product={product} />,
         }))
       : null
 

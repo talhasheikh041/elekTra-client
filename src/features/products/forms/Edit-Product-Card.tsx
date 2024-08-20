@@ -1,4 +1,5 @@
 import { selectUser } from "@/features/customers/reducer/user-reducer"
+import Tiptap from "@/features/global-components/shared/editor/Tiptap"
 import {
    AlertDialog,
    AlertDialogAction,
@@ -15,6 +16,7 @@ import { Button } from "@/features/global-components/ui/button"
 import {
    Dialog,
    DialogContent,
+   DialogDescription,
    DialogHeader,
    DialogTitle,
    DialogTrigger,
@@ -22,34 +24,30 @@ import {
 import {
    Form,
    FormControl,
+   FormDescription,
    FormField,
    FormItem,
    FormLabel,
    FormMessage,
 } from "@/features/global-components/ui/form"
 import { Input } from "@/features/global-components/ui/input"
+import { Textarea } from "@/features/global-components/ui/textarea"
 import {
    useDeleteProductMutation,
    useUpdateProductMutation,
 } from "@/features/products/api/product-api"
 import { responseToast } from "@/lib/utils"
+import { TiptapEditorRef } from "@/pages/admin/management/New-Product"
 import { useAppSelector } from "@/redux/store"
+import { ProductType } from "@/types/types"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { useForm } from "react-hook-form"
-import { FaTrash } from "react-icons/fa"
 import { toast } from "sonner"
 import { z } from "zod"
 
 type EditProductCardProps = {
-   product: {
-      photo: string
-      name: string
-      category: string
-      price: number
-      stock: number
-      _id: string
-   }
+   product: ProductType
 }
 
 const productSchema = z.object({
@@ -57,17 +55,34 @@ const productSchema = z.object({
    category: z.string().min(1, { message: "Category is required" }),
    price: z.number().min(0, { message: "Price must be a positive number" }),
    stock: z.number().int().min(0, { message: "Stock must be a positive integer" }),
-   photo: z
-      .instanceof(File, { message: "Photo is required" })
-      .refine((file) => file.size <= 5 * 1024 * 1024, { message: "Photo must be less than 5MB" })
+   photos: z
+      .array(
+         z
+            .instanceof(File, { message: "Each photo must be a valid file" })
+            .refine((file) => file.size <= 5 * 1024 * 1024, {
+               message: "Each photo must be less than 5MB",
+            }),
+      )
+      .min(1, { message: "At least one photo is required" })
+      .max(6, { message: "You can upload a maximum of 6 photos" })
       .optional(),
+   shortDescription: z
+      .string()
+      .min(100, { message: "Short description must be at least 100 characters" })
+      .max(260, { message: "Short description must be 260 characters or less" }),
+   detail: z.string(),
 })
 
 const EditProductCard = ({ product }: EditProductCardProps) => {
    const [open, setOpen] = useState(false)
-   const [item, setItem] = useState(product)
 
    const { user } = useAppSelector(selectUser)
+
+   const [previewPhotos, setPreviewPhotos] = useState(() =>
+      product.photos.map((photo) => photo.url),
+   )
+
+   const editorRef = useRef<TiptapEditorRef | null>(null)
 
    const [updateProduct] = useUpdateProductMutation()
    const [deleteProduct] = useDeleteProductMutation()
@@ -75,26 +90,15 @@ const EditProductCard = ({ product }: EditProductCardProps) => {
    const form = useForm<z.infer<typeof productSchema>>({
       resolver: zodResolver(productSchema),
       defaultValues: {
-         name: item.name,
-         category: item.category,
-         price: item.price,
-         stock: item.stock,
-         photo: undefined,
+         name: product.name,
+         category: product.category,
+         price: product.price,
+         stock: product.stock,
+         photos: undefined,
+         shortDescription: product.shortDescription,
+         detail: product.detail,
       },
    })
-
-   const handlePhotoPreview = (file: File) => {
-      const reader = new FileReader()
-      reader.readAsDataURL(file)
-      reader.onloadend = () => {
-         if (typeof reader.result === "string") {
-            setItem((prev) => ({
-               ...prev,
-               photo: reader.result as string,
-            }))
-         }
-      }
-   }
 
    const updateProductHandler = async (values: z.infer<typeof productSchema>) => {
       try {
@@ -104,8 +108,14 @@ const EditProductCard = ({ product }: EditProductCardProps) => {
          formData.set("price", values.price.toString())
          formData.set("stock", values.stock.toString())
          formData.set("category", values.category.toString())
+         formData.set("shortDescription", values.shortDescription)
+         formData.set("detail", values.detail)
 
-         if (values.photo) formData.set("photo", values.photo)
+         if (values.photos) {
+            values.photos.forEach((photo) => {
+               formData.append(`photos`, photo)
+            })
+         }
 
          const res = await updateProduct({ userId: user?._id!, productId: product._id, formData })
          responseToast(res)
@@ -127,12 +137,16 @@ const EditProductCard = ({ product }: EditProductCardProps) => {
 
    const handleOpenChange = (isOpen: boolean) => {
       setOpen(isOpen)
-      if (!isOpen) {
-         form.reset()
-         setItem((prev) => ({
-            ...prev,
-            photo: product.photo,
-         }))
+      if (isOpen) {
+         form.reset({
+            name: product.name,
+            category: product.category,
+            price: product.price,
+            stock: product.stock,
+            photos: undefined,
+            shortDescription: product.shortDescription,
+            detail: product.detail,
+         })
       }
    }
 
@@ -141,162 +155,214 @@ const EditProductCard = ({ product }: EditProductCardProps) => {
          <DialogTrigger>
             <Badge className="cursor-pointer">Manage</Badge>
          </DialogTrigger>
-         <DialogContent className="max-h-screen max-w-4xl overflow-y-auto">
+         <DialogContent className="max-h-screen max-w-5xl overflow-y-auto">
             <DialogHeader>
                <DialogTitle className="mx-auto text-2xl font-light uppercase tracking-widest">
                   Edit Product
                </DialogTitle>
+               <DialogDescription className="mx-auto">
+                  Make changes to your product here. Click update when you're done.
+               </DialogDescription>
             </DialogHeader>
-            <div className="flex justify-center gap-12">
-               <div className="relative flex-1 rounded-lg border p-4">
-                  <div className="flex justify-end">
-                     <span className="font-semibold text-green-500">
-                        {form.getValues().stock} available
-                     </span>
-                  </div>
-
-                  <div className="mt-4 flex justify-center">
-                     <img
-                        className="h-60 rounded-lg object-contain"
-                        src={item.photo as string}
-                        alt="product-photo"
+            <div>
+               <Form {...form}>
+                  <form
+                     onSubmit={form.handleSubmit(updateProductHandler)}
+                     className="grid grid-cols-1 gap-4 lg:grid-cols-2"
+                  >
+                     <FormField
+                        control={form.control}
+                        name="name"
+                        render={({ field }) => (
+                           <FormItem>
+                              <FormLabel>Name</FormLabel>
+                              <FormControl>
+                                 <Input {...field} />
+                              </FormControl>
+                              <FormMessage />
+                           </FormItem>
+                        )}
                      />
-                  </div>
 
-                  <div className="mt-5 flex flex-col items-center justify-center gap-4">
-                     <span className="mx-auto tracking-widest">{form.getValues().name}</span>
-                     <span className="text-3xl font-bold">${form.getValues().price}</span>
-                  </div>
+                     <FormField
+                        control={form.control}
+                        name="price"
+                        render={({ field }) => (
+                           <FormItem>
+                              <FormLabel>Price</FormLabel>
+                              <FormControl>
+                                 <Input
+                                    type="number"
+                                    {...field}
+                                    value={field.value === undefined ? "" : field.value}
+                                    onChange={(e) =>
+                                       field.onChange(
+                                          e.target.value === ""
+                                             ? undefined
+                                             : Number(e.target.value),
+                                       )
+                                    }
+                                 />
+                              </FormControl>
+                              <FormMessage />
+                           </FormItem>
+                        )}
+                     />
 
-                  <div className="absolute left-2 top-2">
-                     <AlertDialog>
-                        <AlertDialogTrigger asChild>
-                           <Button variant={"destructive"} size={"icon"}>
-                              <FaTrash size={"18px"} />
-                           </Button>
-                        </AlertDialogTrigger>
-                        <AlertDialogContent>
-                           <AlertDialogHeader>
-                              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                              <AlertDialogDescription>
-                                 This action cannot be undone. This will permanently delete your
-                                 product.
-                              </AlertDialogDescription>
-                           </AlertDialogHeader>
-                           <AlertDialogFooter>
-                              <AlertDialogCancel>Cancel</AlertDialogCancel>
-                              <AlertDialogAction onClick={deleteHandler} asChild>
-                                 <Button
-                                    variant={"destructive"}
-                                    className="bg-destructive hover:bg-destructive/90"
-                                 >
-                                    Delete
-                                 </Button>
-                              </AlertDialogAction>
-                           </AlertDialogFooter>
-                        </AlertDialogContent>
-                     </AlertDialog>
-                  </div>
-               </div>
+                     <FormField
+                        control={form.control}
+                        name="stock"
+                        render={({ field }) => (
+                           <FormItem>
+                              <FormLabel>Stock</FormLabel>
+                              <FormControl>
+                                 <Input
+                                    type="number"
+                                    {...field}
+                                    value={field.value === undefined ? "" : field.value}
+                                    onChange={(e) =>
+                                       field.onChange(
+                                          e.target.value === ""
+                                             ? undefined
+                                             : Number(e.target.value),
+                                       )
+                                    }
+                                 />
+                              </FormControl>
+                              <FormMessage />
+                           </FormItem>
+                        )}
+                     />
 
-               <div className="flex-1">
-                  <Form {...form}>
-                     <form onSubmit={form.handleSubmit(updateProductHandler)} className="space-y-6">
+                     <FormField
+                        control={form.control}
+                        name="category"
+                        render={({ field }) => (
+                           <FormItem>
+                              <FormLabel>Category</FormLabel>
+                              <FormControl>
+                                 <Input {...field} />
+                              </FormControl>
+                              <FormMessage />
+                           </FormItem>
+                        )}
+                     />
+
+                     <div className="col-span-full">
                         <FormField
                            control={form.control}
-                           name="name"
+                           name="shortDescription"
                            render={({ field }) => (
                               <FormItem>
-                                 <FormLabel>Name</FormLabel>
+                                 <FormLabel>Short Description (250 characters)</FormLabel>
                                  <FormControl>
-                                    <Input {...field} />
+                                    <Textarea className="resize-none" {...field} />
                                  </FormControl>
                                  <FormMessage />
                               </FormItem>
                            )}
                         />
+                     </div>
 
+                     <div className="col-span-full">
                         <FormField
                            control={form.control}
-                           name="price"
+                           name="detail"
                            render={({ field }) => (
                               <FormItem>
-                                 <FormLabel>Price</FormLabel>
+                                 <FormLabel>Product Detail</FormLabel>
                                  <FormControl>
-                                    <Input
-                                       type="number"
-                                       {...field}
-                                       value={field.value === undefined ? "" : field.value}
-                                       onChange={(e) =>
-                                          field.onChange(
-                                             e.target.value === ""
-                                                ? undefined
-                                                : Number(e.target.value),
+                                    {/* <Textarea className="h-60 resize-none" {...field} /> */}
+                                    <Tiptap
+                                       ref={editorRef}
+                                       description={field.value}
+                                       onChange={field.onChange}
+                                    />
+                                 </FormControl>
+                                 <FormMessage />
+                              </FormItem>
+                           )}
+                        />
+                     </div>
+
+                     <FormField
+                        control={form.control}
+                        name="photos"
+                        render={({ field }) => (
+                           <FormItem>
+                              <FormLabel>Photos</FormLabel>
+                              <FormControl>
+                                 <Input
+                                    type="file"
+                                    multiple
+                                    onChange={(e) => {
+                                       const files = Object.values(e.target.files!)
+                                       if (files) {
+                                          field.onChange(files)
+                                          setPreviewPhotos(
+                                             files.map((file) => URL.createObjectURL(file)),
                                           )
                                        }
-                                    />
-                                 </FormControl>
-                                 <FormMessage />
-                              </FormItem>
-                           )}
-                        />
+                                    }}
+                                 />
+                              </FormControl>
+                              <FormDescription>This will replace the below photos</FormDescription>
+                              <FormMessage />
+                           </FormItem>
+                        )}
+                     />
 
-                        <FormField
-                           control={form.control}
-                           name="stock"
-                           render={({ field }) => (
-                              <FormItem>
-                                 <FormLabel>Stock</FormLabel>
-                                 <FormControl>
-                                    <Input
-                                       type="number"
-                                       {...field}
-                                       value={field.value === undefined ? "" : field.value}
-                                       onChange={(e) =>
-                                          field.onChange(
-                                             e.target.value === ""
-                                                ? undefined
-                                                : Number(e.target.value),
-                                          )
-                                       }
-                                    />
-                                 </FormControl>
-                                 <FormMessage />
-                              </FormItem>
-                           )}
-                        />
+                     <div className="col-span-full flex flex-wrap gap-3">
+                        {previewPhotos &&
+                           previewPhotos.map((photo, index) => (
+                              <div
+                                 key={index}
+                                 className="relative h-24 w-24 overflow-hidden rounded-md border border-[#ccc]"
+                              >
+                                 <img
+                                    src={photo}
+                                    alt="Selected"
+                                    className="h-full w-full object-cover"
+                                 />
+                              </div>
+                           ))}
+                     </div>
 
-                        <FormField
-                           control={form.control}
-                           name="photo"
-                           render={({ field }) => (
-                              <FormItem>
-                                 <FormLabel>Photo</FormLabel>
-                                 <FormControl>
-                                    <Input
-                                       type="file"
-                                       onChange={(e) => {
-                                          const file = e.target.files?.[0]
-                                          if (file) {
-                                             field.onChange(file)
-                                             handlePhotoPreview(file)
-                                          }
-                                       }}
-                                    />
-                                 </FormControl>
-                                 <FormMessage />
-                              </FormItem>
-                           )}
-                        />
+                     <div className="col-span-full flex justify-center gap-3">
+                        <Button variant={"default"} type="submit">
+                           Update
+                        </Button>
 
-                        <div className="flex justify-center">
-                           <Button className="text-md mx-auto px-6" type="submit">
-                              Update
-                           </Button>
-                        </div>
-                     </form>
-                  </Form>
-               </div>
+                        <AlertDialog>
+                           <AlertDialogTrigger asChild>
+                              <Button variant={"outline"} className="border border-black">
+                                 Delete
+                              </Button>
+                           </AlertDialogTrigger>
+                           <AlertDialogContent>
+                              <AlertDialogHeader>
+                                 <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                 <AlertDialogDescription>
+                                    This action cannot be undone. This will permanently delete your
+                                    product.
+                                 </AlertDialogDescription>
+                              </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                 <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                 <AlertDialogAction onClick={deleteHandler} asChild>
+                                    <Button
+                                       variant={"destructive"}
+                                       className="bg-destructive hover:bg-destructive/90"
+                                    >
+                                       Delete
+                                    </Button>
+                                 </AlertDialogAction>
+                              </AlertDialogFooter>
+                           </AlertDialogContent>
+                        </AlertDialog>
+                     </div>
+                  </form>
+               </Form>
             </div>
          </DialogContent>
       </Dialog>
