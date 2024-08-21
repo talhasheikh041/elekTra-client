@@ -6,6 +6,7 @@ import {
    useAllReviewsOfProductQuery,
    useGetSingleProductQuery,
 } from "@/features/products/api/product-api"
+import AddReview from "@/features/products/components/Add-Review"
 import DetailsCard from "@/features/products/components/Details-Card"
 import DetailsSlider from "@/features/products/components/Details-Slider"
 import RatingProgress from "@/features/products/components/Rating-Progress"
@@ -90,6 +91,9 @@ const ProductDetails = () => {
                                  </div>
 
                                  <div className="flex-grow">
+                                    <div className="flex justify-end">
+                                       <AddReview productId={data.product._id} />
+                                    </div>
                                     <div className="mt-6 flex w-full justify-between">
                                        <RatingStars rating={data.product.rating} readOnly={true} />
                                        <span className="self-end text-xl font-semibold">
@@ -105,7 +109,7 @@ const ProductDetails = () => {
                            ) : (
                               <>
                                  <div className="flex justify-end">
-                                    <Button className="ml-auto inline">Add Review</Button>
+                                    <AddReview productId={data.product._id} />
                                  </div>
                                  <p className="grid place-items-center">{reviewsErrorMessage}</p>
                               </>

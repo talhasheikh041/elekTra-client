@@ -193,7 +193,9 @@ const Search = () => {
          </aside>
 
          <main className="w-full">
-            <h1 className="text-4xl font-light uppercase tracking-widest">Products</h1>
+            <h1 className="text-4xl font-light uppercase tracking-widest">
+               Products {category && <span className="text-base">({category})</span>}
+            </h1>
 
             <div className="mt-4">
                <Input

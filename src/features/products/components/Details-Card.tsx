@@ -15,18 +15,8 @@ type DetailsCardProps = {
 }
 
 const DetailsCard = ({ product }: DetailsCardProps) => {
-   const {
-      _id,
-      category,
-      name,
-      photo,
-      price,
-      rating,
-      stock,
-      totalReviews,
-      shortDescription,
-      detail,
-   } = product
+   const { _id, category, name, photos, price, rating, stock, totalReviews, shortDescription } =
+      product
    const [quantity, setQuantity] = useState<number>(1)
 
    const dispatch = useAppDispatch()
@@ -47,7 +37,7 @@ const DetailsCard = ({ product }: DetailsCardProps) => {
       dispatch(
          addToCart({
             name,
-            photo,
+            photo: photos[0].url,
             price,
             productId: _id,
             stock,

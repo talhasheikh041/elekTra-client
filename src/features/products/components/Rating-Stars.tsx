@@ -4,12 +4,17 @@ import { FaStar } from "react-icons/fa"
 
 type RatingStarsProps = {
    readOnly?: boolean
-   rating?: number
+   rating: number
    size?: string
+   setRating?: (rating: number) => void // Add this prop
 }
 
-const RatingStars = ({ readOnly, rating, size = "25px" }: RatingStarsProps) => {
-   const [activeStar, setActiveStar] = useState(rating && readOnly ? rating : -1)
+const RatingStars = ({
+   readOnly = false,
+   rating = -1,
+   size = "25px",
+   setRating,
+}: RatingStarsProps) => {
    const [hoverActiveStar, setHoverActiveStar] = useState(-1)
    const [isHovered, setIsHovered] = useState(false)
 
@@ -20,12 +25,15 @@ const RatingStars = ({ readOnly, rating, size = "25px" }: RatingStarsProps) => {
 
    const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
       setIsHovered(false)
-      setActiveStar(calculateRating(e))
+      const newRating = calculateRating(e)
+      setRating!(newRating)
    }
+
    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
       setIsHovered(true)
       setHoverActiveStar(calculateRating(e))
    }
+
    const handleMouseLeave = () => {
       setHoverActiveStar(-1) // Reset to default state
       setIsHovered(false)
@@ -52,8 +60,8 @@ const RatingStars = ({ readOnly, rating, size = "25px" }: RatingStarsProps) => {
          className={`relative inline-flex ${readOnly ? "cursor-default" : "cursor-pointer"} text-left`}
          ref={ratingContainerRef}
       >
-         {[...new Array(totalStars)].map((arr, index) => {
-            const activeState = isHovered ? hoverActiveStar : activeStar
+         {[...new Array(totalStars)].map((_, index) => {
+            const activeState = isHovered ? hoverActiveStar : rating
 
             const showEmptyIcon = activeState === -1 || activeState < index + 1
 
@@ -90,4 +98,5 @@ const RatingStars = ({ readOnly, rating, size = "25px" }: RatingStarsProps) => {
       </div>
    )
 }
+
 export default RatingStars

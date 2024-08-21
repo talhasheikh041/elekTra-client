@@ -34,6 +34,8 @@ export type ReviewType = {
    }
    rating: number
    comment: string
+   updatedAt?: Date
+   createdAt?: Date
 }
 
 export type ShippingInfoType = {

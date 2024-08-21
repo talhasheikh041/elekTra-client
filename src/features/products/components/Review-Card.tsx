@@ -1,13 +1,16 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/features/global-components/ui/avatar"
 import RatingStars from "@/features/products/components/Rating-Stars"
 import { ReviewType } from "@/types/types"
+import moment from "moment"
 
 type ReviewCardProps = {
    review: ReviewType
 }
 
 const ReviewCard = ({ review }: ReviewCardProps) => {
-   const { _id, comment, product, rating, user } = review
+   const { comment, rating, user, updatedAt } = review
+
+   const relativeTime = moment(updatedAt).fromNow()
 
    return (
       <div className="flex gap-4 rounded-xl bg-secondary px-4 py-4">
@@ -23,7 +26,7 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
          <div>
             <div className="flex items-center gap-2">
                <span className="font-semibold">{user.name}</span>
-               <span className="text-xs text-muted-foreground">yesterday</span>
+               <span className="text-xs text-muted-foreground">{relativeTime}</span>
             </div>
             <RatingStars size="18px" rating={rating} readOnly={true} />
             <p className="text-sm font-light">{comment}</p>
