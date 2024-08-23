@@ -6,16 +6,14 @@ import {
    RouterProvider,
 } from "react-router-dom"
 
-// Hooks
-
-// Components
+// Components and Layouts
 import DashboardLayout from "@/features/global-components/layout/Dashboard-Layout"
 import RootLayout from "@/features/global-components/layout/Root-Layout"
 import Error404 from "@/features/global-components/shared/Error-404"
 import PersistAuth from "@/features/global-components/shared/Persist-Auth"
 import RequireAuth from "@/features/global-components/shared/Require-Auth"
 
-// User Pages
+// Customer Pages
 const Home = lazy(() => import("@/pages/Home"))
 const Cart = lazy(() => import("@/pages/Cart"))
 const Search = lazy(() => import("@/pages/Search"))
@@ -27,8 +25,8 @@ const ProductDetails = lazy(() => import("@/pages/Product-Details"))
 
 // Admin Pages
 const Dashboard = lazy(() => import("@/pages/admin/Dashboard"))
-const Products = lazy(() => import("@/pages/admin/Products"))
-const NewProduct = lazy(() => import("@/pages/admin/management/New-Product"))
+const Products = lazy(() => import("@/pages/admin/products/Products"))
+const NewProduct = lazy(() => import("@/pages/admin/products/New-Product"))
 const Transactions = lazy(() => import("@/pages/admin/Transactions"))
 const Customers = lazy(() => import("@/pages/admin/Customers"))
 const Bar = lazy(() => import("@/pages/admin/charts/Bar"))
@@ -36,7 +34,7 @@ const Line = lazy(() => import("@/pages/admin/charts/Line"))
 const Pie = lazy(() => import("@/pages/admin/charts/Pie"))
 const Stopwatch = lazy(() => import("@/pages/admin/apps/Stopwatch"))
 const Toss = lazy(() => import("@/pages/admin/apps/Toss"))
-const Coupon = lazy(() => import("@/pages/admin/apps/Coupon"))
+const Coupons = lazy(() => import("@/pages/admin/apps/Coupons"))
 
 function App() {
    const router = createBrowserRouter(
@@ -81,7 +79,7 @@ function App() {
                   <Route path="apps">
                      <Route path="stopwatch" element={<Stopwatch />} />
                      <Route path="toss" element={<Toss />} />
-                     <Route path="coupon" element={<Coupon />} />
+                     <Route path="coupon" element={<Coupons />} />
                   </Route>
                </Route>
             </Route>

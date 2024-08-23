@@ -15,6 +15,7 @@ import { Button } from "@/features/global-components/ui/button"
 import {
    Dialog,
    DialogContent,
+   DialogDescription,
    DialogHeader,
    DialogTitle,
    DialogTrigger,
@@ -101,6 +102,7 @@ const EditTransaction = ({ order }: EditTransactionProps) => {
                <DialogTitle className="mx-auto text-2xl font-light uppercase tracking-widest">
                   Edit Transaction
                </DialogTitle>
+               <DialogDescription></DialogDescription>
             </DialogHeader>
             <div className="flex justify-center gap-12">
                <section className="flex-1">

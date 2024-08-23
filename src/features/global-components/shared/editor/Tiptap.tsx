@@ -2,7 +2,7 @@ import { forwardRef, useImperativeHandle, useState } from "react"
 import { EditorContent, useEditor } from "@tiptap/react"
 import MenuBar from "@/features/global-components/shared/editor/Menu-Bar"
 import DOMPurify from "dompurify"
-import { TiptapEditorRef } from "@/pages/admin/management/New-Product"
+import { TiptapEditorRef } from "@/pages/admin/products/New-Product"
 
 // Extensions
 import StarterKit from "@tiptap/starter-kit"

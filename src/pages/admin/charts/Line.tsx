@@ -44,7 +44,7 @@ function Line() {
                            borderColor="rgb(53, 162, 255)"
                            bgColor="rgba(53, 162, 255,0.5)"
                            labels={lastTwelveMonths}
-                        />
+                        />I
                      </div>
                      <h2 className="mt-4 flex justify-center">Active Users</h2>
                   </section>

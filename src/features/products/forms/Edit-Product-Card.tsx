@@ -12,7 +12,7 @@ import {
    AlertDialogTrigger,
 } from "@/features/global-components/ui/alert-dialog"
 import { Badge } from "@/features/global-components/ui/badge"
-import { Button } from "@/features/global-components/ui/button"
+import { Button, buttonVariants } from "@/features/global-components/ui/button"
 import {
    Dialog,
    DialogContent,
@@ -36,11 +36,12 @@ import {
    useDeleteProductMutation,
    useUpdateProductMutation,
 } from "@/features/products/api/product-api"
-import { responseToast } from "@/lib/utils"
-import { TiptapEditorRef } from "@/pages/admin/management/New-Product"
+import { cn, responseToast } from "@/lib/utils"
+import { TiptapEditorRef } from "@/pages/admin/products/New-Product"
 import { useAppSelector } from "@/redux/store"
 import { ProductType } from "@/types/types"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Upload } from "lucide-react"
 import { useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -290,9 +291,25 @@ const EditProductCard = ({ product }: EditProductCardProps) => {
                         name="photos"
                         render={({ field }) => (
                            <FormItem>
-                              <FormLabel>Photos</FormLabel>
+                              <FormLabel className="space-y-2">
+                                 <div>Photos</div>
+                                 <div
+                                    className={cn(
+                                       buttonVariants({ variant: "outline" }),
+                                       "cursor-pointer justify-center gap-2",
+                                    )}
+                                 >
+                                    <span>
+                                       <Upload className="size-5" />
+                                    </span>
+                                    <span>Upload Photos</span>
+                                 </div>
+                              </FormLabel>
                               <FormControl>
                                  <Input
+                                    name={field.name}
+                                    onBlur={field.onBlur}
+                                    className="sr-only"
                                     type="file"
                                     multiple
                                     onChange={(e) => {

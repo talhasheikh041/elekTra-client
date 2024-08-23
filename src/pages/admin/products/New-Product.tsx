@@ -1,14 +1,15 @@
 import { selectUser } from "@/features/customers/reducer/user-reducer"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/global-components/ui/card"
 import { useNewProductMutation } from "@/features/products/api/product-api"
-import { responseToast } from "@/lib/utils"
+import { cn, responseToast } from "@/lib/utils"
 import { useAppSelector } from "@/redux/store"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
 
-import { Button } from "@/features/global-components/ui/button"
+import Tiptap from "@/features/global-components/shared/editor/Tiptap"
+import { Button, buttonVariants } from "@/features/global-components/ui/button"
 import {
    Form,
    FormControl,
@@ -19,8 +20,7 @@ import {
 } from "@/features/global-components/ui/form"
 import { Input } from "@/features/global-components/ui/input"
 import { Textarea } from "@/features/global-components/ui/textarea"
-import { Loader, Trash } from "lucide-react"
-import Tiptap from "@/features/global-components/shared/editor/Tiptap"
+import { Loader, Trash, Upload } from "lucide-react"
 import { useRef } from "react"
 
 const productSchema = z.object({
@@ -220,7 +220,6 @@ const NewProduct = () => {
                               <FormItem>
                                  <FormLabel>Product Detail</FormLabel>
                                  <FormControl>
-                                    {/* <Textarea className="h-60 resize-none" {...field} /> */}
                                     <Tiptap
                                        ref={editorRef}
                                        description={field.value}
@@ -238,9 +237,25 @@ const NewProduct = () => {
                         name="photos"
                         render={({ field }) => (
                            <FormItem>
-                              <FormLabel>Photos</FormLabel>
+                              <FormLabel className="space-y-2">
+                                 <div>Photos</div>
+                                 <div
+                                    className={cn(
+                                       buttonVariants({ variant: "outline" }),
+                                       "cursor-pointer justify-center gap-2",
+                                    )}
+                                 >
+                                    <span>
+                                       <Upload className="size-5" />
+                                    </span>
+                                    <span>Upload Photos</span>
+                                 </div>
+                              </FormLabel>
                               <FormControl>
                                  <Input
+                                    name={field.name}
+                                    onBlur={field.onBlur}
+                                    className="sr-only"
                                     type="file"
                                     multiple
                                     onChange={(e) => {

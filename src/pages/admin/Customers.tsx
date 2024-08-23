@@ -1,7 +1,6 @@
 import { useAllUsersQuery, useDeleteUserMutation } from "@/features/customers/api/user-api"
 import { selectUser } from "@/features/customers/reducer/user-reducer"
 import { CustomersType, customersColumns } from "@/features/customers/table/customer-columns"
-import MyTooltip from "@/features/global-components/shared/My-Tooltip"
 import SkeletonWrapper from "@/features/global-components/shared/Skeleton-Wrapper"
 import { DataTable } from "@/features/global-components/shared/data-table/Data-Table"
 import { Avatar, AvatarFallback, AvatarImage } from "@/features/global-components/ui/avatar"
@@ -25,51 +24,6 @@ import {
    AlertDialogTitle,
    AlertDialogTrigger,
 } from "@/features/global-components/ui/alert-dialog"
-
-const img = "https://randomuser.me/api/portraits/women/54.jpg"
-const img2 = "https://randomuser.me/api/portraits/women/50.jpg"
-
-const arr: CustomersType[] = [
-   {
-      avatar: (
-         <Avatar>
-            <AvatarImage src={img} />
-            <AvatarFallback>CN</AvatarFallback>
-         </Avatar>
-      ),
-      name: "Emily Palmer",
-      email: "emily.palmer@example.com",
-      gender: "female",
-      role: "user",
-      action: (
-         <MyTooltip title="Delete">
-            <Button size={"icon"} variant={"destructive"} className="h-8 w-8 rounded-full">
-               <FaTrash />
-            </Button>
-         </MyTooltip>
-      ),
-   },
-
-   {
-      avatar: (
-         <Avatar>
-            <AvatarImage src={img2} />
-            <AvatarFallback>CN</AvatarFallback>
-         </Avatar>
-      ),
-      name: "May Scoot",
-      email: "aunt.may@example.com",
-      gender: "female",
-      role: "user",
-      action: (
-         <MyTooltip title="Delete">
-            <Button variant={"destructive"} size={"icon"} className="h-8 w-8 rounded-full">
-               <FaTrash />
-            </Button>
-         </MyTooltip>
-      ),
-   },
-]
 
 const Customers = () => {
    const { user } = useAppSelector(selectUser)
@@ -100,7 +54,7 @@ const Customers = () => {
            name: user.name,
            email: user.email,
            gender: user.gender,
-           role: user.role,
+           role: user.role!,
            action: (
               <AlertDialog>
                  <AlertDialogTrigger asChild>

@@ -1,6 +1,7 @@
 import {
    BarType,
    CartItemType,
+   CouponType,
    LineType,
    OrderType,
    PieType,
@@ -125,6 +126,11 @@ export type DeleteOrderRequestType = {
 export type AllUsersResponseType = {
    success: true
    users: UserType[]
+}
+
+export type AllCouponsResponseType = {
+   success: true
+   allCoupons: CouponType[]
 }
 
 export type DeleteUserRequestType = {

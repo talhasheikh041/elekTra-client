@@ -24,6 +24,12 @@ export type ProductType = {
    _id: string
 }
 
+export type CouponType = {
+   _id: string
+   coupon: string
+   discount: number
+}
+
 export type ReviewType = {
    _id: string
    product: string
