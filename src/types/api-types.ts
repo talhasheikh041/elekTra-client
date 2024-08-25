@@ -11,6 +11,7 @@ import {
    StatsType,
    UserType,
 } from "@/types/types"
+import { StringDecoder } from "string_decoder"
 
 export type CustomErrorType = {
    status: number
@@ -120,7 +121,7 @@ export type UpdateOrderRequestType = {
 
 export type DeleteOrderRequestType = {
    userId: string
-   orderId: string
+   orderId: StringDecoder
 }
 
 export type AllUsersResponseType = {
@@ -131,6 +132,12 @@ export type AllUsersResponseType = {
 export type AllCouponsResponseType = {
    success: true
    allCoupons: CouponType[]
+}
+
+export type UpdateUserRequestType = {
+   role: string
+   adminUserId: string
+   userId: string
 }
 
 export type DeleteUserRequestType = {

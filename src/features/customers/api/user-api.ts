@@ -2,6 +2,7 @@ import {
    AllUsersResponseType,
    DeleteUserRequestType,
    MessageResponseType,
+   UpdateUserRequestType,
    UserResponseType,
 } from "@/types/api-types"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
@@ -25,6 +26,15 @@ export const userApi = createApi({
          providesTags: ["User"],
       }),
 
+      updateUser: builder.mutation<MessageResponseType, UpdateUserRequestType>({
+         query: ({ role, userId, adminUserId }) => ({
+            url: `${userId}?id=${adminUserId}`,
+            method: "PUT",
+            body: { role },
+         }),
+         invalidatesTags: ["User"],
+      }),
+
       deleteUser: builder.mutation<MessageResponseType, DeleteUserRequestType>({
          query: ({ adminUserId, userId }) => ({
             url: `${userId}?id=${adminUserId}`,
@@ -35,4 +45,9 @@ export const userApi = createApi({
    }),
 })
 
-export const { useLazyGetUserQuery, useAllUsersQuery, useDeleteUserMutation } = userApi
+export const {
+   useLazyGetUserQuery,
+   useAllUsersQuery,
+   useDeleteUserMutation,
+   useUpdateUserMutation,
+} = userApi

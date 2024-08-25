@@ -19,13 +19,15 @@ const DashboardLayout = () => {
          <aside>
             <Sidebar isSideBarActive={isSideBarActive} setIsSidebarActive={setIsSideBarActive} />
          </aside>
-         <main className="bg-secondary py-4 dark:bg-secondary sm:ms-72 min-h-svh">
+         <header className="sm:ms-72 sticky top-0 bg-background shadow-sm z-50">
+            <DashboardHeader
+               isSideBarActive={isSideBarActive}
+               setIsSidebarActive={setIsSideBarActive}
+            />
+         </header>
+         <main className="min-h-svh bg-secondary py-4 dark:bg-secondary sm:ms-72">
             <Suspense fallback={<BounceLoader />}>
                <div className="container">
-                  <DashboardHeader
-                     isSideBarActive={isSideBarActive}
-                     setIsSidebarActive={setIsSideBarActive}
-                  />
                   <Outlet />
                </div>
             </Suspense>

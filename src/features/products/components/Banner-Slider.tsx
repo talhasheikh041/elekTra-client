@@ -12,49 +12,29 @@ const BannerSlider = () => {
    return (
       <Carousel opts={{ loop: true }} plugins={[Autoplay({ delay: 5000 })]}>
          <CarouselContent>
-            <CarouselItem>
-               <div className="h-[300px] rounded-bl-2xl rounded-br-2xl md:h-[500px] lg:h-[500px] xl:h-[550px]">
-                  <img
-                     className="size-full rounded-bl-2xl rounded-br-2xl object-cover"
-                     src={heroImg}
-                     alt="hero-img"
-                  />
+            <CarouselItem> 
+               <div className="h-[300px] md:h-[500px] lg:h-[500px] xl:h-[550px]">
+                  <img className="size-full object-cover" src={heroImg} alt="hero-img" />
                </div>
             </CarouselItem>
             <CarouselItem>
-               <div className="h-[300px] rounded-bl-2xl rounded-br-2xl md:h-[500px] lg:h-[500px] xl:h-[550px]">
-                  <img
-                     className="size-full rounded-bl-2xl rounded-br-2xl object-cover"
-                     src={heroImg}
-                     alt="hero-img"
-                  />
+               <div className="h-[300px] md:h-[500px] lg:h-[500px] xl:h-[550px]">
+                  <img className="size-full object-cover" src={heroImg} alt="hero-img" />
                </div>
             </CarouselItem>
             <CarouselItem>
-               <div className="h-[300px] rounded-bl-2xl rounded-br-2xl md:h-[500px] lg:h-[500px] xl:h-[550px]">
-                  <img
-                     className="size-full rounded-bl-2xl rounded-br-2xl object-cover"
-                     src={heroImg}
-                     alt="hero-img"
-                  />
+               <div className="h-[300px] md:h-[500px] lg:h-[500px] xl:h-[550px]">
+                  <img className="size-full object-cover" src={heroImg} alt="hero-img" />
                </div>
             </CarouselItem>
             <CarouselItem>
-               <div className="h-[300px] rounded-bl-2xl rounded-br-2xl md:h-[500px] lg:h-[500px] xl:h-[550px]">
-                  <img
-                     className="size-full rounded-bl-2xl rounded-br-2xl object-cover"
-                     src={heroImg}
-                     alt="hero-img"
-                  />
+               <div className="h-[300px] md:h-[500px] lg:h-[500px] xl:h-[550px]">
+                  <img className="size-full object-cover" src={heroImg} alt="hero-img" />
                </div>
             </CarouselItem>
             <CarouselItem>
-               <div className="h-[300px] rounded-bl-2xl rounded-br-2xl md:h-[500px] lg:h-[500px] xl:h-[550px]">
-                  <img
-                     className="size-full rounded-bl-2xl rounded-br-2xl object-cover"
-                     src={heroImg}
-                     alt="hero-img"
-                  />
+               <div className="h-[300px] md:h-[500px] lg:h-[500px] xl:h-[550px]">
+                  <img className="size-full object-cover" src={heroImg} alt="hero-img" />
                </div>
             </CarouselItem>
          </CarouselContent>

@@ -9,7 +9,7 @@ import { useAppSelector } from "@/redux/store"
 import { CustomErrorType } from "@/types/api-types"
 import { toast } from "sonner"
 
-const { lastSixMonths, lastTwelveMonths } = getLastMonths()
+const { lastTwelveMonths } = getLastMonths()
 
 function Line() {
    const { user } = useAppSelector(selectUser)
@@ -32,7 +32,7 @@ function Line() {
          <CardContent className="flex flex-col gap-12 py-6">
             {isLoading ? (
                <SkeletonWrapper className="flex flex-col items-center gap-10" quantity={2}>
-                  <Skeleton className="w-full h-[300px]" />
+                  <Skeleton className="h-[300px] w-full" />
                </SkeletonWrapper>
             ) : isSuccess && data ? (
                <>
@@ -44,7 +44,8 @@ function Line() {
                            borderColor="rgb(53, 162, 255)"
                            bgColor="rgba(53, 162, 255,0.5)"
                            labels={lastTwelveMonths}
-                        />I
+                        />
+                        I
                      </div>
                      <h2 className="mt-4 flex justify-center">Active Users</h2>
                   </section>

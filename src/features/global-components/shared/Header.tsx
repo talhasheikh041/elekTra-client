@@ -18,10 +18,12 @@ import { HomeIcon, Loader, LogInIcon, Moon, SearchIcon, ShoppingBagIcon, Sun } f
 import { Link, useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 import logo from "@/assets/logo.svg"
+import { Badge } from "@/features/global-components/ui/badge"
 
 const Header = () => {
    const { theme, setTheme } = useTheme()
    const { user, loading } = useAppSelector(selectUser)
+   const cartItemsCount = useAppSelector((state) => state.cartReducer.cartItems.length)
    const navigate = useNavigate()
 
    const logoutHandler = async () => {
@@ -62,7 +64,14 @@ const Header = () => {
 
                <Link to={"cart"}>
                   <MyTooltip title="Cart">
-                     <ShoppingBagIcon className="size-5 transition-transform hover:scale-110" />
+                     <div className="relative">
+                        <ShoppingBagIcon className="size-5 transition-transform hover:scale-110" />
+                        {cartItemsCount > 0 && (
+                           <Badge className="absolute -right-3 -top-3.5 px-1.5 py-0.5 text-xs">
+                              {cartItemsCount}
+                           </Badge>
+                        )}
+                     </div>
                   </MyTooltip>
                </Link>
 

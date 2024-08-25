@@ -24,11 +24,12 @@ import {
    AlertDialogTitle,
    AlertDialogTrigger,
 } from "@/features/global-components/ui/alert-dialog"
+import SelectRole from "@/features/customers/components/Select-Role"
 
 const Customers = () => {
-   const { user } = useAppSelector(selectUser)
+   const { user: loggedInUser } = useAppSelector(selectUser)
 
-   const { data, isLoading, isSuccess, isError, error } = useAllUsersQuery(user?._id!)
+   const { data, isLoading, isSuccess, isError, error } = useAllUsersQuery(loggedInUser?._id!)
    const [deleteUser] = useDeleteUserMutation()
 
    let errorMessage: string | null = null
@@ -38,7 +39,7 @@ const Customers = () => {
       toast.error(errorMessage)
    }
 
-   const deleteUserHandler = async (userId: string, adminUserId: string = user?._id!) => {
+   const deleteUserHandler = async (userId: string, adminUserId: string = loggedInUser?._id!) => {
       const res = await deleteUser({ userId, adminUserId })
       responseToast(res)
    }
@@ -48,13 +49,18 @@ const Customers = () => {
            avatar: (
               <Avatar>
                  <AvatarImage src={user.photo} />
-                 <AvatarFallback>CN</AvatarFallback>
+                 <AvatarFallback>{user.name[0]}</AvatarFallback>
               </Avatar>
            ),
            name: user.name,
            email: user.email,
            gender: user.gender,
-           role: user.role!,
+           role:
+              loggedInUser?._id === user._id ? (
+                 <span>{user.role!}</span>
+              ) : (
+                 <SelectRole role={user.role!} userId={user._id} />
+              ),
            action: (
               <AlertDialog>
                  <AlertDialogTrigger asChild>

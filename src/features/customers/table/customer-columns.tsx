@@ -6,7 +6,7 @@ export type CustomersType = {
    name: string
    email: string
    gender: string
-   role: string
+   role: ReactNode
    action: ReactNode
 }
 
@@ -31,6 +31,7 @@ export const customersColumns: ColumnDef<CustomersType>[] = [
    {
       accessorKey: "role",
       header: "Role",
+      cell: ({ cell }) => cell.renderValue<ReactNode>(),
    },
    {
       accessorKey: "action",
