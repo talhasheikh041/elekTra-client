@@ -19,7 +19,7 @@ const DashboardLayout = () => {
          <aside>
             <Sidebar isSideBarActive={isSideBarActive} setIsSidebarActive={setIsSideBarActive} />
          </aside>
-         <header className="sm:ms-72 sticky top-0 bg-background shadow-sm z-50">
+         <header className="sticky top-0 z-50 bg-background shadow-sm sm:ms-72">
             <DashboardHeader
                isSideBarActive={isSideBarActive}
                setIsSidebarActive={setIsSideBarActive}

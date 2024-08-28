@@ -39,7 +39,7 @@ function Line() {
                   <section>
                      <div>
                         <LineChart
-                           data={data.lineCarts.users}
+                           data={data.lineCarts?.users}
                            label="Users"
                            borderColor="rgb(53, 162, 255)"
                            bgColor="rgba(53, 162, 255,0.5)"
