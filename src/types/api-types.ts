@@ -102,6 +102,11 @@ export type OrderDetailsResponseType = {
    order: OrderType
 }
 
+export type OrderDetailsRequestType = {
+   adminId: string
+   orderId: string
+}
+
 export type NewOrderRequestType = {
    shippingInfo: ShippingInfoType
    orderItems: CartItemType[]
@@ -121,7 +126,7 @@ export type UpdateOrderRequestType = {
 
 export type DeleteOrderRequestType = {
    userId: string
-   orderId: StringDecoder
+   orderId: String
 }
 
 export type AllUsersResponseType = {

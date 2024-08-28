@@ -3,6 +3,8 @@ import {
    DeleteOrderRequestType,
    MessageResponseType,
    NewOrderRequestType,
+   OrderDetailsRequestType,
+   OrderDetailsResponseType,
    UpdateOrderRequestType,
 } from "@/types/api-types"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
@@ -54,6 +56,14 @@ export const orderApi = createApi({
          }),
          providesTags: ["Order"],
       }),
+
+      getSingleOrder: builder.query<OrderDetailsResponseType, OrderDetailsRequestType>({
+         query: ({ orderId, adminId }) => ({
+            url: `${orderId}?id=${adminId}`,
+            method: "GET",
+         }),
+         providesTags: ["Order"],
+      }),
    }),
 })
 
@@ -63,4 +73,5 @@ export const {
    useMyOrdersQuery,
    useUpdateOrderMutation,
    useNewOrderMutation,
+   useGetSingleOrderQuery,
 } = orderApi

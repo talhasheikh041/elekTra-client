@@ -5,13 +5,13 @@ import { Badge } from "@/features/global-components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/global-components/ui/card"
 import { Skeleton } from "@/features/global-components/ui/skeleton"
 import { useAllOrdersQuery } from "@/features/transactions/api/order-api"
-import EditTransaction from "@/features/transactions/forms/Edit-Transaction"
 import {
    TransactionsType,
    getTransactionColumns,
 } from "@/features/transactions/table/Transaction-Columns"
 import { useAppSelector } from "@/redux/store"
 import { CustomErrorType } from "@/types/api-types"
+import { Link } from "react-router-dom"
 import { toast } from "sonner"
 
 const Transactions = () => {
@@ -34,12 +34,16 @@ const Transactions = () => {
            discount: order.discount,
            quantity: order.orderItems.length,
            status: <Badge variant="secondary">{order.status}</Badge>,
-           action: <EditTransaction key={order._id} order={order} />,
+           action: (
+              <Link to={order._id}>
+                 <Badge className="cursor-pointer">Details</Badge>
+              </Link>
+           ),
         }))
       : null
 
    return (
-      <Card className="min-h-screen">
+      <Card>
          <CardHeader>
             <CardTitle className="font-light uppercase tracking-widest">Transactions</CardTitle>
          </CardHeader>

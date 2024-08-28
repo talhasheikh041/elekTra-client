@@ -27,7 +27,8 @@ const ProductDetails = lazy(() => import("@/pages/Product-Details"))
 const Dashboard = lazy(() => import("@/pages/admin/Dashboard"))
 const Products = lazy(() => import("@/pages/admin/products/Products"))
 const NewProduct = lazy(() => import("@/pages/admin/products/New-Product"))
-const Transactions = lazy(() => import("@/pages/admin/Transactions"))
+const Transactions = lazy(() => import("@/pages/admin/transactions/Transactions"))
+const TransactionDetails = lazy(() => import("@/pages/admin/transactions/Transaction-Details"))
 const Customers = lazy(() => import("@/pages/admin/Customers"))
 const Bar = lazy(() => import("@/pages/admin/charts/Bar"))
 const Line = lazy(() => import("@/pages/admin/charts/Line"))
@@ -64,11 +65,16 @@ function App() {
                <Route path="/admin" element={<DashboardLayout />}>
                   <Route path="dashboard" element={<Dashboard />} />
                   <Route path="customers" element={<Customers />} />
+
                   <Route path="products">
                      <Route index element={<Products />} />
                      <Route path="new" element={<NewProduct />} />
                   </Route>
-                  <Route path="transactions" element={<Transactions />} />
+
+                  <Route path="transactions">
+                     <Route index element={<Transactions />} />
+                     <Route path=":id" element={<TransactionDetails />} />
+                  </Route>
 
                   <Route path="charts">
                      <Route path="bar" element={<Bar />} />
