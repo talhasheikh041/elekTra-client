@@ -47,8 +47,8 @@ const ProductDetails = () => {
    return (
       <main className="container py-8">
          {isLoading ? (
-            <SkeletonWrapper className="mt-8 flex w-full gap-3" quantity={4}>
-               <Skeleton className="h-64 w-80" />
+            <SkeletonWrapper className="grid grid-cols-1 gap-5 md:grid-cols-2" quantity={3}>
+               <Skeleton className="h-64 md:[&:nth-child(3)]:col-span-2" />
             </SkeletonWrapper>
          ) : isSuccess && data ? (
             <>
@@ -110,7 +110,9 @@ const ProductDetails = () => {
                                  <div className="flex justify-center md:justify-end">
                                     <AddReview productId={data.product._id} />
                                  </div>
-                                 <p className="grid place-items-center mt-4">{reviewsErrorMessage}</p>
+                                 <p className="mt-4 grid place-items-center">
+                                    {reviewsErrorMessage}
+                                 </p>
                               </>
                            )}
                         </TabsContent>

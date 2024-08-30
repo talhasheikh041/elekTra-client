@@ -40,10 +40,10 @@ const LatestProducts = () => {
             </SkeletonWrapper>
          ) : isSuccess && data ? (
             <Carousel>
-               <CarouselContent className="-ml-[calc(2rem*1)] flex touch-pan-y touch-pinch-zoom gap-5">
+               <CarouselContent className="-ml-[calc(2rem*1)] flex touch-pan-y touch-pinch-zoom md:gap-3 xl:gap-1">
                   {data.products.map((product) => (
                      <CarouselItem
-                        className="w-full min-w-0 flex-shrink-0 grow basis-auto pl-6 sm:w-1/2 md:pl-8 lg:w-1/4"
+                        className="flex w-full min-w-0 flex-shrink-0 grow basis-auto justify-center pl-6 sm:w-1/2 md:pl-8 lg:w-1/4"
                         key={product._id}
                      >
                         <ProductCard product={product} />

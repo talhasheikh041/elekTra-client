@@ -27,13 +27,13 @@ const OrderDetails = ({ order }: { order: OrderType }) => {
          <DialogTrigger asChild>
             <Badge className="cursor-pointer">Details</Badge>
          </DialogTrigger>
-         <DialogContent className="max-h-screen max-w-4xl gap-10 overflow-y-auto">
+         <DialogContent className="max-h-dvh max-w-4xl gap-10 overflow-y-auto">
             <DialogHeader>
                <DialogTitle className="mx-auto text-2xl font-light uppercase tracking-widest">
                   Order Details
                </DialogTitle>
             </DialogHeader>
-            <div className="flex justify-center gap-12">
+            <div className="flex flex-col justify-center gap-5 sm:flex-row sm:gap-12">
                <section className="flex-1">
                   <h2 className="mx-auto mb-2 w-fit text-lg font-light uppercase tracking-widest">
                      Order Items

@@ -235,11 +235,14 @@ const Search = () => {
             </div>
 
             {searchProductsIsLoading || searchProductsisFetching ? (
-               <SkeletonWrapper className="mt-8 grid w-full grid-cols-3 gap-y-6" quantity={8}>
+               <SkeletonWrapper
+                  className="mt-8 grid grid-cols-1 place-items-center gap-2 sm:grid-cols-2 md:grid-cols-3"
+                  quantity={8}
+               >
                   <Skeleton className="h-64 w-64" />
                </SkeletonWrapper>
             ) : searchProducts?.products.length && searchProductsIsSuccess ? (
-               <div className="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 place-items-center">
+               <div className="mt-5 grid grid-cols-1 place-items-center gap-2 sm:grid-cols-2 md:grid-cols-3">
                   {searchProducts.products.map((product) => (
                      <ProductCard key={product._id} product={product} />
                   ))}
@@ -250,68 +253,67 @@ const Search = () => {
                </p>
             )}
 
-               <div className="mt-6">
-                  <Pagination>
-                     <PaginationContent>
-                        <PaginationItem>
-                           <PaginationPrevious
-                              style={{
-                                 pointerEvents: page === 1 ? "none" : "auto",
-                                 cursor: page === 1 ? "not-allowed" : "pointer",
-                              }}
-                              className={`${page === 1 && "text-muted-foreground"}`}
-                              onClick={() =>
-                                 setSearchParams({
-                                    ...Object.fromEntries(searchParams),
-                                    page: (page - 1).toString(),
-                                 })
-                              }
-                           />
-                        </PaginationItem>
-                        <PaginationItem>
-                           {generatePageNumbers(page, searchProducts?.totalPages!).map(
-                              (pageNumber) => (
-                                 <PaginationLink
-                                    key={pageNumber}
-                                    isActive={page === pageNumber}
-                                    className="cursor-pointer"
-                                    onClick={() =>
-                                       setSearchParams({
-                                          ...Object.fromEntries(searchParams),
-                                          page: pageNumber.toString(),
-                                       })
-                                    }
-                                 >
-                                    {pageNumber}
-                                 </PaginationLink>
-                              ),
-                           )}
-                        </PaginationItem>
+            <div className="mt-6">
+               <Pagination>
+                  <PaginationContent>
+                     <PaginationItem>
+                        <PaginationPrevious
+                           style={{
+                              pointerEvents: page === 1 ? "none" : "auto",
+                              cursor: page === 1 ? "not-allowed" : "pointer",
+                           }}
+                           className={`${page === 1 && "text-muted-foreground"}`}
+                           onClick={() =>
+                              setSearchParams({
+                                 ...Object.fromEntries(searchParams),
+                                 page: (page - 1).toString(),
+                              })
+                           }
+                        />
+                     </PaginationItem>
+                     <PaginationItem>
+                        {generatePageNumbers(page, searchProducts?.totalPages!).map(
+                           (pageNumber) => (
+                              <PaginationLink
+                                 key={pageNumber}
+                                 isActive={page === pageNumber}
+                                 className="cursor-pointer"
+                                 onClick={() =>
+                                    setSearchParams({
+                                       ...Object.fromEntries(searchParams),
+                                       page: pageNumber.toString(),
+                                    })
+                                 }
+                              >
+                                 {pageNumber}
+                              </PaginationLink>
+                           ),
+                        )}
+                     </PaginationItem>
 
-                        <PaginationItem>
-                           <PaginationEllipsis />
-                        </PaginationItem>
+                     <PaginationItem>
+                        <PaginationEllipsis />
+                     </PaginationItem>
 
-                        <PaginationItem>
-                           <PaginationNext
-                              style={{
-                                 pointerEvents:
-                                    page === searchProducts?.totalPages ? "none" : "auto",
-                                 cursor:
-                                    page === searchProducts?.totalPages ? "not-allowed" : "pointer",
-                              }}
-                              className={`${page === searchProducts?.totalPages && "text-muted-foreground"}`}
-                              onClick={() =>
-                                 setSearchParams({
-                                    ...Object.fromEntries(searchParams),
-                                    page: (page + 1).toString(),
-                                 })
-                              }
-                           />
-                        </PaginationItem>
-                     </PaginationContent>
-                  </Pagination>
-               </div>
+                     <PaginationItem>
+                        <PaginationNext
+                           style={{
+                              pointerEvents: page === searchProducts?.totalPages ? "none" : "auto",
+                              cursor:
+                                 page === searchProducts?.totalPages ? "not-allowed" : "pointer",
+                           }}
+                           className={`${page === searchProducts?.totalPages && "text-muted-foreground"}`}
+                           onClick={() =>
+                              setSearchParams({
+                                 ...Object.fromEntries(searchParams),
+                                 page: (page + 1).toString(),
+                              })
+                           }
+                        />
+                     </PaginationItem>
+                  </PaginationContent>
+               </Pagination>
+            </div>
          </main>
       </div>
    )

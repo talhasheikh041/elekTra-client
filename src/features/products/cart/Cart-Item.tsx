@@ -63,19 +63,21 @@ const CartItem = ({ name, photo, price, productId, quantity, stock }: CartItemPr
          <TableCell>
             <div className="flex items-center gap-2">
                <Button
-                  onClick={incrementHandler}
+                  onClick={decrementHandler}
                   variant="outline"
                   className="flex size-8 cursor-pointer items-center justify-center text-lg"
                   size="icon"
+                  disabled={quantity <= 1}
                >
                   <Minus size={"20px"} />
                </Button>
                <p>{quantity}</p>
                <Button
-                  onClick={decrementHandler}
+                  onClick={incrementHandler}
                   variant="outline"
                   className="flex size-8 cursor-pointer items-center justify-center text-lg"
                   size="icon"
+                  disabled={quantity >= stock}
                >
                   <Plus size={"20px"} />
                </Button>

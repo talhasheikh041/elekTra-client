@@ -105,11 +105,11 @@ const TransactionDetails = () => {
          <CardContent>
             <>
                {isLoading ? (
-                  <SkeletonWrapper className="flex w-full gap-3" quantity={2}>
+                  <SkeletonWrapper className="flex w-full flex-col gap-3 lg:flex-row" quantity={2}>
                      <Skeleton className="h-96 w-full" />
                   </SkeletonWrapper>
                ) : isSuccess && order ? (
-                  <div className="flex justify-center gap-12">
+                  <div className="flex flex-col justify-center gap-6 lg:flex-row lg:gap-12">
                      <section className="flex-1">
                         <h2 className="mx-auto mb-2 w-fit text-lg font-light uppercase tracking-widest">
                            Order Items

@@ -32,8 +32,8 @@ const Dashboard = () => {
    return (
       <>
          {isLoading ? (
-            <SkeletonWrapper className="grid grid-cols-4 gap-4" quantity={8}>
-               <Skeleton className="h-[300px] bg-muted-foreground/10 [&:nth-child(1)]:h-[106px] [&:nth-child(1)]:w-[240px] [&:nth-child(2)]:h-[106px] [&:nth-child(2)]:w-[240px] [&:nth-child(3)]:h-[106px] [&:nth-child(3)]:w-[240px] [&:nth-child(4)]:h-[106px] [&:nth-child(4)]:w-[240px] [&:nth-child(5)]:col-span-3 [&:nth-child(8)]:col-span-3 " />
+            <SkeletonWrapper className="grid grid-cols-1 gap-4 lg:grid-cols-4" quantity={8}>
+               <Skeleton className="lg:[300px] h-[200px] bg-muted-foreground/10 lg:[&:nth-child(1)]:h-[106px] lg:[&:nth-child(1)]:w-[240px] lg:[&:nth-child(2)]:h-[106px] lg:[&:nth-child(2)]:w-[240px] lg:[&:nth-child(3)]:h-[106px] lg:[&:nth-child(3)]:w-[240px] lg:[&:nth-child(4)]:h-[106px] lg:[&:nth-child(4)]:w-[240px] lg:[&:nth-child(5)]:col-span-3 lg:[&:nth-child(8)]:col-span-3 " />
             </SkeletonWrapper>
          ) : isSuccess ? (
             <div>

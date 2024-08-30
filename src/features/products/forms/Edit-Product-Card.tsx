@@ -161,7 +161,7 @@ const EditProductCard = ({ product }: EditProductCardProps) => {
          <DialogTrigger>
             <Badge className="cursor-pointer">Manage</Badge>
          </DialogTrigger>
-         <DialogContent className="max-h-screen max-w-5xl overflow-y-auto">
+         <DialogContent className="max-h-dvh max-w-5xl overflow-y-auto">
             <DialogHeader>
                <DialogTitle className="mx-auto text-2xl font-light uppercase tracking-widest">
                   Edit Product
