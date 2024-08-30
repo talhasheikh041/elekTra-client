@@ -22,6 +22,8 @@ const Cart = () => {
    const [couponCode, setCouponCode] = useState<string>("")
    const [isCouponCodeValid, setIsCouponCodeValid] = useState("")
 
+   const { total } = useAppSelector((state) => state.cartReducer)
+
    const dispatch = useAppDispatch()
 
    const cartItems = useAppSelector((state) => {
@@ -37,7 +39,7 @@ const Cart = () => {
          if (!couponCode) return toast.error("Please provide coupon code")
 
          const res = await axios.get(
-            `${import.meta.env.VITE_SERVER_LINK}/api/v1/payment/discount?coupon=${couponCode}`,
+            `${import.meta.env.VITE_SERVER_LINK}/api/v1/payment/discount?coupon=${couponCode}&total=${total}`,
          )
          dispatch(applyDiscount(res.data.discount))
          toast.success("Coupon Applied")

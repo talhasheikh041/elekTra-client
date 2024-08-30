@@ -42,7 +42,7 @@ const Dashboard = () => {
                      <ProgressCard
                         amount={data.stats.count.totalRevenue}
                         color="text-purple-500"
-                        heading="Revenue (Rs)"
+                        heading="Revenue"
                         percentage={data.stats.percentage.revenue}
                      />
                      <ProgressCard
@@ -58,7 +58,7 @@ const Dashboard = () => {
                         percentage={data.stats.percentage.orders}
                      />
                      <ProgressCard
-                        amount={data.stats.count.orders}
+                        amount={data.stats.count.product}
                         color="text-cyan-500"
                         heading="Products"
                         percentage={data.stats.percentage.products}

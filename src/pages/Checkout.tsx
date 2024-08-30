@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/store"
 import { NewOrderRequestType } from "@/types/api-types"
 import { Elements, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js"
 import { loadStripe } from "@stripe/stripe-js"
+import { Loader } from "lucide-react"
 import { useState } from "react"
 import { Navigate, useLocation, useNavigate } from "react-router-dom"
 import { toast } from "sonner"
@@ -71,11 +72,18 @@ const CheckoutForm = () => {
             Payment
          </h1>
 
-         <div className="md:w-1/2 sm:w-3/4 px-3 mx-auto mt-16">
+         <div className="mx-auto mt-16 px-3 sm:w-3/4 md:w-1/2">
             <form onSubmit={handleSubmit}>
                <PaymentElement />
-               <Button className="mx-auto flex w-20 text-md mt-6"  disabled={isProcessing} type="submit">
-                  {isProcessing ? "Processing..." : "Pay"}
+               <Button className="text-md mx-auto mt-6 flex" disabled={isProcessing} type="submit">
+                  {isProcessing ? (
+                     <span className="inline-flex gap-2">
+                        <span>Processing</span>
+                        <Loader className="animate-spin" />
+                     </span>
+                  ) : (
+                     <span>Pay</span>
+                  )}
                </Button>
             </form>
          </div>

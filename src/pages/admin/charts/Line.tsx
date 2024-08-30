@@ -52,7 +52,7 @@ function Line() {
                   <section>
                      <div>
                         <LineChart
-                           data={data.lineCarts.products}
+                           data={data.lineCarts?.products}
                            bgColor={"hsla(269,80%,40%,0.4)"}
                            borderColor={"hsl(269,80%,40%)"}
                            label="Products"
@@ -64,7 +64,7 @@ function Line() {
                   <section>
                      <div>
                         <LineChart
-                           data={data.lineCarts.revenue}
+                           data={data.lineCarts?.revenue}
                            bgColor={"hsla(129,80%,40%,0.4)"}
                            borderColor={"hsl(129,80%,40%)"}
                            label="Revenue"
@@ -76,7 +76,7 @@ function Line() {
                   <section>
                      <div>
                         <LineChart
-                           data={data.lineCarts.discount}
+                           data={data.lineCarts?.discount}
                            bgColor={"hsla(29,80%,40%,0.4)"}
                            borderColor={"hsl(29,80%,40%)"}
                            label="Discount"

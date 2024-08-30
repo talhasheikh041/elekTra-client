@@ -3,6 +3,7 @@ import { Button } from "@/features/global-components/ui/button"
 import budsCategoryPhoto from "@/assets/category-buds.webp"
 import phoneCategoryPhoto from "@/assets/category-phone.webp"
 import watchCategoryPhoto from "@/assets/category-watch.webp"
+import { Link } from "react-router-dom"
 
 const HomeCategories = () => {
    return (
@@ -16,7 +17,9 @@ const HomeCategories = () => {
                   Phones
                </h1>
 
-               <Button variant={"default"}>Shop now</Button>
+               <Button variant={"default"}>
+                  <Link to={"/search?category=phone"}>Shop Now</Link>
+               </Button>
             </div>
          </div>
 
@@ -29,7 +32,9 @@ const HomeCategories = () => {
                   Watches
                </h1>
 
-               <Button variant={"default"}>Shop now</Button>
+               <Button variant={"default"}>
+                  <Link to={"/search?category=smart+watch"}>Shop Now</Link>
+               </Button>
             </div>
          </div>
 
@@ -39,10 +44,12 @@ const HomeCategories = () => {
          >
             <div className="relative z-10 space-y-6 p-8">
                <h1 className="scroll-m-20 text-4xl font-light tracking-widest text-white lg:text-4xl">
-                  Ear Buds
+                  Laptops
                </h1>
 
-               <Button variant={"default"}>Shop now</Button>
+               <Button variant={"default"}>
+                  <Link to={"/search?category=laptop"}>Shop Now</Link>
+               </Button>
             </div>
          </div>
       </div>

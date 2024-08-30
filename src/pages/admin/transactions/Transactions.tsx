@@ -24,7 +24,6 @@ const Transactions = () => {
    if (isError) {
       const err = error as CustomErrorType
       errorMessage = err.data.message
-      toast.error(errorMessage)
    }
 
    const allTransactions: TransactionsType[] | null = isSuccess
@@ -59,7 +58,7 @@ const Transactions = () => {
                   isPagination={true}
                />
             ) : (
-               <p className="mt-8 grid place-items-center">{errorMessage}</p>
+               <p className="flex justify-center">{errorMessage}</p>
             )}
          </CardContent>
       </Card>

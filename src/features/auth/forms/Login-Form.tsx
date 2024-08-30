@@ -26,12 +26,11 @@ import {
 import { auth } from "@/firebase"
 import { cn } from "@/lib/utils"
 import { useAppDispatch } from "@/redux/store"
-import { CustomErrorType, MessageResponseType } from "@/types/api-types"
+import { CustomErrorType } from "@/types/api-types"
 import { format } from "date-fns"
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth"
 import { CalendarIcon } from "lucide-react"
 import { FaGoogle } from "react-icons/fa"
-import { useLocation, useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
 const loginSchema = z.object({
@@ -52,9 +51,7 @@ const LoginForm = () => {
       },
    })
 
-   const location = useLocation()
    const dispatch = useAppDispatch()
-   const navigate = useNavigate()
 
    const [login] = useLoginMutation()
    const [trigger] = useLazyGetUserQuery()

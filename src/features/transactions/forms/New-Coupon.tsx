@@ -98,7 +98,7 @@ const NewCoupon = ({ setRevalidate }: NewCouponProps) => {
       const { couponLength, options, prefix } = values
       let couponString = ""
       if (prefix) couponString += prefix
-      if (couponLength === couponString.length) return couponString
+      if (couponLength === couponString.length) return setCoupon(couponString)
 
       while (couponString.length < couponLength) {
          if (options.includeCharacters) {

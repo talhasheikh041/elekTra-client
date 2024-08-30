@@ -90,8 +90,11 @@ const Header = () => {
                      <DropdownMenuContent>
                         <DropdownMenuLabel>My Account</DropdownMenuLabel>
                         {user.role === "admin" && (
-                           <DropdownMenuItem>
-                              <Link to={"/admin/dashboard"}>Dashboard</Link>
+                           <DropdownMenuItem
+                              className="cursor-pointer"
+                              onClick={() => navigate("/admin/dashboard")}
+                           >
+                              <span>Dashboard</span>
                            </DropdownMenuItem>
                         )}
                         <DropdownMenuItem

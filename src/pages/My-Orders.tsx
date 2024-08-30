@@ -11,7 +11,6 @@ import { Skeleton } from "@/features/global-components/ui/skeleton"
 import { useMyOrdersQuery } from "@/features/transactions/api/order-api"
 import { useAppSelector } from "@/redux/store"
 import { CustomErrorType } from "@/types/api-types"
-import { toast } from "sonner"
 
 const MyOrders = () => {
    const { user } = useAppSelector(selectUser)
@@ -23,7 +22,6 @@ const MyOrders = () => {
    if (isError) {
       const err = error as CustomErrorType
       errorMessage = err.data.message
-      toast.error(errorMessage)
    }
 
    const myOrders: CustomerOrderType[] | null = data

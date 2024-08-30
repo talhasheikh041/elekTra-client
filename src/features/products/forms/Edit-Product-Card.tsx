@@ -41,7 +41,7 @@ import { TiptapEditorRef } from "@/pages/admin/products/New-Product"
 import { useAppSelector } from "@/redux/store"
 import { ProductType } from "@/types/types"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Upload } from "lucide-react"
+import { Loader, Upload } from "lucide-react"
 import { useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -54,8 +54,13 @@ type EditProductCardProps = {
 const productSchema = z.object({
    name: z.string().min(1, { message: "Name is required" }),
    category: z.string().min(1, { message: "Category is required" }),
-   price: z.number().min(0, { message: "Price must be a positive number" }),
-   stock: z.number().int().min(0, { message: "Stock must be a positive integer" }),
+   price: z
+      .number({ message: "Price is required" })
+      .min(0, { message: "Price must be a positive number" }),
+   stock: z
+      .number({ message: "Stock is required" })
+      .int()
+      .min(0, { message: "Stock must be a positive integer" }),
    photos: z
       .array(
          z
@@ -85,8 +90,8 @@ const EditProductCard = ({ product }: EditProductCardProps) => {
 
    const editorRef = useRef<TiptapEditorRef | null>(null)
 
-   const [updateProduct] = useUpdateProductMutation()
-   const [deleteProduct] = useDeleteProductMutation()
+   const [updateProduct, { isLoading: updateisLoading }] = useUpdateProductMutation()
+   const [deleteProduct, { isLoading: deleteIsLoading }] = useDeleteProductMutation()
 
    const form = useForm<z.infer<typeof productSchema>>({
       resolver: zodResolver(productSchema),
@@ -195,12 +200,10 @@ const EditProductCard = ({ product }: EditProductCardProps) => {
                                  <Input
                                     type="number"
                                     {...field}
-                                    value={field.value === undefined ? "" : field.value}
+                                    value={field.value ?? ""}
                                     onChange={(e) =>
                                        field.onChange(
-                                          e.target.value === ""
-                                             ? undefined
-                                             : Number(e.target.value),
+                                          e.target.value === "" ? null : Number(e.target.value),
                                        )
                                     }
                                  />
@@ -220,12 +223,10 @@ const EditProductCard = ({ product }: EditProductCardProps) => {
                                  <Input
                                     type="number"
                                     {...field}
-                                    value={field.value === undefined ? "" : field.value}
+                                    value={field.value ?? ""}
                                     onChange={(e) =>
                                        field.onChange(
-                                          e.target.value === ""
-                                             ? undefined
-                                             : Number(e.target.value),
+                                          e.target.value === "" ? null : Number(e.target.value),
                                        )
                                     }
                                  />
@@ -346,14 +347,36 @@ const EditProductCard = ({ product }: EditProductCardProps) => {
                      </div>
 
                      <div className="col-span-full flex justify-center gap-3">
-                        <Button variant={"default"} type="submit">
-                           Update
+                        <Button
+                           disabled={updateisLoading || deleteIsLoading}
+                           variant={"default"}
+                           type="submit"
+                        >
+                           {updateisLoading ? (
+                              <span className="inline-flex items-center gap-1">
+                                 <span>Updating</span>
+                                 <Loader className="animate-spin" />
+                              </span>
+                           ) : (
+                              "Update"
+                           )}
                         </Button>
 
                         <AlertDialog>
                            <AlertDialogTrigger asChild>
-                              <Button variant={"outline"} className="border border-black">
-                                 Delete
+                              <Button
+                                 disabled={deleteIsLoading || updateisLoading}
+                                 variant={"outline"}
+                                 className="border border-black"
+                              >
+                                 {deleteIsLoading ? (
+                                    <span className="inline-flex items-center gap-1">
+                                       <span>Deleting</span>
+                                       <Loader className="animate-spin" />
+                                    </span>
+                                 ) : (
+                                    "Delete"
+                                 )}
                               </Button>
                            </AlertDialogTrigger>
                            <AlertDialogContent>

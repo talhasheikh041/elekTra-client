@@ -91,14 +91,9 @@ const DashboardHeader = ({ isSideBarActive, setIsSidebarActive }: DashboardHeade
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
                      <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                     {user.role === "admin" && (
-                        <DropdownMenuItem>
-                           <Link to={"/admin/dashboard"}>Dashboard</Link>
-                        </DropdownMenuItem>
-                     )}
                      <DropdownMenuItem
                         className="cursor-pointer"
-                        onClick={() => navigate("myorders")}
+                        onClick={() => navigate("/myorders", { relative: "path" })}
                      >
                         <span>Orders</span>
                      </DropdownMenuItem>

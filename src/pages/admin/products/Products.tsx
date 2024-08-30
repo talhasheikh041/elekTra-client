@@ -27,7 +27,6 @@ const Products = () => {
    if (isError) {
       const err = error as CustomErrorType
       errorMessage = err.data.message
-      toast.error(errorMessage)
    }
 
    const allProducts: ProductColumnsTypes[] | null = data
@@ -60,7 +59,7 @@ const Products = () => {
             ) : isSuccess && allProducts ? (
                <DataTable columns={productColumns} data={allProducts} isPagination={true} />
             ) : (
-               <p>{errorMessage}</p>
+               <p className="flex justify-center">{errorMessage}</p>
             )}
          </CardContent>
       </Card>

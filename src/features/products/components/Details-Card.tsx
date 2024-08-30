@@ -53,7 +53,7 @@ const DetailsCard = ({ product }: DetailsCardProps) => {
          <div>
             <Badge className="cursor-default bg-blue-500 hover:bg-blue-500">{category}</Badge>
          </div>
-         <h1 className="mt-2 scroll-m-20 pb-2 text-5xl font-light tracking-widest first:mt-0">
+         <h1 className="mt-2 scroll-m-20 pb-2 text-3xl sm:text-4xl font-light tracking-widest first:mt-0">
             {name}
          </h1>
          <div className="mt-1 flex items-center gap-3">

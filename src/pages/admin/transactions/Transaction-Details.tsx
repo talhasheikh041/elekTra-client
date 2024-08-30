@@ -34,12 +34,13 @@ import { CustomErrorType, MessageResponseType } from "@/types/api-types"
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query"
 import { useEffect, useState } from "react"
 import { FaTrash } from "react-icons/fa"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { toast } from "sonner"
 
 const TransactionDetails = () => {
    const { user } = useAppSelector(selectUser)
    const params = useParams()
+   const navigate = useNavigate()
 
    const {
       data: orderResponse,
@@ -90,7 +91,7 @@ const TransactionDetails = () => {
       try {
          const res = await deleteOrder({ userId: user?._id!, orderId: order?._id! })
          responseToast(res)
-         // handleOpenChange(false)
+         navigate("/admin/transactions")
       } catch (error) {
          toast.error(error as string)
       }

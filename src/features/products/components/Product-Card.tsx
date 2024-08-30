@@ -38,7 +38,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
    }
 
    return (
-      <div className="relative flex min-h-72 flex-none cursor-pointer flex-col items-center justify-center rounded-lg bg-secondary p-3">
+      <div className="relative flex min-h-72 flex-none cursor-pointer flex-col items-center justify-center rounded-lg bg-secondary p-3 w-72 sm:w-auto">
          <div>
             <img src={photoURL} className="h-60 rounded-lg object-contain" alt="product" />
          </div>

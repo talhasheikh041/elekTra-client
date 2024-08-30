@@ -25,7 +25,7 @@ const DashboardLayout = () => {
                setIsSidebarActive={setIsSideBarActive}
             />
          </header>
-         <main className="min-h-svh bg-secondary py-4 dark:bg-secondary sm:ms-72">
+         <main className="min-h-[calc(100svh-56px)] bg-secondary py-4 dark:bg-secondary sm:ms-72">
             <Suspense fallback={<BounceLoader />}>
                <div className="container">
                   <Outlet />

@@ -65,7 +65,7 @@ const NewProduct = () => {
          shortDescription: "",
          price: undefined,
          stock: undefined,
-         photos: undefined,
+         photos: [],
       },
    })
 
@@ -92,15 +92,7 @@ const NewProduct = () => {
          const res = await newProduct({ id: user?._id!, formData })
          responseToast(res)
          editorRef.current?.clearEditor()
-         form.reset({
-            name: "",
-            category: "",
-            detail: "",
-            shortDescription: "",
-            price: undefined,
-            stock: undefined,
-            photos: undefined,
-         })
+         form.reset()
       } catch (error) {
          toast.error(error as string)
       }
@@ -145,9 +137,7 @@ const NewProduct = () => {
                                     value={field.value === undefined ? "" : field.value}
                                     onChange={(e) =>
                                        field.onChange(
-                                          e.target.value === ""
-                                             ? undefined
-                                             : Number(e.target.value),
+                                          e.target.value === "" ? null : Number(e.target.value),
                                        )
                                     }
                                  />
@@ -170,9 +160,7 @@ const NewProduct = () => {
                                     value={field.value === undefined ? "" : field.value}
                                     onChange={(e) =>
                                        field.onChange(
-                                          e.target.value === ""
-                                             ? undefined
-                                             : Number(e.target.value),
+                                          e.target.value === "" ? null : Number(e.target.value),
                                        )
                                     }
                                  />

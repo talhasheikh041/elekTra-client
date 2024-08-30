@@ -29,7 +29,7 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
                <span className="text-xs text-muted-foreground">{relativeTime}</span>
             </div>
             <RatingStars size="18px" rating={rating} readOnly={true} />
-            <p className="text-sm font-light">{comment}</p>
+            <p className="text-xs sm:text-sm font-light">{comment}</p>
          </div>
       </div>
    )

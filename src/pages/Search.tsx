@@ -1,4 +1,6 @@
 import SkeletonWrapper from "@/features/global-components/shared/Skeleton-Wrapper"
+import { Badge } from "@/features/global-components/ui/badge"
+import { Button } from "@/features/global-components/ui/button"
 import { Input } from "@/features/global-components/ui/input"
 import { Label } from "@/features/global-components/ui/label"
 import {
@@ -23,8 +25,8 @@ import { useCategoriesQuery, useLazySearchProductsQuery } from "@/features/produ
 import ProductCard from "@/features/products/components/Product-Card"
 import { areObjectsEqual, debounce, generatePageNumbers } from "@/lib/utils"
 import { CustomErrorType } from "@/types/api-types"
-import { Loader } from "lucide-react"
-import { useCallback, useEffect } from "react"
+import { Loader, X } from "lucide-react"
+import { useCallback, useEffect, useState } from "react"
 import { useSearchParams } from "react-router-dom"
 import { toast } from "sonner"
 
@@ -37,6 +39,8 @@ const Search = () => {
    const category = searchParams.get("category") || ""
    const search = searchParams.get("search") || ""
    const page = Number(searchParams.get("page")) || 1
+
+   const [showFilters, setShowFilters] = useState(false)
 
    const {
       data: productCategories,
@@ -56,7 +60,7 @@ const Search = () => {
    const [
       trigger,
       {
-         currentData: searchProducts,
+         data: searchProducts,
          isLoading: searchProductsIsLoading,
          isError: searchProductsIsError,
          error: searchProductsError,
@@ -112,8 +116,26 @@ const Search = () => {
    }, [page])
 
    return (
-      <div className="container flex gap-8 py-8">
-         <aside className="min-w-64 rounded-lg bg-secondary p-6 shadow-xl">
+      <div className="container relative flex gap-8 py-8">
+         <Badge
+            onClick={() => setShowFilters((prev) => !prev)}
+            className="absolute -left-6 top-24 rotate-90 cursor-pointer text-base lg:hidden"
+         >
+            Filters
+         </Badge>
+         <aside
+            className={`absolute left-0 z-50 min-w-64 rounded-lg bg-secondary p-6 shadow-xl lg:static lg:translate-x-0 ${showFilters ? "translate-x-0" : "-translate-x-full"} transition-transform`}
+         >
+            {showFilters && (
+               <Button
+                  onClick={() => setShowFilters((prev) => !prev)}
+                  variant={"outline"}
+                  size={"icon"}
+                  className="absolute right-2 top-2 size-6"
+               >
+                  <X />
+               </Button>
+            )}
             <h2 className="text-3xl font-light uppercase tracking-widest">Filters</h2>
 
             <div className="mt-6 flex flex-col gap-5">
@@ -217,7 +239,7 @@ const Search = () => {
                   <Skeleton className="h-64 w-64" />
                </SkeletonWrapper>
             ) : searchProducts?.products.length && searchProductsIsSuccess ? (
-               <div className="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3">
+               <div className="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 place-items-center">
                   {searchProducts.products.map((product) => (
                      <ProductCard key={product._id} product={product} />
                   ))}
@@ -228,7 +250,6 @@ const Search = () => {
                </p>
             )}
 
-            {searchProducts?.totalPages! > 1 && (
                <div className="mt-6">
                   <Pagination>
                      <PaginationContent>
@@ -291,7 +312,6 @@ const Search = () => {
                      </PaginationContent>
                   </Pagination>
                </div>
-            )}
          </main>
       </div>
    )

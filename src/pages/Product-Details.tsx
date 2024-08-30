@@ -107,10 +107,10 @@ const ProductDetails = () => {
                               </div>
                            ) : (
                               <>
-                                 <div className="flex justify-end">
+                                 <div className="flex justify-center md:justify-end">
                                     <AddReview productId={data.product._id} />
                                  </div>
-                                 <p className="grid place-items-center">{reviewsErrorMessage}</p>
+                                 <p className="grid place-items-center mt-4">{reviewsErrorMessage}</p>
                               </>
                            )}
                         </TabsContent>

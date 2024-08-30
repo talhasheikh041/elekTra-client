@@ -36,7 +36,6 @@ const Customers = () => {
    if (isError) {
       const err = error as CustomErrorType
       errorMessage = err.data.message
-      toast.error(errorMessage)
    }
 
    const deleteUserHandler = async (userId: string, adminUserId: string = loggedInUser?._id!) => {
@@ -105,7 +104,7 @@ const Customers = () => {
             ) : isSuccess && allUsers ? (
                <DataTable columns={customersColumns} data={allUsers} isPagination={true} />
             ) : (
-               <p className="mt-8 grid place-items-center">{errorMessage}</p>
+               <p className="flex justify-center">{errorMessage}</p>
             )}
          </CardContent>
       </Card>

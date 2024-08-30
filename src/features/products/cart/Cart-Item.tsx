@@ -18,8 +18,6 @@ type CartItemProps = {
 const CartItem = ({ name, photo, price, productId, quantity, stock }: CartItemProps) => {
    const dispatch = useAppDispatch()
 
-   const photoURL = `${import.meta.env.VITE_SERVER_LINK}/uploads/${photo}`
-
    const removeItemHandler = () => {
       dispatch(removeCartItem(productId))
    }
@@ -57,7 +55,7 @@ const CartItem = ({ name, photo, price, productId, quantity, stock }: CartItemPr
          <TableCell>
             <div className="flex items-center gap-4">
                <div className="w-11">
-                  <img className="h-12 w-12 rounded-md object-contain" src={photoURL} alt="" />
+                  <img className="h-12 w-12 rounded-md object-contain" src={photo} alt="" />
                </div>
                <p>{name}</p>
             </div>
