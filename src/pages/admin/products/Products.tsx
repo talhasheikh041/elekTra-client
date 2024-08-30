@@ -13,7 +13,6 @@ import { CustomErrorType } from "@/types/api-types"
 import { skipToken } from "@reduxjs/toolkit/query"
 import { CirclePlusIcon } from "lucide-react"
 import { Link } from "react-router-dom"
-import { toast } from "sonner"
 
 const Products = () => {
    const { user } = useAppSelector(selectUser)

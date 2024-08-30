@@ -11,8 +11,8 @@ import { responseToast } from "@/lib/utils"
 import { useAppSelector } from "@/redux/store"
 import { CustomErrorType } from "@/types/api-types"
 import { FaTrash } from "react-icons/fa"
-import { toast } from "sonner"
 
+import SelectRole from "@/features/customers/components/Select-Role"
 import {
    AlertDialog,
    AlertDialogAction,
@@ -24,7 +24,6 @@ import {
    AlertDialogTitle,
    AlertDialogTrigger,
 } from "@/features/global-components/ui/alert-dialog"
-import SelectRole from "@/features/customers/components/Select-Role"
 
 const Customers = () => {
    const { user: loggedInUser } = useAppSelector(selectUser)

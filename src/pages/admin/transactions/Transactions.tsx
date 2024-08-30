@@ -12,7 +12,6 @@ import {
 import { useAppSelector } from "@/redux/store"
 import { CustomErrorType } from "@/types/api-types"
 import { Link } from "react-router-dom"
-import { toast } from "sonner"
 
 const Transactions = () => {
    const { user } = useAppSelector(selectUser)

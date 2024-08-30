@@ -1,13 +1,12 @@
-import { DoughnutChart, PieChart } from "@/features/dashboard/components/Charts"
-import { Card, CardContent, CardHeader, CardTitle } from "@/features/global-components/ui/card"
-import { categories } from "@/assets/data.json"
-import { useAppSelector } from "@/redux/store"
+import { selectUser } from "@/features/customers/reducer/user-reducer"
 import { usePieChartQuery } from "@/features/dashboard/api/dashboard-api"
+import { DoughnutChart, PieChart } from "@/features/dashboard/components/Charts"
+import SkeletonWrapper from "@/features/global-components/shared/Skeleton-Wrapper"
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/global-components/ui/card"
+import { Skeleton } from "@/features/global-components/ui/skeleton"
+import { useAppSelector } from "@/redux/store"
 import { CustomErrorType } from "@/types/api-types"
 import { toast } from "sonner"
-import SkeletonWrapper from "@/features/global-components/shared/Skeleton-Wrapper"
-import { Skeleton } from "@/features/global-components/ui/skeleton"
-import { selectUser } from "@/features/customers/reducer/user-reducer"
 
 function Pie() {
    const { user } = useAppSelector(selectUser)

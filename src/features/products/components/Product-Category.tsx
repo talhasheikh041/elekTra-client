@@ -1,5 +1,5 @@
 import { Progress } from "@/features/global-components/ui/progress"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 
 const randomColors = ["red", "blue", "green", "orange", "yellow", "cyan", "purple", "pink"]
 

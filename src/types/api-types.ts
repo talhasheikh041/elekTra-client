@@ -11,7 +11,6 @@ import {
    StatsType,
    UserType,
 } from "@/types/types"
-import { StringDecoder } from "string_decoder"
 
 export type CustomErrorType = {
    status: number

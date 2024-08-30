@@ -241,6 +241,7 @@ const CarouselNext = React.forwardRef<HTMLButtonElement, React.ComponentProps<ty
 CarouselNext.displayName = "CarouselNext"
 
 const CarouselDotButtons = React.forwardRef<HTMLButtonElement, React.ComponentProps<typeof Button>>(
+   // @ts-ignore: TS6133
    ({ className, variant = "outline", size = "icon", ...props }, ref) => {
       const { api: emblaApi } = useCarousel()
 
@@ -293,6 +294,7 @@ CarouselDotButtons.displayName = "CarouselDotButtons"
 const CarouselThumbButtons = React.forwardRef<
    HTMLButtonElement,
    React.ComponentProps<typeof Button> & { slides: string[] }
+   // @ts-ignore: TS6133
 >(({ className, variant = "outline", size = "icon", slides, ...props }, ref) => {
    const { api: emblaMainApi, emblaThumbsApi, emblaThumbsRef } = useCarousel()
 
