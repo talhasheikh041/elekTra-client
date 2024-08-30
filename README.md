@@ -1,30 +1,81 @@
-# React + TypeScript + Vite
+# ElekTra Ecommerce Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the frontend of a fully functional e-commerce web application built with Vite and React using TypeScript. It provides a responsive and interactive user interface for both customers and admin users.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Framework**: [Vite](https://vitejs.dev/) with [React](https://reactjs.org/)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **CSS**: [TailwindCSS](https://tailwindcss.com/) and [Shadcn](https://ui.shadcn.com/)
+- **Routing**: [React Router DOM](https://reactrouter.com/)
+- **State Management**: [Redux Toolkit](https://redux-toolkit.js.org/)
+- **API Calls**: [RTK Query](https://redux-toolkit.js.org/rtk-query/overview)
+- **Authentication & Authorization**: [Firebase](https://firebase.google.com/)
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Admin Side
 
-- Configure the top-level `parserOptions` property like this:
+- **Dashboard**:
+  - Manage products, users, and orders.
+  - View various analytics (bar, line, and pie charts).
+  - Track revenue, orders, and inventory statistics.
+  - Edit and delete users, products, and orders.
+  - Change user roles (admin/user).
+  - Create, activate, and remove coupons.
+  - Advanced search functionality.
+  - Rich text editor for product descriptions, including image uploads.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+### Customer Side
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- **Product Management**:
+  - Browse and filter products by category, price, and name.
+  - View individual product details and images.
+- **Order Management**:
+  - Place orders and make payments with Stripe.
+  - View order status and details.
+- **Reviews and Ratings**:
+  - Review and rate products.
+- **Coupons**:
+  - Apply coupons on the cart page.
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js and npm installed on your machine.
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/ecommerce-frontend.git
+   cd ecommerce-frontend
+   
+2. Install dependencies:
+   ```bash
+   npm install
+   
+3. Create a .env file in the root directory and add your environment variables:
+    ```bash
+    VITE_API_KEY=your_firebase_api_key
+    VITE_AUTH_DOMAIN=your_firebase_auth_domain
+    VITE_PROJECT_ID=your_firebase_project_id
+    VITE_STORAGE_BUCKET=your_firebase_storage_bucket
+    VITE_MESSAGING_SENDER_ID=your_firebase_messaging_sender_id
+    VITE_APP_ID=your_firebase_app_id
+    VITE_SERVER_LINK=your_backend_server_link
+    VITE_STRIPE_KEY=your_stripe_public_key
+    
+4. Start the development server:
+    ```bash
+    npm run dev
+
+### Deployment
+
+5. Build the app for production:
+    ```bash
+    npm run build
+
+### License
+This project is licensed under the MIT License.
