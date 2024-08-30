@@ -16,12 +16,12 @@ const Login = () => {
    }, [user])
 
    return (
-      <div>
+      <div className="container">
          <h1 className="mt-10 flex justify-center text-5xl font-light uppercase tracking-widest">
             Login
          </h1>
 
-         <div className="mt-8 flex justify-center">
+         <div className="mt-8 flex justify-center w-full">
             <LoginForm />
          </div>
       </div>

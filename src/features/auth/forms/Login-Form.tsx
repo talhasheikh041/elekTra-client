@@ -6,6 +6,7 @@ import { z } from "zod"
 import {
    Form,
    FormControl,
+   FormDescription,
    FormField,
    FormItem,
    FormMessage,
@@ -30,7 +31,7 @@ import { CustomErrorType } from "@/types/api-types"
 import { format } from "date-fns"
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth"
 import { CalendarIcon } from "lucide-react"
-import { FaGoogle } from "react-icons/fa"
+import { FcGoogle } from "react-icons/fc"
 import { toast } from "sonner"
 
 const loginSchema = z.object({
@@ -81,93 +82,100 @@ const LoginForm = () => {
    }
 
    return (
-      <>
-         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 md:w-1/3">
-               <FormField
-                  control={form.control}
-                  name="gender"
-                  render={({ field }) => (
-                     <FormItem>
-                        <FormControl>
-                           <Select onValueChange={field.onChange} defaultValue={field.value}>
-                              <SelectTrigger>
-                                 <SelectValue placeholder="Choose Gender" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                 <SelectItem value="male">Male</SelectItem>
-                                 <SelectItem value="female">Female</SelectItem>
-                                 <SelectItem value="other">Other</SelectItem>
-                              </SelectContent>
-                           </Select>
-                        </FormControl>
-                        <FormMessage />
-                     </FormItem>
-                  )}
-               />
+      <Form {...form}>
+         <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="w-full space-y-4 sm:w-1/2 md:w-1/3"
+         >
+            <FormField
+               control={form.control}
+               name="gender"
+               render={({ field }) => (
+                  <FormItem>
+                     <FormControl>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                           <SelectTrigger>
+                              <SelectValue placeholder="Choose Gender" />
+                           </SelectTrigger>
+                           <SelectContent>
+                              <SelectItem value="male">Male</SelectItem>
+                              <SelectItem value="female">Female</SelectItem>
+                              <SelectItem value="other">Other</SelectItem>
+                           </SelectContent>
+                        </Select>
+                     </FormControl>
+                     <FormDescription className="text-xs">
+                        Required on the first signup
+                     </FormDescription>
+                     <FormMessage />
+                  </FormItem>
+               )}
+            />
 
-               <FormField
-                  control={form.control}
-                  name="dob"
-                  render={({ field }) => (
-                     <FormItem>
-                        <FormControl>
-                           <Popover>
-                              <PopoverTrigger asChild>
-                                 <FormControl>
-                                    <Button
-                                       variant={"outline"}
-                                       className={cn(
-                                          "w-full pl-3 text-left font-normal",
-                                          !field.value && "text-muted-foreground",
-                                       )}
-                                    >
-                                       {field.value ? (
-                                          format(field.value, "PPP")
-                                       ) : (
-                                          <span>Date of Birth</span>
-                                       )}
-                                       <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                                    </Button>
-                                 </FormControl>
-                              </PopoverTrigger>
-                              <PopoverContent className="w-auto p-0" align="start">
-                                 <Calendar
-                                    mode="single"
-                                    captionLayout="dropdown"
-                                    classNames={{
-                                       caption_dropdowns: "flex justify-between w-full",
-                                       vhidden: "hidden",
-                                       dropdown_month: "flex",
-                                       dropdown:
-                                          "flex w-full items-center justify-between rounded-md border border-input bg-background px-2 py-2 text-sm placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
-                                       dropdown_icon: "hidden",
-                                       caption_label: "hidden",
-                                    }}
-                                    fromYear={1900}
-                                    toYear={2025}
-                                    selected={field.value}
-                                    onSelect={field.onChange}
-                                    disabled={(date) =>
-                                       date > new Date() || date < new Date("1900-01-01")
-                                    }
-                                    initialFocus
-                                 />
-                              </PopoverContent>
-                           </Popover>
-                        </FormControl>
-                        <FormMessage />
-                     </FormItem>
-                  )}
-               />
+            <FormField
+               control={form.control}
+               name="dob"
+               render={({ field }) => (
+                  <FormItem>
+                     <FormControl>
+                        <Popover>
+                           <PopoverTrigger asChild>
+                              <FormControl>
+                                 <Button
+                                    variant={"outline"}
+                                    className={cn(
+                                       "w-full pl-3 text-left font-normal",
+                                       !field.value && "text-muted-foreground",
+                                    )}
+                                 >
+                                    {field.value ? (
+                                       format(field.value, "PPP")
+                                    ) : (
+                                       <span>Date of Birth</span>
+                                    )}
+                                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                 </Button>
+                              </FormControl>
+                           </PopoverTrigger>
+                           <PopoverContent className="w-auto p-0" align="start">
+                              <Calendar
+                                 mode="single"
+                                 captionLayout="dropdown"
+                                 classNames={{
+                                    caption_dropdowns: "flex justify-between w-full",
+                                    vhidden: "hidden",
+                                    dropdown_month: "flex",
+                                    dropdown:
+                                       "flex w-full items-center justify-between rounded-md border border-input bg-background px-2 py-2 text-sm placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+                                    dropdown_icon: "hidden",
+                                    caption_label: "hidden",
+                                 }}
+                                 fromYear={1900}
+                                 toYear={2025}
+                                 selected={field.value}
+                                 onSelect={field.onChange}
+                                 disabled={(date) =>
+                                    date > new Date() || date < new Date("1900-01-01")
+                                 }
+                                 initialFocus
+                              />
+                           </PopoverContent>
+                        </Popover>
+                     </FormControl>
+                     <FormDescription className="text-xs">
+                        Required on the first signup
+                     </FormDescription>
+                     <FormMessage />
+                  </FormItem>
+               )}
+            />
 
-               <Button className="mx-auto flex justify-center gap-2" variant="outline">
-                  <FaGoogle />
-                  <span>Login with Google</span>
-               </Button>
-            </form>
-         </Form>
-      </>
+            <Button className="mx-auto flex justify-center gap-2" variant="outline">
+               <FcGoogle className="size-5" />
+               <span>Login with Google</span>
+            </Button>
+         </form>
+      </Form>
    )
 }
 export default LoginForm

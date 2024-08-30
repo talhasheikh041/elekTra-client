@@ -73,10 +73,6 @@ const DashboardHeader = ({ isSideBarActive, setIsSidebarActive }: DashboardHeade
                </MyTooltip>
             </div>
 
-            <MyTooltip title="Notifications">
-               <Bell className="size-5 cursor-pointer transition-transform hover:scale-110" />
-            </MyTooltip>
-
             {loading ? (
                <Loader className="animate-spin" />
             ) : user ? (
