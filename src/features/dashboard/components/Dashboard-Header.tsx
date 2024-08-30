@@ -3,7 +3,7 @@ import MyTooltip from "@/features/global-components/shared/My-Tooltip"
 import { Avatar, AvatarFallback, AvatarImage } from "@/features/global-components/ui/avatar"
 import { Button } from "@/features/global-components/ui/button"
 import { useAppSelector } from "@/redux/store"
-import { AlignRight, Bell, HomeIcon, Loader, LogInIcon, Moon, Search, Sun } from "lucide-react"
+import { AlignRight, HomeIcon, Loader, LogInIcon, Moon, Search, Sun } from "lucide-react"
 
 import { useTheme } from "@/features/global-components/shared/Theme-Provider"
 import {
