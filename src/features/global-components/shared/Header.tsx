@@ -37,7 +37,7 @@ const Header = () => {
 
    return (
       <header className="sticky top-0 z-50 bg-primary-foreground dark:bg-secondary">
-         <nav className="flex items-center justify-between gap-3 rounded-bl-2xl rounded-br-2xl  px-3 py-4 font-light md:container">
+         <nav className="flex items-center justify-between gap-3 rounded-bl-2xl rounded-br-2xl px-3 py-4 font-light md:container">
             <div>
                <Link to="/">
                   <div className="flex items-center gap-2">
